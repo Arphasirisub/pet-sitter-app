@@ -1,19 +1,9 @@
 import { Router } from "express";
 import supabase from "../utills/supabase.js";
 
-export const ownersRouter = Router();
+export const sittersRouter = Router();
 
-ownersRouter.get("/", async (req, res) => {
-  try {
-    const data = await supabase.from("owners").select("*");
-    res.json({ data });
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-ownersRouter.post("/", async (req, res) => {
+sittersRouter.post("/", async (req, res) => {
   try {
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
       {
@@ -32,8 +22,8 @@ ownersRouter.post("/", async (req, res) => {
     const userId = signUpData.user.id;
 
     // Define the table name and role message based on the role (pet_owner, pet_sitter)
-    const tableName = "owners"; // Adjust as needed
-    const roleMessage = "Pet Owner"; // Adjust as needed
+    const tableName = "sitters"; // Adjust as needed
+    const roleMessage = "Pet Sister"; // Adjust as needed
 
     const { data: insertData, error: insertError } = await supabase
       .from(tableName)

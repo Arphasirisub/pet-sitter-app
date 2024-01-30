@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage/Loginpage";
-import RegisterPage from "./pages/RegisterPage/Registerpage";
+import RegisterPage from "./pages/registerpage/Registerpage";
 import SearchListPage from "./pages/SearchListPage/SearchListPage";
 import SisterHomepage from "./pages/SitterHomePage/SisterHomepage";
 import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
