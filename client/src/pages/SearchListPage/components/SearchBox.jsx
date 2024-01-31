@@ -4,9 +4,9 @@ import Checkbox from "@mui/material/Checkbox";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import searchIcon from "../../../PublicPicture/searchIcon.png";
+import locationLogo from "../../../PublicPicture/location.png";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import SitterList from "./SitterList.jsx";
-
 import {
   greenStar,
   containerStyles,
@@ -31,29 +31,56 @@ import {
   clearButton,
   searchButton,
   paginationContainer,
+  sitterListCotainer,
+  sitterInfoBox,
+  SitterNameContainer,
+  infoLayout,
+  nameLayout,
+  locationLayout,
+  petTypeIcon,
+  petTypeContainer,
+  imgProflie,
+  dogIconStyle,
+  catIconStyle,
+  rabbitIconStyle,
+  birdIconStyle,
+  addressText,
+  imageGalleryStyle,
 } from "./Style.jsx";
+import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function SearchBody() {
+  const navigate = useNavigate();
+
   const [experience, setExperience] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [dog, setDog] = useState(false);
   const [cat, setCat] = useState(false);
   const [bird, setBird] = useState(false);
   const [rabbit, setRabbit] = useState(false);
+  const [sitterData, setSitterData] = useState([]);
+
+  const getSitterDetail = async () => {
+    try {
+      const result = await axios(`http://localhost:4000/sitters/${searchInput}`);
+      setSitterData(result.data.data?.data || []);
+      console.log(sitterData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    searchInput;
-  }, [searchInput, experience, searchInput]);
+    getSitterDetail();
+  }, []);
 
-  const handdleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Submited");
   };
 
   const handleClearButtonClick = (e) => {
-    e.preventDefault();
     setSearchInput(""),
       setExperience(""),
       setCat(false),
@@ -63,7 +90,7 @@ function SearchBody() {
   };
 
   return (
-    <form onSubmit={handdleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div css={containerStyles}>
         <p css={headingStyles}>Search For Pet Sitter</p>
 
@@ -190,8 +217,91 @@ function SearchBody() {
               </div>
             </div>
           </div>
-          {/* Sitter Detail Card */}
-          <SitterList />
+          {/*-------- Sitter Detail Card --------*/}
+          <div
+            css={sitterListCotainer}
+            onClick={() => {
+              navigate("/detail");
+            }}
+          >
+            {sitterData.map((item, index) => {
+              console.log("Item:", item);
+              return (
+                <div key={index} css={sitterInfoBox}>
+                  <img css={imageGalleryStyle} src={item.image_gallery} />
+                  <div css={infoLayout}>
+                    <div css={nameLayout}>
+                      <img css={imgProflie} src={item.profile_img} />
+                      <div css={SitterNameContainer}>
+                        <p
+                          css={css`
+                            font-size: 14px;
+                            font-weight: 600;
+                            margin-top: 2px;
+                          `}
+                        >
+                          {item.trade_name}
+                        </p>
+                        <p
+                          css={css`
+                            font-size: 12px;
+                            margin-top: -6px;
+                          `}
+                        >
+                          By {item.full_name}
+                        </p>
+                      </div>
+
+                      <div css={starLayout}>
+                        {greenStar}
+                        {greenStar}
+                        {greenStar}
+                        {greenStar}
+                        {greenStar}
+                      </div>
+                    </div>
+
+                    <div css={locationLayout}>
+                      <img
+                        css={css`
+                          width: 20px;
+                          height: 20px;
+                        `}
+                        src={locationLogo}
+                      />
+                      <p css={addressText}>
+                        {item.district}, {item.province}
+                      </p>
+                    </div>
+
+                    <div css={petTypeContainer}>
+                      {item.pet_type.map((typelist, index) => {
+                        return (
+                          <div
+                            key={index}
+                            css={[
+                              petTypeIcon,
+                              typelist === "Dog"
+                                ? dogIconStyle
+                                : typelist === "Bird"
+                                ? birdIconStyle
+                                : typelist === "Rabbit"
+                                ? rabbitIconStyle
+                                : typelist === "Cat"
+                                ? catIconStyle
+                                : null,
+                            ]}
+                          >
+                            {typelist}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div css={paginationContainer}>
           <Stack spacing={2}>

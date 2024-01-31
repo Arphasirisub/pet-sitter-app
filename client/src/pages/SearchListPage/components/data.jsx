@@ -9,7 +9,7 @@ const sitterData = [
       "https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg",
     district: "Senanikom",
     province: "Bangkok",
-    pettype: ["Rabbit"],
+    pettype:{ Dog: false, Bird: true, Cat: true, Rabbit: false },
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const sitterData = [
       "https://image.petmd.com/files/styles/863x625/public/2023-09/how-smart-are-cats.jpg",
     district: "Bang Bon",
     province: "Bangkok",
-    pettype: ["Cat"],
+    pettype: { Dog: true, Bird: false, Cat: true, Rabbit: true },
   },
   {
     id: 3,
@@ -32,7 +32,7 @@ const sitterData = [
     imagegallery: "https://ychef.files.bbci.co.uk/1280x720/p07ryyyj.jpg",
     district: "Sathon",
     province: "Bangkok",
-    pettype: ["Bird"],
+    pettype: { Dog: true, Bird: false, Cat: false, Rabbit: false },
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const sitterData = [
       "https://www.forbes.com/advisor/wp-content/uploads/2023/09/how-much-does-a-cat-cost.jpeg-900x510.jpg",
     district: "Mars",
     province: "Mars",
-    pettype: ["Cat", "Rabbit"],
+    pettype: { Dog: false, Bird: false, Cat: true, Rabbit: false },
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const sitterData = [
       "https://www.cats.org.uk/media/1363/getting-another-cat-og.jpg",
     district: "Bang Bon",
     province: "Bangkok",
-    pettype: ["Dog", "Bird"],
+    pettype: { Dog: true, Bird: true, Cat: false, Rabbit: false },
   },
   {
     id: 6,
@@ -68,21 +68,20 @@ const sitterData = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSko16djmgfoxewAPK37fGRlx6QgQEl_18sFg&usqp=CAU",
     district: "Sai Mai",
     province: "Bangkok",
-    pettype: ["Dog", "Cat"],
-  },{
+    pettype: { Dog: false, Bird: false, Cat: true, Rabbit: false },
+  },
+  {
     id: 7,
     fullName: "Bruno Mars",
     sitterName: "Please Me",
-    profileimg:
-      "https://d2zp5xs5cp8zlg.cloudfront.net/image-29951-800.jpg",
+    profileimg: "https://d2zp5xs5cp8zlg.cloudfront.net/image-29951-800.jpg",
     imagegallery:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO9EMCfs4fzBBU8J1OJ_TLc7iNLE2csREujQ&usqp=CAU",
     district: "Hawaii",
     province: "America",
-    pettype: ["Dog","Cat","Bird","Rabbit"],
+    pettype: { Dog: true, Bird: true, Cat: true, Rabbit: true },
   },
+  ,
 ];
-
-
 
 export default sitterData;
