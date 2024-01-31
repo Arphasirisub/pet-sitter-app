@@ -21,15 +21,11 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
 
-        {token ? (
-          <>
-            <Route path="/sitter" element={<SisterHomepage />} />
-            <Route path="/list" element={<SearchListPage />} />
-            <Route path="/detail" element={<SitterDetailsPage />} />
-          </>
-        ) : (
-          <Route path="/" element={<OwnerHomePage />} />
-        )}
+        <Route path="/sitter" element={<SisterHomepage />} />
+        <Route path="/list" element={<SearchListPage />} />
+        <Route path="/detail" element={<SitterDetailsPage />} />
+
+        <Route path="/" element={<OwnerHomePage />} />
       </Routes>
     </BrowserRouter>
   );
