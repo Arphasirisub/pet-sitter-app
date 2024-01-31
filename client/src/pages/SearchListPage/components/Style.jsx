@@ -301,7 +301,7 @@ export const nameLayout = css`
 export const locationLayout = css`
   display: flex;
   flex-direction: row;
-  margin: 5px 40px;
+  margin: 15px 40px;
   align-items: center;
   gap: 4px;
 `;
