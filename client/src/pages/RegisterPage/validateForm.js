@@ -12,7 +12,7 @@ const validateForm = (formData, setFormErrors, formErrors) => {
   }
 
   // Validate email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}\.com$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}/;
   if (!emailRegex.test(formData.email)) {
     newErrors.email = "Invalid email format";
     valid = false;

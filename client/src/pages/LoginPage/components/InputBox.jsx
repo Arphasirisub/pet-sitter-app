@@ -34,24 +34,6 @@ export function InputBox({ handleInputChange, formData }) {
         onChange={handleInputChange}
         required
       />
-      <FormControl variant="outlined">
-        <InputLabel id="role-label">Role</InputLabel>
-        <Select
-          labelId="role-label"
-          id="role"
-          label="Role"
-          name="role"
-          value={formData.role}
-          onChange={handleInputChange}
-          required
-        >
-          <MenuItem value="" disabled>
-            Select Role
-          </MenuItem>
-          <MenuItem value="pet_owner">Pet Owner</MenuItem>
-          <MenuItem value="pet_sitter">Pet Sitter</MenuItem>
-        </Select>
-      </FormControl>
       <div
         css={css`
           display: flex;

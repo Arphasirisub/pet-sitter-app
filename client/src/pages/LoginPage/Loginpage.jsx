@@ -6,17 +6,41 @@ import { AlternativeLogin } from "./components/AlternativeLogin";
 import { Header } from "./components/Header";
 import { InputBox } from "./components/InputBox";
 import { SignUpLink } from "./components/SignUpLink";
+import axios from "axios";
+import AuthBackground from "../../public-components/AuthBackground";
 
-function LoginPage() {
+function LoginPage({ setToken, token }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/authentication/login`,
+        {
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+
+      const authToken = response.data.token;
+      console.log(response.data);
+
+      // Set the token in the state
+      setToken({
+        token: authToken,
+        role: response.data.user.role,
+      });
+      console.log(token);
+    } catch (error) {
+      console.error("Authentication failed:", error.message);
+      alert(error.message);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -25,6 +49,7 @@ function LoginPage() {
       ...formData,
       [name]: value,
     });
+    console.log(formData);
   };
 
   const pageLayout = css`
@@ -34,8 +59,7 @@ function LoginPage() {
     justify-content: center;
     height: 100vh;
     gap: 1rem;
-    padding-top: 3%;
-    padding-bottom: 8%;
+    position: relative;
   `;
 
   const formLayout = css`
@@ -53,6 +77,7 @@ function LoginPage() {
       </form>
       <AlternativeLogin />
       <SignUpLink navigate={navigate} />
+      <AuthBackground />
     </div>
   );
 }

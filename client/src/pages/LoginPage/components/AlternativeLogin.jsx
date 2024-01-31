@@ -13,35 +13,39 @@ export function AlternativeLogin() {
           display: flex;
           align-items: center;
           text-align: center;
+          width: 30%; /* Ensure the container takes up the full width */
         `}
       >
         <div
           css={css`
             flex-grow: 1;
-            border-top: 1px solid rgb(123, 126, 143); /* Change the color as needed */
+            border-top: 1px solid rgb(123, 126, 143);
             margin: 0 10px;
           `}
         ></div>
-        <span
+        <div
           css={css`
             color: rgb(123, 126, 143);
           `}
         >
           Or Continue With
-        </span>
+        </div>
         <div
           css={css`
             flex-grow: 1;
-            border-top: 1px solid rgb(123, 126, 143); /* Change the color as needed */
+            border-top: 1px solid rgb(123, 126, 143);
             margin: 0 10px;
           `}
         ></div>
       </div>
+
       <div
         css={css`
           width: 30%;
           display: flex;
-          justify-content: space-between;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
           &:hover {
             cursor: pointer;
           }

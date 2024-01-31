@@ -9,6 +9,7 @@ import LoginLink from "./components/LoginLink";
 import SelectRole from "./components/SelectRole";
 import validateForm from "./validateForm";
 import { AlternativeLogin } from "../LoginPage/components/AlternativeLogin";
+import AuthBackground from "../../public-components/AuthBackground";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -27,19 +28,23 @@ function RegisterPage() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    validateForm(formData, setFormErrors, formErrors);
+    const isValid = validateForm(formData, setFormErrors, formErrors);
 
-    if (validateForm(formData, setFormErrors, formErrors)) {
-      if (role === "pet_owner") {
-        axios.post("http://localhost:4000/owners", { ...formData, role: role });
-      } else if (role === "pet_sitter") {
-        axios.post("http://localhost:4000/sitters", {
+    if (isValid) {
+      try {
+        await axios.post("http://localhost:4000/authentication/register", {
           ...formData,
           role: role,
         });
+
+        alert("Sign up successful");
+
+        navigate("/login");
+      } catch (error) {
+        console.error("Error during sign up:", error);
       }
     }
   };
@@ -59,8 +64,7 @@ function RegisterPage() {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    padding-top: 3%;
-    padding-bottom: 8%;
+    position: relative;
     gap: 1rem;
   `;
 
@@ -82,6 +86,7 @@ function RegisterPage() {
       <AlternativeLogin />
 
       <LoginLink navigate={navigate} />
+      <AuthBackground />
     </div>
   );
 }
