@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-export function Header() {
+function Header() {
   return (
     <>
       <div
@@ -22,7 +22,7 @@ export function Header() {
             line-height: 64px;
           `}
         >
-          Welcome back!
+          Join Us!
         </div>
         <div
           css={css`
@@ -40,3 +40,5 @@ export function Header() {
     </>
   );
 }
+
+export default Header;

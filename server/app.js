@@ -3,6 +3,8 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { ownersRouter } from "./routers/ownerRouter.js";
+import { sittersRouter } from "./routers/sittersRouter.js";
+import { authenticationRouter } from "./routers/authenticationRouter.js";
 
 function init() {
   dotenv.config();
@@ -18,6 +20,8 @@ function init() {
   app.use(bodyParser.json());
 
   app.use("/owners", ownersRouter);
+  app.use("/sitters", sittersRouter);
+  app.use("/authentication", authenticationRouter);
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
