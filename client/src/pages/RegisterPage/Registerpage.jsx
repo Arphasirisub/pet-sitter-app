@@ -10,6 +10,7 @@ import SelectRole from "./components/SelectRole";
 import validateForm from "./validateForm";
 import { AlternativeLogin } from "../LoginPage/components/AlternativeLogin";
 import AuthBackground from "../../public-components/AuthBackground";
+import { useAuth } from "../../contexts/authentication";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -28,24 +29,22 @@ function RegisterPage() {
     password: "",
   });
 
+  const { register } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isValid = validateForm(formData, setFormErrors, formErrors);
 
     if (isValid) {
-      try {
-        await axios.post("http://localhost:4000/authentication/register", {
-          ...formData,
-          role: role,
-        });
+      register({
+        ...formData,
+        role: role,
+      });
 
-        alert("Sign up successful");
+      alert("Sign up successfuly");
 
-        navigate("/login");
-      } catch (error) {
-        console.error("Error during sign up:", error);
-      }
+      navigate("/login");
     }
   };
 

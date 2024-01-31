@@ -102,13 +102,9 @@ authenticationRouter.post("/login", async (req, res) => {
 
     // Include the user data and role in the response
     const response = {
-      user: {
-        id: userData.id,
-        email: userData.email,
-        role: userData.role, // Include the user's role in the response
-      },
-      token: data,
+      token: data.session.access_token,
       message: "Login successful",
+      role: userData.role,
     };
 
     res.status(200).json(response);
