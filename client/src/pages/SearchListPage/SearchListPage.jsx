@@ -1,13 +1,14 @@
 import Footer from "../../public-components/Footer";
 import Navbar from "../../public-components/Navbar";
+import SearchBody from "./components/SearchBox.jsx";
 function SearchListPage() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
-      <div>this is SearchListPage</div>
+      <SearchBody />
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
