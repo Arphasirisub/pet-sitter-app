@@ -1,6 +1,6 @@
 import React from "react";
 import supabase from "../../../supabase.js";
-import { Auth } from "@supabase/ui";
+
 import { useNavigate } from "react-router-dom";
 import { dark } from "@mui/material/styles/createPalette.js";
 
@@ -13,7 +13,7 @@ const FacebookLogin = () => {
   });
   return (
     <>
-      <Auth supabaseClient={supabase} providers={["facebook"]} />
+     
     </>
   );
 };

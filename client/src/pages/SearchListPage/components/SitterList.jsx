@@ -80,8 +80,7 @@ function SitterList (){
                         `}
                         src={locationLogo}
                       />
-                      <p css={addressText}>{item.district},</p>
-                      <p css={addressText}>{item.province}</p>
+                      <p css={addressText}>{item.district}, {item.province}</p>
                     </div>
                     <div css={petTypeContainer}>
                       {item.pettype.map((typelist, index) => {
@@ -90,7 +89,7 @@ function SitterList (){
                             key={index}
                             css={[
                               petTypeIcon,
-                              typelist === "Dog"
+                              typelist === "Dog" 
                                 ? dogIconStyle
                                 : typelist === "Bird"
                                 ? birdIconStyle

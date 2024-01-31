@@ -37,6 +37,7 @@ function LoginPage({ setToken, token }) {
         role: response.data.user.role,
       });
       console.log(token);
+      navigate("/")
     } catch (error) {
       console.error("Authentication failed:", error.message);
       alert(error.message);

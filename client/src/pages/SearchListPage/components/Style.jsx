@@ -35,6 +35,7 @@ export const seachLishContainer = css`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  flex-wrap: wrap;
   top: 30px;
   width: 100vw;
 `;
@@ -52,6 +53,7 @@ export const searchBox = css`
   /* margin: 0px 0px 50px 0px; */
   background-color: white;
   z-index: 1;
+  margin-bottom: 30px;
 `;
 
 export const searchInputStyle = css`
