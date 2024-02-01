@@ -261,9 +261,18 @@ export const paginationContainer = css`
   justify-content: center;
   align-items: center;
 `;
+export const rightbox = css`
+  border: solid 1px #fafafb;
+  background-color: #fafafb;
+  width:750px;
+  margin-top: -10px;
+  padding: 10px 0px 10px 10px;
+  display: flex;
+`;
 
 export const sitterListCotainer = css`
   display: flex;
+  border-radius: 10px;
   flex-direction: column;
   gap: 20px;
   cursor: pointer;
