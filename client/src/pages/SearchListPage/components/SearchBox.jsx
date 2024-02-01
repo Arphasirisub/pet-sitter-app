@@ -8,7 +8,15 @@ import locationLogo from "../../../PublicPicture/location.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+  FiveStar,
+  FourStar,
+  ThreeStar,
+  TwoStar,
+  OneStar,
+} from "./StarIcon.jsx";
+import {
   greenStar,
+  rightbox,
   containerStyles,
   headingStyles,
   seachLishContainer,
@@ -19,12 +27,6 @@ import {
   checkBoxLaout,
   checkBoxText,
   flexRowRating,
-  numberRating,
-  fiveRatingbox,
-  fourRatingBox,
-  threeRatingBox,
-  twoRatingBox,
-  oneRatingBox,
   starLayout,
   inputStyles,
   buttonContainer,
@@ -64,7 +66,9 @@ function SearchBody() {
 
   const getSitterDetail = async () => {
     try {
-      const result = await axios(`http://localhost:4000/sitters/${searchInput}`);
+      const result = await axios(
+        `http://localhost:4000/sitters?full_name=${searchInput}&province=${searchInput}`
+      );
       setSitterData(result.data.data?.data || []);
       console.log(sitterData);
     } catch (error) {
@@ -77,10 +81,12 @@ function SearchBody() {
   }, []);
 
   const handleSubmit = (e) => {
+    const data = { searchInput, dog, cat, bird, rabbit, experience };
     e.preventDefault();
+    data;
   };
 
-  const handleClearButtonClick = (e) => {
+  const handleClearButtonClick = () => {
     setSearchInput(""),
       setExperience(""),
       setCat(false),
@@ -151,46 +157,13 @@ function SearchBody() {
               </div>
               <label css={text}>Rating:</label>
               <div css={flexRowRating}>
-                <div css={fiveRatingbox}>
-                  <p css={numberRating}>5</p>
-                  <div css={starLayout}>
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                  </div>
-                </div>
-                <div css={fourRatingBox}>
-                  <p css={numberRating}>4</p>
-                  <div css={starLayout}>
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                  </div>
-                </div>
+                <FiveStar />
+                <FourStar />
               </div>
               <div css={flexRowRating}>
-                <div css={threeRatingBox}>
-                  <p css={numberRating}>3</p>
-                  <div css={starLayout}>
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                  </div>
-                </div>
-                <div css={twoRatingBox}>
-                  <p css={numberRating}>2</p>
-                  <div css={starLayout}>
-                    {greenStar}
-                    {greenStar}
-                  </div>
-                </div>
-                <div css={oneRatingBox}>
-                  <p css={numberRating}>1</p>
-                  <div css={starLayout}>{greenStar}</div>
-                </div>
+                <ThreeStar />
+                <TwoStar />
+                <OneStar />
               </div>
 
               <p css={text}>Experience:</p>
@@ -200,7 +173,9 @@ function SearchBody() {
                 id="experience"
                 name="experience"
                 value={experience}
-                onChange={(e) => setExperience(e.target.value)}
+                onChange={(e) => {
+                  setExperience(e.target.value);
+                }}
               >
                 <option value="2years">0-2 Years</option>
                 <option value="3years">3-5 Years</option>
@@ -211,98 +186,105 @@ function SearchBody() {
                 <button css={clearButton} onClick={handleClearButtonClick}>
                   Clear
                 </button>
-                <button type="submit" css={searchButton}>
+                <button
+                  type="submit"
+                  css={searchButton}
+                  onClick={getSitterDetail}
+                >
                   Search
                 </button>
               </div>
             </div>
           </div>
           {/*-------- Sitter Detail Card --------*/}
-          <div
-            css={sitterListCotainer}
-            onClick={() => {
-              navigate("/detail");
-            }}
-          >
-            {sitterData.map((item, index) => {
-              console.log("Item:", item);
-              return (
-                <div key={index} css={sitterInfoBox}>
-                  <img css={imageGalleryStyle} src={item.image_gallery} />
-                  <div css={infoLayout}>
-                    <div css={nameLayout}>
-                      <img css={imgProflie} src={item.profile_img} />
-                      <div css={SitterNameContainer}>
-                        <p
-                          css={css`
-                            font-size: 14px;
-                            font-weight: 600;
-                            margin-top: 2px;
-                          `}
-                        >
-                          {item.trade_name}
-                        </p>
-                        <p
-                          css={css`
-                            font-size: 12px;
-                            margin-top: -6px;
-                          `}
-                        >
-                          By {item.full_name}
-                        </p>
-                      </div>
-
-                      <div css={starLayout}>
-                        {greenStar}
-                        {greenStar}
-                        {greenStar}
-                        {greenStar}
-                        {greenStar}
-                      </div>
-                    </div>
-
-                    <div css={locationLayout}>
-                      <img
-                        css={css`
-                          width: 20px;
-                          height: 20px;
-                        `}
-                        src={locationLogo}
-                      />
-                      <p css={addressText}>
-                        {item.district}, {item.province}
-                      </p>
-                    </div>
-
-                    <div css={petTypeContainer}>
-                      {item.pet_type.map((typelist, index) => {
-                        return (
-                          <div
-                            key={index}
-                            css={[
-                              petTypeIcon,
-                              typelist === "Dog"
-                                ? dogIconStyle
-                                : typelist === "Bird"
-                                ? birdIconStyle
-                                : typelist === "Rabbit"
-                                ? rabbitIconStyle
-                                : typelist === "Cat"
-                                ? catIconStyle
-                                : null,
-                            ]}
+          <div css={rightbox}>
+            <div
+              css={sitterListCotainer}
+              onClick={() => {
+                navigate("/detail");
+              }}
+            >
+              {sitterData.map((item, index) => {
+                console.log("Item:", item);
+                return (
+                  <div key={index} css={sitterInfoBox}>
+                    <img css={imageGalleryStyle} src={item.image_gallery} />
+                    <div css={infoLayout}>
+                      <div css={nameLayout}>
+                        <img css={imgProflie} src={item.profile_img} />
+                        <div css={SitterNameContainer}>
+                          <p
+                            css={css`
+                              font-size: 14px;
+                              font-weight: 600;
+                              margin-top: 2px;
+                            `}
                           >
-                            {typelist}
-                          </div>
-                        );
-                      })}
+                            {item.trade_name}
+                          </p>
+                          <p
+                            css={css`
+                              font-size: 12px;
+                              margin-top: -6px;
+                            `}
+                          >
+                            By {item.full_name}
+                          </p>
+                        </div>
+
+                        <div css={starLayout}>
+                          {greenStar}
+                          {greenStar}
+                          {greenStar}
+                          {greenStar}
+                          {greenStar}
+                        </div>
+                      </div>
+
+                      <div css={locationLayout}>
+                        <img
+                          css={css`
+                            width: 20px;
+                            height: 20px;
+                          `}
+                          src={locationLogo}
+                        />
+                        <p css={addressText}>
+                          {item.district}, {item.province}
+                        </p>
+                      </div>
+
+                      <div css={petTypeContainer}>
+                        {item.pet_type.map((typelist, index) => {
+                          return (
+                            <div
+                              key={index}
+                              css={[
+                                petTypeIcon,
+                                typelist === "Dog"
+                                  ? dogIconStyle
+                                  : typelist === "Bird"
+                                  ? birdIconStyle
+                                  : typelist === "Rabbit"
+                                  ? rabbitIconStyle
+                                  : typelist === "Cat"
+                                  ? catIconStyle
+                                  : null,
+                              ]}
+                            >
+                              {typelist}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+
         <div css={paginationContainer}>
           <Stack spacing={2}>
             <Pagination count={10} />
