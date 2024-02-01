@@ -38,7 +38,13 @@ export const seachLishContainer = css`
   flex-wrap: wrap;
   top: 30px;
   width: 100vw;
+  /* position: sticky; */
 `;
+
+export const sticky =css`
+  display: flex;
+  position:sticky;
+`
 
 export const searchBox = css`
   display: flex;
