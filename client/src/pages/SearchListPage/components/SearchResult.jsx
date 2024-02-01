@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import locationLogo from "../../../PublicPicture/location.png";
+import React from "react";
 // import { useState, useEffect } from "react";
 // import axios from "axios";
 import {
@@ -25,8 +26,7 @@ import {
   imageGalleryStyle,
 } from "./Style.jsx";
 
-function SearchResult({sitterData,setSitterData}) {
-
+function SearchResult({ sitterData, setSitterData }) {
   const navigate = useNavigate();
 
   return (
@@ -66,11 +66,9 @@ function SearchResult({sitterData,setSitterData}) {
                   </div>
 
                   <div css={starLayout}>
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
-                    {greenStar}
+                    {Array.from({ length: item.rating }, (_, index) => (
+                      <React.Fragment key={index}>{greenStar}</React.Fragment>
+                    ))}
                   </div>
                 </div>
 

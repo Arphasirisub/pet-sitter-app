@@ -22,6 +22,7 @@ function SearchListPage() {
     cat: false,
     bird: false,
     rabbit: false,
+    rating: 0,
   });
   // const [experience, setExperience] = useState("");
   // const [searchInput, setSearchInput] = useState("");
@@ -41,6 +42,7 @@ function SearchListPage() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getSitterDetail();
   }, []);
@@ -54,7 +56,7 @@ function SearchListPage() {
           <SearchBox
             searchData={searchData}
             setSearchData={setSearchData}
-            setSitterData={setSearchData}
+            setSitterData={setSitterData}
             sitterData={sitterData}
           />
           <SearchResult sitterData={sitterData} setSitterData={setSitterData} />

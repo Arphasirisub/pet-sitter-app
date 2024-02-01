@@ -30,43 +30,28 @@ import axios from "axios";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
-  // const {
-  //   handleSearchInputChange,
-  //   handleExperienceChange,
-  //   handleDogChange,
-  //   handleCatChange,
-  //   handleBirdChange,
-  //   handleRabbitChange,
-  // } = useSearchData();
-  const getSitterDetail = async () => {
-    try {
-      const result = await axios(
-        `http://localhost:4000/sitters?full_name=${searchData.searchInput}&province=${searchData.searchInput}`
-      );
-      setSitterData(result.data.data?.data || []);
-      console.log(sitterData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getSitterDetail();
-  }, []);
-
-  const handleSubmit = (e) => {
-    const data = { searchInput, dog, cat, bird, rabbit, experience };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    data;
+    console.log(searchData.experience);
+
+    const result = await axios(
+      `http://localhost:4000/sitters?full_name=${searchData.searchInput}&experience=${searchData.experience}&rating=${searchData.rating}&dog=${searchData.dog}&cat=${searchData.cat}&bird=${searchData.bird}&rabbit=${searchData.rabbit}`
+    );
+    console.log(result);
+    setSitterData(result.data.data);
   };
 
   const handleClearButtonClick = () => {
-    setSearchInput(""),
-      setExperience(""),
-      setCat(false),
-      setDog(false),
-      setBird(false),
-      setRabbit(false);
+    setSearchData({
+      experience: "",
+      searchInput: "",
+      dog: false,
+      cat: false,
+      bird: false,
+      rabbit: false,
+      rating: 0,
+    });
+    setSitterData([]);
   };
 
   const handleStateChange = (fieldName, value) => {
@@ -138,13 +123,43 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
           </div>
           <label css={text}>Rating:</label>
           <div css={flexRowRating}>
-            <FiveStar />
-            <FourStar />
+            <div
+              onClick={() => {
+                handleStateChange("rating", 5);
+              }}
+            >
+              <FiveStar />
+            </div>
+            <div
+              onClick={() => {
+                handleStateChange("rating", 4);
+              }}
+            >
+              <FourStar />
+            </div>
           </div>
           <div css={flexRowRating}>
-            <ThreeStar />
-            <TwoStar />
-            <OneStar />
+            <div
+              onClick={() => {
+                handleStateChange("rating", 3);
+              }}
+            >
+              <ThreeStar />
+            </div>
+            <div
+              onClick={() => {
+                handleStateChange("rating", 2);
+              }}
+            >
+              <TwoStar />
+            </div>
+            <div
+              onClick={() => {
+                handleStateChange("rating", 1);
+              }}
+            >
+              <OneStar />
+            </div>
           </div>
 
           <p css={text}>Experience:</p>
@@ -158,9 +173,9 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               handleStateChange("experience", e.target.value);
             }}
           >
-            <option value="2years">0-2 Years</option>
-            <option value="3years">3-5 Years</option>
-            <option value="5years">5+ Years</option>
+            <option value="0-2">0-2 Years</option>
+            <option value="3-5">3-5 Years</option>
+            <option value="5-9">5+ Years</option>
           </select>
 
           <div css={buttonContainer}>
@@ -171,7 +186,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
             >
               Clear
             </button>
-            <button type="submit" css={searchButton} onClick={getSitterDetail}>
+            <button type="submit" css={searchButton}>
               Search
             </button>
           </div>
