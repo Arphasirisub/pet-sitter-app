@@ -40,6 +40,7 @@ authenticationRouter.post("/register", async (req, res) => {
           phone: req.body.phone,
           password: req.body.password,
           role: req.body.role,
+          profile_img: req.body.profile_img,
         },
       ]);
 
@@ -78,13 +79,13 @@ authenticationRouter.post("/login", async (req, res) => {
     // Fetch user data from both "sitters" and "owners" tables
     const { data: sitterData, error: sitterError } = await supabase
       .from("sitters")
-      .select("id, email, role, name")
+      .select("id, email, role, name, profile_img")
       .eq("id", data.user.id)
       .single();
 
     const { data: ownerData, error: ownerError } = await supabase
       .from("owners")
-      .select("id, email, role, name")
+      .select("id, email, role, name, profile_img")
       .eq("id", data.user.id)
       .single();
 
@@ -110,6 +111,7 @@ authenticationRouter.post("/login", async (req, res) => {
         email: data.user.email,
         role: userData.role,
         name: userData.name,
+        profile_img: userData.profile_img,
       },
       process.env.SECRET_KEY,
       { expiresIn: "900000" }

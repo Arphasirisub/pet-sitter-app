@@ -54,6 +54,7 @@ function AuthProvider(props) {
     // Set the token in the state
 
     // const userDataFromToken = jwtDecode(token);
+    console.log(state);
     // setState({ ...state, user: userDataFromToken });
     navigate("/");
   };

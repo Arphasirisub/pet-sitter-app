@@ -24,6 +24,20 @@ export function SignUpLink({ navigate }) {
         >
           Register
         </div>
+        <div>Or go to website as</div>
+        <div
+          css={css`
+            color: rgb(255, 112, 55);
+            &:hover {
+              cursor: pointer;
+            }
+          `}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Guest
+        </div>
       </div>
     </>
   );

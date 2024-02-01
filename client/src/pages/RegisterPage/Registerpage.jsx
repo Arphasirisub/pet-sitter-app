@@ -38,8 +38,10 @@ function RegisterPage() {
 
     if (isValid) {
       register({
-        ...formData,
-        role: role,
+        ...formData, // Spread the properties of formData
+        role: role, // Add the 'role' property
+        profile_img:
+          "https://wajvygdhtyqvxzpizdqw.supabase.co/storage/v1/object/public/public-picture/newUserIcon.png",
       });
 
       alert("Sign up successfuly");
