@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import Sidebar from "./components/Sidebar";
 import TopBar from "./components/HeadNav";
 import Body from "./components/Body";
+import { useState } from "react";
+import DynamicCompenents from "./components/DynamicComonents";
 
 const appStyle = css`
   display: flex;
@@ -25,6 +27,8 @@ const contentContainerStyle = css`
 `;
 
 function SisterHomepage() {
+  const [activeTap, setActiveTap] = useState("");
+
   return (
     <div
       css={css`
@@ -33,10 +37,14 @@ function SisterHomepage() {
     >
       <div css={appStyle}>
         <div css={contentStyle}>
-          <Sidebar />
+          <Sidebar
+            css={topBarStyle}
+            activeTap={activeTap}
+            setActiveTap={setActiveTap}
+          />
           <div css={contentContainerStyle}>
-            <TopBar css={topBarStyle} />
-            <Body />
+            <TopBar />
+            <DynamicCompenents activeTap={activeTap} />
           </div>
         </div>
       </div>

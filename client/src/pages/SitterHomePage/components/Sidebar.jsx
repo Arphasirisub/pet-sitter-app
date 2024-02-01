@@ -1,8 +1,9 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({ activeTap, setActiveTap }) => {
   const sidebarStyle = css`
     background-color: #fafafb;
     display: flex;
@@ -56,21 +57,36 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div css={containerButton}>
+      <div
+        css={containerButton}
+        onClick={() => {
+          setActiveTap("pet-sitter-profile");
+        }}
+      >
         <div css={fixcenter}>
           <img src="/src/PublicPicture/llogohuman.png" alt="Human" width="20" />
           <p css={fontStyleSidebar}>Pet Sitter Profile</p>
         </div>
       </div>
 
-      <div css={containerButton}>
+      <div
+        css={containerButton}
+        onClick={() => {
+          setActiveTap("booking-list");
+        }}
+      >
         <div css={fixcenter}>
           <img src="/src/PublicPicture/list.png" alt="booking" width="30" />
           <p css={fontStyleSidebar}>Booking List</p>
         </div>
       </div>
 
-      <div css={containerButton}>
+      <div
+        css={containerButton}
+        onClick={() => {
+          setActiveTap("payout-option");
+        }}
+      >
         <div>
           <img
             src="/src/PublicPicture/payouticon.png"
