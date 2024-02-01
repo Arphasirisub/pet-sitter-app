@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import TimeValidationMinTime from "./Book-Now-Time";
+import DateValidationShouldDisableYear from "./Book-Now-Date";
 
 const style = {
   position: "absolute",
@@ -45,6 +47,8 @@ const BookNowModal = () => {
           <p id="parent-modal-description">
             Select date and time you want to schedule the service.{" "}
           </p>
+          <DateValidationShouldDisableYear />
+          <TimeValidationMinTime />
         </Box>
       </Modal>
     </div>

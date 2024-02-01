@@ -12,13 +12,17 @@ const PetSitterReview = () => {
       className="review-container"
       height="auto"
       width="60%"
-      paddingLeft="5%"
+      marginLeft="2%"
+      padding={3}
       marginTop={10}
       spacing={2}
+      backgroundColor="#f5f6f9"
+      borderRadius={10}
     >
       <Stack direction="row" spacing={2}>
         <Stack width="20%">
           <Box
+            borderRadius={10}
             sx={{
               backgroundColor: "black",
               color: "white",
@@ -53,6 +57,7 @@ const PetSitterReview = () => {
                   <Rating
                     name="read-only"
                     value={5}
+                    max={5}
                     readOnly
                     sx={{ color: "#1CCD83" }}
                   />
@@ -62,6 +67,7 @@ const PetSitterReview = () => {
                   <Rating
                     name="read-only"
                     value={4}
+                    max={4}
                     readOnly
                     sx={{ color: "#1CCD83" }}
                   />
@@ -71,6 +77,7 @@ const PetSitterReview = () => {
                   <Rating
                     name="read-only"
                     value={3}
+                    max={3}
                     readOnly
                     sx={{ color: "#1CCD83" }}
                   />
@@ -80,6 +87,7 @@ const PetSitterReview = () => {
                   <Rating
                     name="read-only"
                     value={2}
+                    max={2}
                     readOnly
                     sx={{ color: "#1CCD83" }}
                   />
@@ -89,6 +97,7 @@ const PetSitterReview = () => {
                   <Rating
                     name="read-only"
                     value={1}
+                    max={1}
                     readOnly
                     sx={{ color: "#1CCD83" }}
                   />

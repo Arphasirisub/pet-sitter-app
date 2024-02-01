@@ -5,9 +5,11 @@ import Carousel from "./components/Pet-Sitter-Image-Carousel";
 function SitterDetailsPage() {
   return (
     <>
+      {/* <Navbar /> */}
       <Carousel />
       <PetSitterDetail />
       <PetSitterReview />
+      {/* <Footer /> */}
     </>
   );
 }
