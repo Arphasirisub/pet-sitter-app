@@ -11,6 +11,7 @@ function Footer() {
         width: 100%;
         height: 280px;
         text-align: center;
+        margin-top: 20px;
       `}
     >
       <div className="footer__logo">
