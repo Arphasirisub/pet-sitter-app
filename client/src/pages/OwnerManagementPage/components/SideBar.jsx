@@ -10,7 +10,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/authentication";
 
-function SideBar({ setActiveTaps, activeTaps, setIsCreatePet, setIsUpdatePet }) {
+function SideBar({
+  setActiveTaps,
+  activeTaps,
+  setIsCreatePet,
+  setIsUpdatePet,
+}) {
   const { state, checkToken } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {

@@ -2,9 +2,9 @@ import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage/Loginpage";
-import RegisterPage from "./pages/registerpage/Registerpage";
+import RegisterPage from "./pages/RegisterPage/Registerpage";
 import SearchListPage from "./pages/SearchListPage/SearchListPage";
-import SitterHomepage from "./pages/SitterHomePage/SitterHomepage";
+import SisterHomepage from "./pages/SitterHomePage/SisterHomepage";
 import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";

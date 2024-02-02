@@ -18,20 +18,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <SittersProvider>
             <PetsProvider>
               <BookingToolsProvider>
-            <ThemeProvider theme={theme}>
-              <App />
-              </ThemeProvider>
-               </BookingToolsProvider>
-         </PetsProvider>
-        </SittersProvider>
+                <ThemeProvider theme={theme}>
+                  <App />
+                </ThemeProvider>
+              </BookingToolsProvider>
+            </PetsProvider>
+          </SittersProvider>
         </MyPetsToolsProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
-
-//The <React.StrictMode> component is used to wrap the application,
-//ensuring that the additional checks and warnings provided by React
-//during development are enabled for the entire application.
-//It's a good practice to include it in your development setup to catch
-//and address potential issues early in the development process.
