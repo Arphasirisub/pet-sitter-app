@@ -3,21 +3,7 @@ import supabase from "../utills/supabase.js";
 
 export const sittersRouter = Router();
 
-// sittersRouter.get("/", async (req, res) => {
-//   const fullName = req.query.full_name;
-//   const experience = req.query.experience;
-//   try {
-//     const data = await supabase
-//       .from("sitters")
-//       .select("*")
-//       .ilike("full_name", `%${fullName || ""}%`);
 
-//     res.json({ data });
-//   } catch (error) {
-//     console.error("Error fetching data:", error.message);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 sittersRouter.get("/", async (req, res) => {
   const experienceRange = req.query.experience;

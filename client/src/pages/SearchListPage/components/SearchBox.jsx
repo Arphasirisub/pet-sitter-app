@@ -66,8 +66,8 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
   }, [searchData]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form css={sticky} onSubmit={handleSubmit}>
+      <div >
         <div css={searchBox}>
           <label css={text}>Search</label>
           <div>
@@ -173,6 +173,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               handleStateChange("experience", e.target.value);
             }}
           >
+            <option value="">see all</option>
             <option value="0-2">0-2 Years</option>
             <option value="3-5">3-5 Years</option>
             <option value="5-9">5+ Years</option>

@@ -3,8 +3,6 @@ import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import locationLogo from "../../../PublicPicture/location.png";
 import React from "react";
-// import { useState, useEffect } from "react";
-// import axios from "axios";
 import {
   greenStar,
   rightbox,
@@ -24,9 +22,10 @@ import {
   birdIconStyle,
   addressText,
   imageGalleryStyle,
+  flip
 } from "./Style.jsx";
 
-function SearchResult({ sitterData, setSitterData }) {
+function SearchResult({ sitterData }) {
   const navigate = useNavigate();
 
   return (
@@ -38,7 +37,7 @@ function SearchResult({ sitterData, setSitterData }) {
               key={index}
               css={sitterInfoBox}
               onClick={() => {
-                navigate("/detail");
+                navigate(`/detail/${item.id}`);
               }}
             >
               <img css={imageGalleryStyle} src={item.image_gallery[0]} />
@@ -64,11 +63,12 @@ function SearchResult({ sitterData, setSitterData }) {
                       By {item.full_name}
                     </p>
                   </div>
-
-                  <div css={starLayout}>
-                    {Array.from({ length: item.rating }, (_, index) => (
-                      <React.Fragment key={index}>{greenStar}</React.Fragment>
-                    ))}
+                  <div css={flip}>
+                    <div css={starLayout}>
+                      {Array.from({ length: item.rating }, (_, index) => (
+                        <React.Fragment key={index}>{greenStar}</React.Fragment>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

@@ -14,7 +14,7 @@ import {
 
 export function FiveStar() {
   return (
-    <div css={fiveRatingbox}>
+    <button css={fiveRatingbox}>
       <p css={numberRating}>5</p>
       <div css={starLayout}>
         {greenStar}
@@ -23,13 +23,13 @@ export function FiveStar() {
         {greenStar}
         {greenStar}
       </div>
-    </div>
+    </button>
   );
 }
 
 export function FourStar() {
   return (
-    <div css={fourRatingBox}>
+    <button css={fourRatingBox}>
       <p css={numberRating}>4</p>
       <div css={starLayout}>
         {greenStar}
@@ -37,40 +37,40 @@ export function FourStar() {
         {greenStar}
         {greenStar}
       </div>
-    </div>
+    </button>
   );
 }
 
 export function ThreeStar() {
   return (
-    <div css={threeRatingBox}>
+    <button css={threeRatingBox}>
       <p css={numberRating}>3</p>
       <div css={starLayout}>
         {greenStar}
         {greenStar}
         {greenStar}
       </div>
-    </div>
+    </button>
   );
 }
 
 export function TwoStar() {
   return (
-    <div css={twoRatingBox}>
+    <button css={twoRatingBox}>
       <p css={numberRating}>2</p>
       <div css={starLayout}>
         {greenStar}
         {greenStar}
       </div>
-    </div>
+    </button>
   );
 }
 
 export function OneStar() {
   return (
-    <div css={oneRatingBox}>
+    <button css={oneRatingBox}>
       <p css={numberRating}>1</p>
       <div css={starLayout}>{greenStar}</div>
-    </div>
+    </button>
   );
 }

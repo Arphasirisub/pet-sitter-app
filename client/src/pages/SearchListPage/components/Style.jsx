@@ -38,13 +38,12 @@ export const seachLishContainer = css`
   flex-wrap: wrap;
   top: 30px;
   width: 100vw;
-  /* position: sticky; */
 `;
 
-export const sticky =css`
+export const sticky = css`
   display: flex;
-  position:sticky;
-`
+  position: sticky;
+`;
 
 export const searchBox = css`
   display: flex;
@@ -133,6 +132,11 @@ export const fiveRatingbox = css`
     background-color: rgba(226, 226, 226, 0.5);
     border: 1px solid rgba(226, 226, 226, 0.5);
   }
+
+  &:focus {
+    background-color: rgba(160, 160, 160, 0.5);
+    border: 1px solid rgba(162, 161, 161, 0.5);
+  }
 `;
 
 export const fourRatingBox = css`
@@ -149,6 +153,11 @@ export const fourRatingBox = css`
   &:hover {
     background-color: rgba(226, 226, 226, 0.5);
     border: 1px solid rgba(226, 226, 226, 0.5);
+  }
+
+  &:focus {
+    background-color: rgba(160, 160, 160, 0.5);
+    border: 1px solid rgba(162, 161, 161, 0.5);
   }
 `;
 
@@ -167,6 +176,11 @@ export const threeRatingBox = css`
     background-color: rgba(226, 226, 226, 0.5);
     border: 1px solid rgba(226, 226, 226, 0.5);
   }
+
+  &:focus {
+    background-color: rgba(160, 160, 160, 0.5);
+    border: 1px solid rgba(162, 161, 161, 0.5);
+  }
 `;
 
 export const twoRatingBox = css`
@@ -183,6 +197,11 @@ export const twoRatingBox = css`
   &:hover {
     background-color: rgba(226, 226, 226, 0.5);
     border: 1px solid rgba(226, 226, 226, 0.5);
+  }
+
+  &:focus {
+    background-color: rgba(160, 160, 160, 0.5);
+    border: 1px solid rgba(162, 161, 161, 0.5);
   }
 `;
 
@@ -201,6 +220,16 @@ export const oneRatingBox = css`
     background-color: rgba(226, 226, 226, 0.5);
     border: 1px solid rgba(226, 226, 226, 0.5);
   }
+
+  &:focus {
+    background-color: rgba(160, 160, 160, 0.5);
+    border: 1px solid rgba(162, 161, 161, 0.5);
+  }
+`;
+export const flip = css`
+  display: flex;
+  width: 100px;
+  flex-direction: row-reverse;
 `;
 
 export const starLayout = css`
@@ -270,7 +299,7 @@ export const paginationContainer = css`
 export const rightbox = css`
   border: solid 1px #fafafb;
   background-color: #fafafb;
-  width:750px;
+  width: 750px;
   margin-top: -10px;
   padding: 10px 0px 10px 10px;
   display: flex;

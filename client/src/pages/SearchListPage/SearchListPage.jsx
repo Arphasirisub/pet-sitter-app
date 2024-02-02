@@ -11,6 +11,7 @@ import {
   seachLishContainer,
   containerStyles,
   headingStyles,
+  sticky,
 } from "./components/Style.jsx";
 
 function SearchListPage() {
@@ -24,18 +25,10 @@ function SearchListPage() {
     rabbit: false,
     rating: 0,
   });
-  // const [experience, setExperience] = useState("");
-  // const [searchInput, setSearchInput] = useState("");
-  // const [dog, setDog] = useState(false);
-  // const [cat, setCat] = useState(false);
-  // const [bird, setBird] = useState(false);
-  // const [rabbit, setRabbit] = useState(false); // <SearchBox />
 
   const getSitterDetail = async () => {
     try {
-      const result = await axios(
-        `http://localhost:4000/sitters?full_name=${searchData.searchInput}&province=${searchData.searchInput}`
-      );
+      const result = await axios(`http://localhost:4000/sitters`);
       setSitterData(result.data.data?.data || []);
       console.log(sitterData);
     } catch (error) {
@@ -52,15 +45,21 @@ function SearchListPage() {
       {/* <Navbar /> */}
       <div css={containerStyles}>
         <p css={headingStyles}>Search For Pet Sitter</p>
-        <div css={seachLishContainer}>
-          <SearchBox
-            searchData={searchData}
-            setSearchData={setSearchData}
-            setSitterData={setSitterData}
-            sitterData={sitterData}
-          />
-          <SearchResult sitterData={sitterData} setSitterData={setSitterData} />
+        <div css={sticky}>
+          <div css={seachLishContainer}>
+            <SearchBox
+              searchData={searchData}
+              setSearchData={setSearchData}
+              setSitterData={setSitterData}
+              sitterData={sitterData}
+            />
+            <SearchResult
+              sitterData={sitterData}
+              setSitterData={setSitterData}
+            />
+          </div>
         </div>
+
         <PaginationBar />
       </div>
       {/* <Footer /> */}
