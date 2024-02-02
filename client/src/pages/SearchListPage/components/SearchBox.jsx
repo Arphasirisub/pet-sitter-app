@@ -26,6 +26,7 @@ import {
   sticky,
 } from "./Style.jsx";
 import axios from "axios";
+import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -67,7 +68,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
 
   return (
     <form css={sticky} onSubmit={handleSubmit}>
-      <div >
+      <div>
         <div css={searchBox}>
           <label css={text}>Search</label>
           <div>

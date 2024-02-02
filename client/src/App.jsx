@@ -22,8 +22,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/sitter" element={<SisterHomepage />} />
         <Route path="/list" element={<SearchListPage />} />
-        <Route path="/detail" element={<SitterDetailsPage />} />
-
+        <Route path="/detail/:id" element={<SitterDetailsPage />} />
         <Route path="/" element={<OwnerHomePage />} />
       </Routes>
     </BrowserRouter>

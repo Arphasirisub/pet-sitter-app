@@ -308,6 +308,7 @@ export const rightbox = css`
 export const sitterListCotainer = css`
   display: flex;
   border-radius: 10px;
+  border-radius: 10px;
   flex-direction: column;
   gap: 20px;
   cursor: pointer;
@@ -345,6 +346,7 @@ export const nameLayout = css`
 export const locationLayout = css`
   display: flex;
   flex-direction: row;
+  margin: 15px 40px;
   margin: 15px 40px;
   align-items: center;
   gap: 4px;

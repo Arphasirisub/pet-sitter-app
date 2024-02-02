@@ -9,7 +9,6 @@ import {
   twoRatingBox,
   oneRatingBox,
   starLayout,
-
 } from "./Style.jsx";
 
 export function FiveStar() {
