@@ -54,7 +54,7 @@ function Carousel() {
                   height={480}
                   width={640}
                   alt={`image_gallery_${index}`}
-                  src={item} // Use item.url instead of item
+                  src={item}
                 />
               </Stack>
             </SwiperSlide>

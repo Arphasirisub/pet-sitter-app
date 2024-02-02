@@ -62,6 +62,7 @@ const PetSitterReviewBox = () => {
                 <Rating
                   name="read-only"
                   value={comment.rating}
+                  max={comment.rating}
                   readOnly
                   sx={{ color: "#1CCD83" }}
                 />

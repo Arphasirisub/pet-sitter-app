@@ -24,7 +24,7 @@ sittersRouter.get("/:id", async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("sitters")
-      .select("*,comments(content)")
+      .select("*,comments(*)")
       .eq("id", id);
 
     if (error) {

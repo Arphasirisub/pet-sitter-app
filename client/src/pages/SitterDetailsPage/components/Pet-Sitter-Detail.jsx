@@ -5,7 +5,7 @@ import PetSitterDetailIntro from "./Pet-Sitter-Detail-Intro";
 const PetSitterDetail = () => {
   return (
     <>
-      <Stack direction="row" className="body-detail" paddingTop={2}>
+      <Stack direction="row" className="body-detail" paddingTop={10}>
         <PetSitterDetailIntro />
         <PetSitterCard />
       </Stack>
