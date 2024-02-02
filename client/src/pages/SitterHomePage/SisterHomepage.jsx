@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import Sidebar from "./components/Sidebar";
 import TopBar from "./components/HeadNav";
-import Body from "./components/Body";
+import Body from "./BookingList/Body";
 import { useState } from "react";
 import DynamicCompenents from "./components/DynamicComonents";
 
@@ -27,12 +27,14 @@ const contentContainerStyle = css`
 `;
 
 function SisterHomepage() {
-  const [activeTap, setActiveTap] = useState("");
+  const [activeTap, setActiveTap] = useState("booking-list");
 
   return (
     <div
       css={css`
         justify-content: center;
+        height: 100%;
+        width: 100vw;
       `}
     >
       <div css={appStyle}>

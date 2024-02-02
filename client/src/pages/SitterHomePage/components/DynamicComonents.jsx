@@ -1,6 +1,6 @@
-import PetSitterProfile from "./PetSitterProfile";
-import PayoutOption from "./PayoutOption";
-import BookingList from "./BookingList";
+import PetSitterProfile from "../PetSitterProfile/PetSitterProfile";
+import PayoutOption from "../PayOutOption/PayoutOption";
+import BookingList from "../BookingList/BookingList";
 
 function DynamicComponents({ activeTap }) {
   return (
