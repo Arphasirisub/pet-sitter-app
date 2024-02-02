@@ -5,8 +5,29 @@ import PetSitterReviewBox from "./Pet-Sitter-Review-Box";
 import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const PetSitterReview = () => {
+  const [sitterData1, setSitterData1] = useState(null);
+  const param = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/sitters/${param.id}`
+        );
+        setSitterData1(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching sitter details:", error);
+      }
+    };
+
+    fetchData();
+  }, [param.id]);
   return (
     <Stack
       className="review-container"
@@ -21,20 +42,46 @@ const PetSitterReview = () => {
     >
       <Stack direction="row" spacing={2}>
         <Stack width="20%">
-          <Box
-            borderRadius={10}
-            sx={{
-              backgroundColor: "black",
-              color: "white",
-              textAlign: "center",
-              padding: "5px",
-            }}
-          >
-            <Typography variant="h3" fontWeight="bold">
-              4.5
-            </Typography>
-            <Typography>24 Reviews</Typography>
-          </Box>
+          {sitterData1 &&
+          sitterData1.comments &&
+          sitterData1.comments.length > 0 ? (
+            <Stack>
+              {sitterData1.comments.reduce((comments, index) => (
+                <Box
+                  key={index}
+                  borderRadius={10}
+                  sx={{
+                    backgroundColor: "black",
+                    color: "white",
+                    textAlign: "center",
+                    padding: "5px",
+                  }}
+                >
+                  <Typography>
+                    {(
+                      sitterData1.comments.reduce(
+                        (sum, comments) => sum + comments.rating,
+                        0
+                      ) / sitterData1.comments.length
+                    ).toFixed(2)}
+                  </Typography>
+                  <Typography>{sitterData1.comments.length} Reviews</Typography>
+                </Box>
+              ))}
+            </Stack>
+          ) : (
+            <Box
+              borderRadius={10}
+              sx={{
+                backgroundColor: "black",
+                color: "white",
+                textAlign: "center",
+                padding: "5px",
+              }}
+            >
+              <Typography>No comments available</Typography>
+            </Box>
+          )}
         </Stack>
         <Stack width="75%">
           <Stack>
