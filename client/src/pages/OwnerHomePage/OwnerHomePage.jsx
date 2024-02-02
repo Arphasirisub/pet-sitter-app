@@ -6,6 +6,7 @@ import Footer from "../../public-components/Footer";
 import Content from "./components/Content";
 import Banner from "./components/ฺBanner";
 function OwnerHomePage() {
+  const { logout } = useAuth();
   return (
     <div
       css={css`

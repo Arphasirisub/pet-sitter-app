@@ -8,6 +8,7 @@ import { InputBox } from "./components/InputBox";
 import { SignUpLink } from "./components/SignUpLink";
 import axios from "axios";
 import AuthBackground from "../../public-components/AuthBackground";
+import { useAuth } from "../../contexts/authentication";
 
 function LoginPage({ setToken, token }) {
   const navigate = useNavigate();
@@ -16,32 +17,14 @@ function LoginPage({ setToken, token }) {
     password: "",
   });
 
+  const { login } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        `http://localhost:4000/authentication/login`,
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
-
-      const authToken = response.data.token;
-      console.log(response.data);
-
-      // Set the token in the state
-      setToken({
-        token: authToken,
-        role: response.data.user.role,
-      });
-      console.log(token);
-      navigate("/")
-    } catch (error) {
-      console.error("Authentication failed:", error.message);
-      alert(error.message);
-    }
+    login({
+      email: formData.email,
+      password: formData.password,
+    });
   };
 
   const handleInputChange = (e) => {
@@ -50,7 +33,6 @@ function LoginPage({ setToken, token }) {
       ...formData,
       [name]: value,
     });
-    console.log(formData);
   };
 
   const pageLayout = css`

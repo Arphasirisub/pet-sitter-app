@@ -10,7 +10,16 @@ import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [token, setToken] = useState({ token: null, role: null }); // Set to null initially
+  const storedToken = localStorage.getItem("token");
+  const storedRole = localStorage.getItem("role");
+  const [token, setToken] = useState({ token: storedToken, role: storedRole });
+
+  // Effect to update the state when local storage changes
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedRole = localStorage.getItem("role");
+    setToken({ token: storedToken, role: storedRole });
+  }, []); // Empty dependency array means this effect runs once after the initial render
 
   return (
     <BrowserRouter>
