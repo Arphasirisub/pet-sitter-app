@@ -37,11 +37,12 @@ function Header() {
         <div className="logogroup_detail" css={detailScale}>
           <p css={detailHeaderText}>
             Pet Sitter, Perfect,
-            <br /> For Your Pet.
-            <h3 css={detailDescriptionText}>
-              Find your perfect pet sitter with us.
-            </h3>
+            <br />
+            For Your Pet.
           </p>
+          <h3 css={detailDescriptionText}>
+            Find your perfect pet sitter with us.
+          </h3>
         </div>
         <div className="logogroup_right" css={logoScale}>
           A lots Logo

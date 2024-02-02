@@ -26,7 +26,6 @@ import {
   sticky,
 } from "./Style.jsx";
 import axios from "axios";
-import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 

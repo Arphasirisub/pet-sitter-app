@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "../../public-components/Footer";
 import Content from "./components/Content";
 import Banner from "./components/ฺBanner";
+import { useAuth } from "../../contexts/authentication";
 function OwnerHomePage() {
   const { logout } = useAuth();
   return (

@@ -10,31 +10,15 @@ import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import { useEffect, useState } from "react";
 
 function App() {
-  const storedToken = localStorage.getItem("token");
-  const storedRole = localStorage.getItem("role");
-  const [token, setToken] = useState({ token: storedToken, role: storedRole });
-
-  // Effect to update the state when local storage changes
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedRole = localStorage.getItem("role");
-    setToken({ token: storedToken, role: storedRole });
-  }, []); // Empty dependency array means this effect runs once after the initial render
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={<LoginPage setToken={setToken} token={token} />}
-        />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/sitter" element={<SisterHomepage />} />
-        <Route path="/list" element={<SearchListPage />} />
-        <Route path="/detail/:id" element={<SitterDetailsPage />} />
-        <Route path="/" element={<OwnerHomePage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/sitter" element={<SisterHomepage />} />
+      <Route path="/list" element={<SearchListPage />} />
+      <Route path="/detail/:id" element={<SitterDetailsPage />} />
+      <Route path="/" element={<OwnerHomePage />} />
+    </Routes>
   );
 }
 
