@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import DestuctCheckbox from "./destuctureCheckbox.jsx";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { useNavigate } from "react-router-dom";
 import {
   FiveStar,
   FourStar,
@@ -12,10 +14,8 @@ import {
 import {
   text,
   flexRowRating,
-  textLogoStyle,
   inputStyles,
   searchButton,
-  containerStyle,
   sectionLogoStyle,
   logoScale,
   detailScale,
@@ -24,16 +24,39 @@ import {
   sectionBarGroupStyle,
   ratingStyle,
   checkBoxStyle,
+  containerHeaderStyle,
+  catFootStyle,
+  pieceCircleStyle,
+  messageImgStyle,
+  catCircleStyle,
+  largeOrangeStarStyle,
+  dogCircleStyle,
+  grayCirclrStyle,
+  halfGreenCircleStyle,
 } from "./HeaderStyle.jsx";
+import dogcircle from "../../../PublicPicture/dogcircle.png";
+import graycircle from "../../../PublicPicture/graycircle.png";
+import largeorangestar from "../../../PublicPicture/largeorangestar.png";
+import halfgreencircle from "../../../PublicPicture/halfgreencircle.png";
+import catfoot from "../../../PublicPicture/catfoot.png";
+import messageimg from "../../../PublicPicture/messageimg.png";
+import catcircle from "../../../PublicPicture/catcircle.png";
+import piececircle from "../../../PublicPicture/piececircle.png";
 
 function Header() {
+  const navigate = useNavigate();
   const [experience, setExperience] = useState("");
+
   return (
-    <div className="container_header" css={containerStyle}>
+    <div className="container_header" css={containerHeaderStyle}>
       <div className="section__logogroup" css={sectionLogoStyle}>
         <div className="logogroup_left" css={logoScale}>
-          A lots Logo
+          <img css={catFootStyle} src={catfoot} alt="catfoot" />
+          <img css={pieceCircleStyle} src={piececircle} alt="pricecircle" />
+          <img css={messageImgStyle} src={messageimg} alt="messageimg" />
+          <img css={catCircleStyle} src={catcircle} alt="catcircle" />
         </div>
+
         <div className="logogroup_detail" css={detailScale}>
           <p css={detailHeaderText}>
             Pet Sitter, Perfect,
@@ -44,15 +67,70 @@ function Header() {
             Find your perfect pet sitter with us.
           </h3>
         </div>
+
         <div className="logogroup_right" css={logoScale}>
-          A lots Logo
+          <img
+            css={largeOrangeStarStyle}
+            src={largeorangestar}
+            alt="largeoranhestar"
+          />
+          <img css={dogCircleStyle} src={dogcircle} alt="dogcircle" />
+          <img css={grayCirclrStyle} src={graycircle} alt="graycircle" />
+          <img
+            css={halfGreenCircleStyle}
+            src={halfgreencircle}
+            alt="halfgreencircle"
+          />
         </div>
       </div>
 
       <div className="section__bargroup" css={sectionBarGroupStyle}>
         <div className="bargroup_checkbox" css={checkBoxStyle}>
           <span css={text}>Pet Type: </span>
-          <DestuctCheckbox />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="animalcategory1"
+                name="animalcategory1"
+                value="dog"
+                color="primary"
+              />
+            }
+            label="Dog"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="animalcategory2"
+                name="animalcategory2"
+                value="cat"
+                color="primary"
+              />
+            }
+            label="Cat"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="animalcategory3"
+                name="animalcategory3"
+                value="bird"
+                color="primary"
+              />
+            }
+            label="Bird"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="animalcategory4"
+                name="animalcategory4"
+                value="rabbit"
+                color="primary"
+              />
+            }
+            label="Rabbit"
+          />
         </div>
 
         <div className="bargroup_rating" css={ratingStyle}>
@@ -80,7 +158,14 @@ function Header() {
             <option value="5years">5+ Years</option>
           </select>
 
-          <button css={searchButton}>search</button>
+          <button
+            css={searchButton}
+            onClick={() => {
+              navigate("/list");
+            }}
+          >
+            search
+          </button>
         </div>
       </div>
     </div>

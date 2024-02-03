@@ -1,70 +1,62 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import yellowcircle from "../../../PublicPicture/yellowcircle.png";
+import halfbluedonut from "../../../PublicPicture/halfbluedonut.png";
+import largegreenstar from "../../../PublicPicture/largegreenstar.png";
+import { useNavigate } from "react-router-dom";
+import {
+  bannerContentStyle,
+  bannerTopicTextStyle,
+  bannerfigmaStyle,
+  containerBannerStyle,
+  figmaButtonStyle,
+  figmaDescriptionStyle,
+  figmaLeftStyle,
+  figmaRightStyle,
+  halfBlueDonutStyle,
+  largeGreenStarStyle,
+  yellowCircleStyle,
+} from "./BannerStyle";
 
 function Banner() {
+  const navigate = useNavigate();
   return (
-    <div
-      className="container_banner"
-      css={css`
-        width: 100%;
-        height: 608px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      `}
-    >
-      <div
-        className="banner_content"
-        css={css`
-          background-color: rgba(255, 245, 236, 1);
-          margin: 0px;
-          padding: 0px;
-          width: 1280px;
-          height: 448px;
-          border-radius: 16px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        `}
-      >
-        <h1
-          css={css`
-            font-weight: 700;
-            font-size: 56px;
-            text-align: center;
-            width: 457px;
-            padding: 0;
-          `}
-        >
-          Perfect Pet Sitter For Your Pet
-        </h1>
-        <button
-          css={css`
-            background-color: #ff7037;
-            width: 168px;
-            font-family: "Satoshi", sans-serif;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            color: white;
-            &:hover {
-              color: black;
-            }
-            padding: 12px 24px 12px 24px;
-            border-radius: 99px;
-            border: none;
-            cursor: pointer;
-            margin-left: 20px;
-            gap: 8px;
-          `}
-        >
-          Find A Pet Sitter
-        </button>
-      </div>
-      <div className="banner_figma">
-        <div></div>
-        <div></div>
+    <div className="container_banner" css={containerBannerStyle}>
+      <div className="banner_content" css={bannerContentStyle}>
+        <div className="banner_figma" css={bannerfigmaStyle}>
+          <div className="figma_left" css={figmaLeftStyle}>
+            <img
+              css={halfBlueDonutStyle}
+              src={halfbluedonut}
+              alt="halfbluedonut"
+            />
+          </div>
+
+          <div className="figma_des" css={figmaDescriptionStyle}>
+            <h1 css={bannerTopicTextStyle}>Perfect Pet Sitter For Your Pet</h1>
+            <button
+              css={figmaButtonStyle}
+              onClick={() => {
+                navigate("/list");
+              }}
+            >
+              Find A Pet Sitter
+            </button>
+          </div>
+
+          <div className="figma_right" css={figmaRightStyle}>
+            <img
+              css={yellowCircleStyle}
+              src={yellowcircle}
+              alt="yellowcircle"
+            />
+            <img
+              css={largeGreenStarStyle}
+              src={largegreenstar}
+              alt="largegreenstar"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

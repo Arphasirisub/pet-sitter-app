@@ -10,6 +10,16 @@ import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import { useEffect, useState } from "react";
 
 function App() {
+  const [searchData, setSearchData] = useState({
+    experience: "",
+    searchInput: "",
+    dog: false,
+    cat: false,
+    bird: false,
+    rabbit: false,
+    rating: 0,
+  });
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />

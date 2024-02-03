@@ -41,7 +41,18 @@ function Navbar() {
         onClick={handleImageClick}
         style={{ cursor: isAuthenticated ? "pointer" : "default" }}
       >
-        <img src={sitterlogo} alt="sitterlogo" />
+        <img
+          css={css`
+            width: 136.1px;
+            height: 40px;
+            cursor: pointer;
+          `}
+          src={sitterlogo}
+          alt="sitterlogo"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
       </div>
       <div
         css={css`
@@ -54,7 +65,7 @@ function Navbar() {
         {isAuthenticated ? (
           <div>
             <img
-              src={state.user.profile_img}
+              // src={state.user.profile_img}
               css={css`
                 width: 40px;
                 height: 40px;
@@ -110,16 +121,21 @@ function Navbar() {
               navigate("/list");
             }}
             css={css`
-              background-color: rgb(255, 112, 55);
+              background-color: #ff7037;
+              font-family: "Satoshi", sans-serif;
+              font-weight: 700;
+              font-size: 16px;
+              text-align: center;
               color: white;
-              font-size: 12px;
-              padding: 15px;
-              border-radius: 30px;
-              transition: background-color 0.3s ease;
-
               &:hover {
-                background-color: #ff7a3d;
+                color: black;
               }
+              padding: 12px 24px 12px 24px;
+              border-radius: 99px;
+              border: none;
+              cursor: pointer;
+              margin-left: 20px;
+              gap: 8px;
             `}
           >
             Find A Pet Sitter

@@ -3,10 +3,14 @@ import { css } from "@emotion/react";
 import {
   allStarSize,
   cardContentText,
+  cardStyle,
+  containerContentStyle,
+  detailDescriptionStyle,
   detailStyle,
   headerContentText,
+  sectionCardStyle,
   topicText,
-} from "./BodyStyle";
+} from "./ContentStyle";
 import largecat from "../../../PublicPicture/large-cat.png";
 import bluestar from "../../../PublicPicture/bluestar.png";
 import pinkstar from "../../../PublicPicture/pinkstar.png";
@@ -18,30 +22,14 @@ import womenanddog from "../../../PublicPicture/womenanddog.png";
 
 function Content() {
   return (
-    <div
-      className="container_content"
-      css={css`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 80px;
-        width: 100%;
-        height: 1455px;
-      `}
-    >
+    <div className="container_content" css={containerContentStyle}>
       <div className="section__topic">
         <h2 css={topicText}>
           "Your Pets, Our Priority: Perfect Care, Anytime, Anywhere."
         </h2>
       </div>
       <div className="section__detail" css={detailStyle}>
-        <div
-          className="detail_des"
-          css={css`
-            width: 468px;
-            height: 600px;
-          `}
-        >
+        <div className="detail_des" css={detailDescriptionStyle}>
           <h3 css={headerContentText}>
             {" "}
             <img src={bluestar} alt="bluestar" css={allStarSize} /> Boarding
@@ -85,27 +73,12 @@ function Content() {
           <img src={largecat} alt="largecat" />
         </div>
       </div>
-      <div
-        className="section__card"
-        css={css`
-          display: flex;
-          justify-content: space-around;
-          width: 1280px;
-          height: 410px;
-          text-align: center;
-        `}
-      >
-        <div
-          className="card_1"
-          css={css`
-            text-align: center;
-            width: 368px;
-          `}
-        >
-          <div className="card_image-1">
+      <div className="section__card" css={sectionCardStyle}>
+        <div className="card" css={cardStyle}>
+          <div className="card_image">
             <img src={womenandcat} alt="womenandcat" />
           </div>
-          <div className="card_des-1">
+          <div className="card_des">
             <h3 css={cardContentText}>Connect With Sitters</h3>
             <p>
               Find a verified and reviewed sitter who’ll keep your pets company
@@ -114,17 +87,11 @@ function Content() {
           </div>
         </div>
 
-        <div
-          className="card_2"
-          css={css`
-            text-align: center;
-            width: 368px;
-          `}
-        >
-          <div className="card_image-2">
+        <div className="card" css={cardStyle}>
+          <div className="card_image">
             <img src={catanddog} alt="catanddog" />
           </div>
-          <div className="card_des-2">
+          <div className="card_des">
             <h3 css={cardContentText}>Better For Your Pets</h3>
             <p>
               Pets stay happy at home with a sitter who gives them loving care
@@ -133,17 +100,11 @@ function Content() {
           </div>
         </div>
 
-        <div
-          className="card_3"
-          css={css`
-            text-align: center;
-            width: 368px;
-          `}
-        >
-          <div className="card_image-3">
+        <div className="card" css={cardStyle}>
+          <div className="card_image">
             <img src={womenanddog} alt="womenanddog" />
           </div>
-          <div className="card_des-3">
+          <div className="card_des">
             <h3 css={cardContentText}>Calling All Pets</h3>
             <p>
               Stay for free with adorable animals in unique homes around the
