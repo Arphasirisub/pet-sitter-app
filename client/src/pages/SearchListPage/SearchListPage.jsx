@@ -42,7 +42,7 @@ function SearchListPage() {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div css={containerStyles}>
         <p css={headingStyles}>Search For Pet Sitter</p>
         <div css={sticky}>

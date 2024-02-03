@@ -8,23 +8,31 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import { useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { logout, state, isAuthenticated } = useAuth();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { logout, state, checkToken } = useAuth();
 
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const handleImageClick = () => {
-    if (isAuthenticated) {
-      handleClick(); // Open the menu when the image is clicked only if authenticated
+    if (state.isAuthenticated) {
+      handleClick();
     }
   };
 
@@ -33,28 +41,37 @@ function Navbar() {
       css={css`
         display: flex;
         justify-content: space-between;
-        padding: 0 80px 0 80px;
-        margin: 15px 0 15px 0;
+        padding: 0 20px;
+        margin: 10px 0;
       `}
     >
       <div
-        onClick={handleImageClick}
-        style={{ cursor: isAuthenticated ? "pointer" : "default" }}
+        onClick={() => {
+          navigate("/");
+          window.location.reload();
+        }}
+        css={css`
+          &:hover {
+            cursor: pointer;
+          }
+        `}
       >
-        <img src={sitterlogo} alt="sitterlogo" />
+        <img src={sitterlogo} alt="Sitter Logo" />
       </div>
       <div
         css={css`
           display: flex;
-          gap: 2rem;
+          gap: 1rem;
           justify-content: center;
           align-items: center;
         `}
       >
-        {isAuthenticated ? (
-          <div>
+        {state.isAuthenticated && state.user ? (
+          <>
+            <div>{state.user.role}</div>
             <img
               src={state.user.profile_img}
+              alt="Profile"
               css={css`
                 width: 40px;
                 height: 40px;
@@ -62,6 +79,7 @@ function Navbar() {
               `}
               onClick={handleClick}
             />
+
             <Menu
               id="fade-menu"
               MenuListProps={{
@@ -84,7 +102,7 @@ function Navbar() {
                 Log out
               </MenuItem>
             </Menu>
-          </div>
+          </>
         ) : (
           <div
             css={css`
@@ -113,8 +131,8 @@ function Navbar() {
               background-color: rgb(255, 112, 55);
               color: white;
               font-size: 12px;
-              padding: 15px;
-              border-radius: 30px;
+              padding: 10px; /* Adjust padding for responsiveness */
+              border-radius: 20px; /* Adjust border-radius for responsiveness */
               transition: background-color 0.3s ease;
 
               &:hover {
