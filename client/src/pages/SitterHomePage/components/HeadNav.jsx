@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import axios from "axios";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const TopBar = () => {
   const topBarStyle = css`
@@ -41,11 +44,31 @@ const TopBar = () => {
     align-items: center;
     flex-shrink: 0;
   `;
+  const [img, setImg] = useState("");
+  const param = useParams();
+  const getImg = async () => {
+    try {
+      console.log(param.id);
+      const result = await axios.get(
+        `http://localhost:4000/sitter/${param.id}`
+      );
+
+      setImg(result.data);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getImg();
+  }, [param.id]);
+
   return (
     <div css={topBarStyle}>
-      <img src="/src/PublicPicture/logositter.png" alt="Logo" css={logoStyle} />
+      {img && <img src={img.profile_img} alt="Profile" css={logoStyle} />}
       <div css={proFilebox}>
-        <p css={fontStyle}>Name Surname</p>
+        {img && <p css={fontStyle}>{img.full_name}</p>}
       </div>
     </div>
   );

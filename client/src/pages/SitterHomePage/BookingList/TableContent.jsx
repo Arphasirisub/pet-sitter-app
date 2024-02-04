@@ -7,68 +7,112 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
+const RoundedTableContainer = styled(TableContainer)({
+  borderRadius: "20px",
+  overflow: "hidden",
+});
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const getColorByStatus = (status) => {
+  switch (status) {
+    case "In service":
+      return "#76d0fc";
+    case "Waiting for confirm":
+      return "#fa8ac0";
+    case "Waiting for service":
+      return "#ffca62";
+    case "Success":
+      return "#1ecd83";
+    case "Canceled":
+      return "#ea1110";
+    default:
+      return "black";
+  }
+};
+
+const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    textAlign: 'start',
+
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    color: getColorByStatus(status),
+    padding: 30,
+    textAlign: 'start',
   },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 function CustomizedTables() {
+  const param = useParams();
+  const [bookingHistory, setBookingHistory] = useState([]);
+
+  const fetchBookingHistory = async () => {
+    try {
+      console.log(param.id);
+      const result = await axios.get(
+        `http://localhost:4000/bookings/sitters/${param.id}`
+      );
+
+      setBookingHistory(result.data.data.data);
+
+      console.log(result);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookingHistory();
+  }, []);
+
   return (
-    <TableContainer component={Paper}>
+    <RoundedTableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Pet Owner Name</StyledTableCell>
+            <StyledTableCell align="right">Pet(s)</StyledTableCell>
+            <StyledTableCell align="right">Duration</StyledTableCell>
+            <StyledTableCell align="right">Booked Date</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {bookingHistory.map((row) => (
+            <StyledTableRow key={row.full_name}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.owners.full_name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.pets}</StyledTableCell>
+              <StyledTableCell align="right">
+                {row.duration} hours
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.booked_date}</StyledTableCell>
+              <StyledTableCell align="right" status={row.status}>
+                ● {row.status}
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </RoundedTableContainer>
   );
 }
 
-export default CustomizedTables
+export default CustomizedTables;
+

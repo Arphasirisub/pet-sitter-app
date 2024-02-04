@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
 import CustomizedTables from "./TableContent";
 
 const bodyStyle = css`
@@ -26,7 +25,7 @@ const InputStyle = css`
   border: 1px solid #ccc;
   padding: 12px;
   border-radius: 10px;
-  justify-content: space-between;
+  width: 170px;
 `;
 
 const fontStyle = css`
@@ -39,6 +38,11 @@ const fontStyle = css`
   margin-right: 980px;
 `;
 
+const inputContainer = css`
+  display: flex;
+  gap: 15px;
+`
+
 const Body = () => {
   return (
     <>
@@ -48,12 +52,16 @@ const Body = () => {
             <h3>Booking List</h3>
           </div>
 
-          <div>
+          <div css={inputContainer}>
             <input type="text" placeholder="Search..." css={InputStyle} />
 
             <select css={InputStyle}>
-              <option value="true">True</option>
-              <option value="fail">Fail</option>
+              <option value="">All status</option>
+              <option value="success">Success</option>
+              <option value="inService">In service</option>
+              <option value="waitingService">Waiting for service</option>
+              <option value="waitingConfirm">Waiting for confirm</option>
+              <option value="canceled">Canceled</option>
             </select>
           </div>
         </div>
