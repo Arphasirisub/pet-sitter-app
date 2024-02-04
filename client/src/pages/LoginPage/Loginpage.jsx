@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AlternativeLogin } from "./components/AlternativeLogin";
@@ -53,10 +52,6 @@ function LoginPage({ setToken, token }) {
     width: 30%;
   `;
 
-=======
-
-function LoginPage() {
->>>>>>> feat-petsitter-bookinglist
   return (
     <div css={pageLayout}>
       <Header />

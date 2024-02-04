@@ -156,7 +156,7 @@ const PetSitterCard = () => {
                 </Stack>
 
                 <Stack direction="row" spacing={1} justifyContent={"center"}>
-                  { sitterData1.pet_type?.map((typelist, index) => {
+                  {sitterData1.pet_type?.map((typelist, index) => {
                     return (
                       <div
                         key={index}
@@ -213,9 +213,8 @@ const PetSitterCard = () => {
                   width: "330px",
                   borderRadius: "100",
                 }}
-              >
-                <BookNowModal />
-              </Button>
+              >Book Now</Button>
+              <BookNowModal />
             </Card>
           </div>
         ) : (

@@ -23,7 +23,7 @@ function init() {
   app.use("/owners", ownersRouter);
   app.use("/authentication", authenticationRouter);
   app.use("/bookings", bookingsRouter);
-  app.use("/sitter", sittersRouter);
+  app.use("/sitters", sittersRouter);
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
