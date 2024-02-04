@@ -31,7 +31,7 @@ const PetSitterReviewBox = () => {
         {sitterData1 &&
           sitterData1.comments &&
           // Map over the comments array
-          sitterData1.comments.map((comment, index) => (
+          sitterData1.comments?.map((comment, index) => (
             <Stack
               key={index}
               className="children-review-box"

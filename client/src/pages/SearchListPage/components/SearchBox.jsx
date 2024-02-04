@@ -30,15 +30,18 @@ import axios from "axios";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(searchData.experience);
-
+  const getInfo = async () => {
     const result = await axios(
       `http://localhost:4000/sitters?full_name=${searchData.searchInput}&experience=${searchData.experience}&rating=${searchData.rating}&dog=${searchData.dog}&cat=${searchData.cat}&bird=${searchData.bird}&rabbit=${searchData.rabbit}`
     );
     console.log(result);
     setSitterData(result.data.data);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(searchData);
+    getInfo();
   };
 
   const handleClearButtonClick = () => {
@@ -51,7 +54,6 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
       rabbit: false,
       rating: 0,
     });
-    setSitterData([]);
   };
 
   const handleStateChange = (fieldName, value) => {
@@ -63,7 +65,8 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
 
   useEffect(() => {
     console.log(searchData);
-  }, [searchData]);
+    getInfo();
+  }, []);
 
   return (
     <form css={sticky} onSubmit={handleSubmit}>

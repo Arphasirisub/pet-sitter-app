@@ -47,7 +47,7 @@ function Carousel() {
             width: 100%;
           `}
         >
-          {sitterData1.image_gallery.map((item, index) => (
+          {sitterData1.image_gallery?.map((item, index) => (
             <SwiperSlide key={index}>
               <Stack className="comment-reviewer" width="80%" spacing={2}>
                 <img

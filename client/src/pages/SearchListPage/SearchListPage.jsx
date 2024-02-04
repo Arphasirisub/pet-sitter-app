@@ -5,8 +5,7 @@ import Navbar from "../../public-components/Navbar";
 import SearchBox from "./components/SearchBox.jsx";
 import SearchResult from "./components/SearchResult.jsx";
 import PaginationBar from "./components/pagination.jsx";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   seachLishContainer,
   containerStyles,
@@ -26,23 +25,9 @@ function SearchListPage() {
     rating: 0,
   });
 
-  const getSitterDetail = async () => {
-    try {
-      const result = await axios(`http://localhost:4000/sitters`);
-      setSitterData(result.data.data?.data || []);
-      console.log(sitterData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getSitterDetail();
-  }, []);
-
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div css={containerStyles}>
         <p css={headingStyles}>Search For Pet Sitter</p>
         <div css={sticky}>
@@ -62,7 +47,7 @@ function SearchListPage() {
 
         <PaginationBar />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

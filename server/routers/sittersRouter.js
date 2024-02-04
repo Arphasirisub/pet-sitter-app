@@ -4,21 +4,6 @@ import { protect } from "../middlewares/protect.js";
 
 export const sittersRouter = Router();
 
-sittersRouter.get("/", async (req, res) => {
-  try {
-    const data = await supabase
-      .from("sitters")
-      .select("*")
-      .ilike("full_name", `%${req.query.full_name || ""}%`)
-      .ilike("province", `%${req.query.province || ""}%`)
-      .ilike("district", `%${req.query.district || ""}%`);
-    res.json({ data });
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 sittersRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -26,7 +11,8 @@ sittersRouter.get("/:id", async (req, res) => {
     const { data, error } = await supabase
       .from("sitters")
       .select("*,comments(*)")
-      .eq("id", id);
+      .eq("id", id)
+      .eq("is_active", true);
 
     if (error) {
       console.error("Error fetching data:", error.message);
@@ -46,37 +32,6 @@ sittersRouter.get("/:id", async (req, res) => {
   }
 });
 
-// sittersRouter.get("/:id/comment", async (req, res) => {
-//   const sitterId = req.params.id;
-
-//   try {
-//     const { data, error } = await supabase
-//       .from("sitters")
-//       .select("sitters.*, owner.*, comments.content")
-//       .eq("id", sitterId)
-//       .join(
-//         {
-//           table: "owners",
-//           on: "sitters.id = owners.id",
-//         },
-//         {
-//           table: "comments",
-//           on: "owners.id = comments.id",
-//         }
-//       );
-
-//     if (error) {
-//       console.error("Error fetching sitter details:", error);
-//       return res.status(500).json({ error: "Internal Server Error" });
-//     }
-
-//     res.json(data);
-//   } catch (error) {
-//     console.error("Error fetching sitter details:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
 sittersRouter.get("/", async (req, res) => {
   const experienceRange = req.query.experience;
   const fullName = req.query.full_name;
@@ -87,7 +42,7 @@ sittersRouter.get("/", async (req, res) => {
   const rabbit = req.query.rabbit === "true";
 
   try {
-    let query = supabase.from("sitters").select("*");
+    let query = supabase.from("sitters").select("*").eq("is_active", true);
 
     if (experienceRange) {
       let [minExp, maxExp] = experienceRange.split("-");
