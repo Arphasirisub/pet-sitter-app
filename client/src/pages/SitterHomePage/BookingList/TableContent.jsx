@@ -65,14 +65,14 @@ function CustomizedTables() {
     try {
       console.log(param.id);
       const result = await axios.get(
-        `http://localhost:4000/bookings/sitters/${param.id}`
+        `http://localhost:4000/bookings/${param.id}`
       );
 
-      setBookingHistory(result.data.data.data);
+      setBookingHistory(result.data);
 
       console.log(result);
     } catch (error) {
-      console.error("Error fetching data:", error.message);
+      console.log(error);
     }
   };
 
@@ -94,7 +94,7 @@ function CustomizedTables() {
         </TableHead>
         <TableBody>
           {bookingHistory.map((row) => (
-            <StyledTableRow key={row.full_name}>
+            <StyledTableRow key={row.owners.full_name}>
               <StyledTableCell component="th" scope="row">
                 {row.owners.full_name}
               </StyledTableCell>
