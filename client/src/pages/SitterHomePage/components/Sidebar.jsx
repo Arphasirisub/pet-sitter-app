@@ -5,7 +5,7 @@ import {
   containerSidebarStyle,
   sectionLogoStyle,
   fontSidebarStyle,
-  sidebarButtonStyle,
+  sidebarStyle,
   sectionLogoutStyle,
 } from "./SidebarStyle";
 
@@ -20,15 +20,13 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
   return (
     <div className="container_sidebar" css={containerSidebarStyle}>
       <div className="section__logo" css={sectionLogoStyle}>
-        <div className="logo">
-          <img src="/src/PublicPicture/logositter.png" alt="Logo" width="140" />
-        </div>
+        <img src="/src/PublicPicture/logositter.png" alt="Logo" width="140" />
       </div>
 
       <div className="section__sidebar-button">
         <div
           className="sidebar"
-          css={sidebarButtonStyle}
+          css={sidebarStyle}
           onClick={() => {
             setActiveTap("pet-sitter-profile");
           }}
@@ -50,7 +48,7 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
 
         <div
           className="sidebar"
-          css={sidebarButtonStyle}
+          css={sidebarStyle}
           onClick={() => {
             setActiveTap("booking-list");
           }}
@@ -75,7 +73,7 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
 
         <div
           className="sidebar"
-          css={sidebarButtonStyle}
+          css={sidebarStyle}
           onClick={() => {
             setActiveTap("payout-option");
           }}

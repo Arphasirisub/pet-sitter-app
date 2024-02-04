@@ -13,9 +13,8 @@ export const containerSidebarStyle = css`
 `;
 
 export const sectionLogoStyle = css`
-  padding: 24px 80px 40px 24px;
+  padding: 24px 40px 40px 0px;
   background-color: #fafafb;
-  text-align: center;
 `;
 
 export const fontSidebarStyle = css`
@@ -29,7 +28,7 @@ export const fontSidebarStyle = css`
   width: 152px;
 `;
 
-export const sidebarButtonStyle = css`
+export const sidebarStyle = css`
   background-color: #fafafb;
   border: none;
   cursor: pointer;
