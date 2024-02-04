@@ -238,7 +238,7 @@ export const searchButton = css`
   gap: 8px;
 `;
 
-export const containerStyle = css`
+export const containerHeaderStyle = css`
   width: 100%;
   height: 820px;
   display: flex;
@@ -256,6 +256,7 @@ export const sectionLogoStyle = css`
 export const logoScale = css`
   width: 428px;
   height: 441;
+  position: relative;
 `;
 
 export const detailScale = css`
@@ -300,4 +301,70 @@ export const checkBoxStyle = css`
   height: 72px;
   display: flex;
   align-items: center;
+`;
+
+export const catFootStyle = css`
+  width: 163px;
+  height: 169px;
+  position: absolute;
+  left: 230px;
+  top: -30px;
+`;
+
+export const pieceCircleStyle = css`
+  width: 117.5px;
+  height: 117.5px;
+  position: absolute;
+  left: 67px;
+  top: 70px;
+`;
+
+export const messageImgStyle = css`
+  width: 79px;
+  height: 44px;
+  position: absolute;
+  left: 160.58px;
+  top: 160px;
+`;
+
+export const catCircleStyle = css`
+  width: 235px;
+  height: 235px;
+  position: absolute;
+  left: 130px;
+  top: 170.58px;
+  z-index: -1;
+`;
+
+export const largeOrangeStarStyle = css`
+  width: 159.89px;
+  height: 155.88px;
+  position: absolute;
+  left: 11.05px;
+  top: -10px;
+`;
+
+export const dogCircleStyle = css`
+  width: 235px;
+  height: 235px;
+  position: absolute;
+  left: 95px;
+  top: 80px;
+`;
+
+export const grayCirclrStyle = css`
+  width: 67px;
+  height: 67px;
+  position: absolute;
+  left: 61px;
+  top: 250px;
+  z-index: -1;
+`;
+
+export const halfGreenCircleStyle = css`
+  width: 229px;
+  height: 114.5px;
+  position: absolute;
+  left: 37px;
+  top: 306px;
 `;

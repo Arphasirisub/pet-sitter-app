@@ -32,3 +32,29 @@ export const cardContentText = css`
   font-size: 24px;
   text-align: center;
 `;
+
+export const containerContentStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  width: 100%;
+`;
+
+export const sectionCardStyle = css`
+  display: flex;
+  justify-content: space-around;
+  width: 1280px;
+  height: 410px;
+  text-align: center;
+`;
+
+export const cardStyle = css`
+  text-align: center;
+  width: 368px;
+`;
+
+export const detailDescriptionStyle = css`
+  width: 468px;
+  height: 600px;
+`;

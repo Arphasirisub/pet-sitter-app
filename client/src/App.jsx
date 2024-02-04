@@ -9,6 +9,16 @@ import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 
 function App() {
+  const [searchData, setSearchData] = useState({
+    experience: "",
+    searchInput: "",
+    dog: false,
+    cat: false,
+    bird: false,
+    rabbit: false,
+    rating: 0,
+  });
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />

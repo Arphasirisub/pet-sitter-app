@@ -14,7 +14,7 @@ function OwnerHomePage() {
     <div
       css={css`
         width: 100%;
-        height: 3483px;
+        /* height: 3483px; */
       `}
     >
       <Navbar />
