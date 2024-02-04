@@ -9,30 +9,49 @@ import { SignUpLink } from "./components/SignUpLink";
 import axios from "axios";
 import AuthBackground from "../../public-components/AuthBackground";
 import { useAuth } from "../../contexts/authentication";
+import CircularProgress from "@mui/material/CircularProgress";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
-function LoginPage({ setToken, token }) {
+function LoginPage() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const { login, state, setState } = useAuth();
+  const [formData, setFormData] = useState(() => {
+    const storedIsRemember = localStorage.getItem("isRemember");
+    const storedEmail = localStorage.getItem("email");
+
+    return {
+      email: storedEmail || "",
+      password: "",
+      isRemember: storedIsRemember === "true",
+    };
   });
-
-  const { login } = useAuth();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    login({
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await login({
       email: formData.email,
       password: formData.password,
+      isRemember: formData.isRemember,
     });
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox" && name === "isRemember") {
+      localStorage.setItem("isRemember", checked);
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    console.log(formData);
   };
 
   const pageLayout = css`
@@ -48,20 +67,94 @@ function LoginPage({ setToken, token }) {
   const formLayout = css`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
     width: 30%;
   `;
 
+  const modalStlye = css`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+
+    box-shadow: 24px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+  `;
+
   return (
-    <div css={pageLayout}>
-      <Header />
-      <form css={formLayout} onSubmit={handleSubmit}>
-        <InputBox formData={formData} handleInputChange={handleInputChange} />
-      </form>
-      <AlternativeLogin />
-      <SignUpLink navigate={navigate} />
-      <AuthBackground />
-    </div>
+    <>
+      {/* page */}
+
+      <div css={pageLayout}>
+        <Header />
+        {state.isLoading ? (
+          <CircularProgress size={50} color="primary" />
+        ) : (
+          <>
+            <form css={formLayout} onSubmit={handleSubmit}>
+              <InputBox
+                formData={formData}
+                handleInputChange={handleInputChange}
+              />
+            </form>
+            <AlternativeLogin />
+          </>
+        )}
+
+        <SignUpLink navigate={navigate} />
+        <AuthBackground />
+      </div>
+
+      {/* modal */}
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={state.isSignInError}
+        onClose={() => {
+          setState({ ...state, isSignInError: false });
+          setFormData({ ...formData, password: "" });
+        }}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={state.isSignInError}>
+          <Box css={modalStlye} sx={{ minHeight: 150 }}>
+            {" "}
+            {/* Set a minimum height */}
+            <Typography id="transition-modal-title" variant="h6" component="h2">
+              Login Failed
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Your email or password is incorrect. Please try again.
+            </Typography>
+            <Divider sx={{ my: 2, backgroundColor: "red", height: 3 }} />
+            <Button
+              onClick={() => {
+                setState({ ...state, isSignInError: false });
+                setFormData({ ...formData, password: "" });
+              }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
+    </>
   );
 }
 

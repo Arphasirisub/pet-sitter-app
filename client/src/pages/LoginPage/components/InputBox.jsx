@@ -1,21 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import {
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 export function InputBox({ handleInputChange, formData }) {
   return (
     <>
-      {" "}
       <TextField
         label="Email"
         type="email"
@@ -24,6 +16,9 @@ export function InputBox({ handleInputChange, formData }) {
         value={formData.email}
         onChange={handleInputChange}
         required
+        css={css`
+          width: 100%;
+        `}
       />
       <TextField
         label="Password"
@@ -33,15 +28,29 @@ export function InputBox({ handleInputChange, formData }) {
         value={formData.password}
         onChange={handleInputChange}
         required
+        css={css`
+          width: 100%;
+        `}
       />
       <div
         css={css`
           display: flex;
           justify-content: space-between;
           text-align: center;
+          width: 100%;
         `}
       >
-        <FormControlLabel control={<Checkbox />} label="Remember?" />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formData.isRemember}
+              onChange={handleInputChange}
+              name="isRemember"
+              type="checkbox"
+            />
+          }
+          label="Remember Me"
+        />
         <p
           css={css`
             color: rgb(255, 112, 55);
@@ -67,6 +76,7 @@ export function InputBox({ handleInputChange, formData }) {
           &:hover {
             cursor: pointer;
           }
+          width: 100%;
         `}
       >
         Login

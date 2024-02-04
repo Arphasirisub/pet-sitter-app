@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -12,68 +12,115 @@ function AuthProvider(props) {
   jwtInterceptor();
 
   const [state, setState] = useState({
-    loading: null,
-    error: null,
+    isLoading: false,
+    isError: false,
+    isSignInError: false,
+    isSignUpError: null,
     user: null,
+    isAuthenticated: Boolean(localStorage.getItem("token")),
   });
 
   const register = async (data) => {
-    // 🐨 Todo: Exercise #2
-    //  ให้เขียน Logic ของ Function `register` ตรงนี้
-    //  Function register ทำหน้าที่สร้าง Request ไปที่ API POST /register
-    //  ที่สร้างไว้ด้านบนพร้อมกับ Body ที่กำหนดไว้ในตารางที่ออกแบบไว้
+    try {
+      setState({ ...state, isLoading: true });
 
-    await axios.post("http://localhost:4000/authentication/register", data);
-    navigate("/login");
+      await axios.post("http://localhost:4000/authentication/register", data);
+
+      setState({ ...state, isLoading: false, isSignUpError: false });
+    } catch (error) {
+      console.error("Registration failed:", error);
+      setState({ ...state, isLoading: false, isSignUpError: true });
+    }
   };
 
   const login = async (data) => {
-    // 🐨 Todo: Exercise #4
-    //  ให้เขียน Logic ของ Function `login` ตรงนี้
-    //  Function `login` ทำหน้าที่สร้าง Request ไปที่ API POST /login
-    //  ที่สร้างไว้ด้านบนพร้อมกับ Body ที่กำหนดไว้ในตารางที่ออกแบบไว้
-    console.log(data);
-    const response = await axios.post(
-      "http://localhost:4000/authentication/login",
-      data
-    );
+    try {
+      setState({ ...state, isLoading: true });
 
-    const token = response.data.token;
-    const role = response.data.role;
+      const response = await axios.post(
+        "http://localhost:4000/authentication/login",
+        data
+      );
+      console.log(data);
 
-    // Store the token and role separately in local storage
-    localStorage.setItem("token", token);
+      const token = response.data.token;
 
-    console.log(localStorage);
+      localStorage.setItem("token", token);
 
-    const userDataFromToken = jwtDecode(token);
-    console.log(userDataFromToken);
+      if (data.isRemember) {
+        localStorage.setItem("isRemember", "true");
+        localStorage.setItem("email", data.email);
+      } else {
+        localStorage.removeItem("isRemember");
+        localStorage.removeItem("email");
+      }
 
-    setState({ ...state, user: userDataFromToken });
-
-    // Set the token in the state
-
-    // const userDataFromToken = jwtDecode(token);
-    console.log(state);
-    // setState({ ...state, user: userDataFromToken });
-    navigate("/");
+      const userDataFromToken = jwtDecode(token);
+      setState({
+        ...state,
+        user: userDataFromToken,
+        isAuthenticated: true,
+        isLoading: false,
+        isError: false,
+      });
+      console.log(state);
+      navigate("/");
+    } catch (error) {
+      setState({
+        ...state,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        isSignInError: true,
+      });
+    }
   };
 
   const logout = () => {
-    // 🐨 Todo: Exercise #7
-    //  ให้เขียน Logic ของ Function `logout` ตรงนี้
-    //  Function logout ทำหน้าที่ในการลบ JWT Token ออกจาก Local Storage
     localStorage.removeItem("token");
     setState({ ...state, user: null });
     console.log(localStorage);
     navigate("/login");
   };
 
-  const isAuthenticated = Boolean(localStorage.getItem("token"));
+  const checkToken = () => {
+    try {
+      const storedToken = localStorage.getItem("token");
+
+      if (!storedToken) {
+        setState({
+          ...state,
+          isAuthenticated: false,
+          isLoading: false,
+          isError: false,
+        });
+        return;
+      }
+
+      const userDataFromToken = jwtDecode(storedToken);
+
+      setState({
+        ...state,
+        user: userDataFromToken,
+        isAuthenticated: true,
+        isLoading: false,
+        isError: false,
+      });
+    } catch (error) {
+      console.error("Error decoding token:", error);
+
+      setState({
+        ...state,
+        isAuthenticated: false,
+        isLoading: false,
+        isError: true,
+      });
+    }
+  };
 
   return (
     <AuthContext.Provider
-      value={{ state, login, logout, register, isAuthenticated }}
+      value={{ state, setState, checkToken, login, logout, register }}
     >
       {props.children}
     </AuthContext.Provider>

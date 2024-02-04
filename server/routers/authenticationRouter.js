@@ -2,64 +2,9 @@ import { Router } from "express";
 import supabase from "../utills/supabase.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-
+import { protect } from "../middlewares/protect.js";
 export const authenticationRouter = Router();
 dotenv.config();
-authenticationRouter.post("/register", async (req, res) => {
-  try {
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-      {
-        email: req.body.email,
-        password: req.body.password,
-      }
-    );
-
-    if (signUpError) {
-      console.error("Sign-up error:", signUpError.message);
-      return res
-        .status(400)
-        .json({ error: "Sign-up error", message: signUpError.message });
-    }
-
-    const userId = signUpData.user.id;
-    let tableName;
-
-    if (req.body.role === "pet_sitter") {
-      tableName = "sitters";
-    } else {
-      tableName = "owners";
-    }
-
-    const { data: insertData, error: insertError } = await supabase
-      .from(tableName)
-      .insert([
-        {
-          id: userId,
-          name: req.body.name,
-          email: req.body.email,
-          phone: req.body.phone,
-          password: req.body.password,
-          role: req.body.role,
-          profile_img: req.body.profile_img,
-        },
-      ]);
-
-    if (insertError) {
-      console.error(
-        `Error inserting data into '${tableName}':`,
-        insertError.message
-      );
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-
-    res.status(200).json({
-      message: "Registration successful",
-    });
-  } catch (error) {
-    console.error("Unhandled error:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
 
 authenticationRouter.post("/login", async (req, res) => {
   try {
@@ -70,8 +15,9 @@ authenticationRouter.post("/login", async (req, res) => {
 
     if (error) {
       console.error("Login error:", error.message);
-      return res.status(401).json({
-        error: "Authentication failed",
+
+      // Return a 200 status with a message
+      return res.status(400).json({
         message: "Invalid email or password",
       });
     }
@@ -79,13 +25,13 @@ authenticationRouter.post("/login", async (req, res) => {
     // Fetch user data from both "sitters" and "owners" tables
     const { data: sitterData, error: sitterError } = await supabase
       .from("sitters")
-      .select("id, email, role, name, profile_img")
+      .select("id, email, role, full_name, profile_img")
       .eq("id", data.user.id)
       .single();
 
     const { data: ownerData, error: ownerError } = await supabase
       .from("owners")
-      .select("id, email, role, name, profile_img")
+      .select("id, email, role, full_name, profile_img")
       .eq("id", data.user.id)
       .single();
 
@@ -110,7 +56,7 @@ authenticationRouter.post("/login", async (req, res) => {
         id: data.user.id,
         email: data.user.email,
         role: userData.role,
-        name: userData.name,
+        name: userData.full_name,
         profile_img: userData.profile_img,
       },
       process.env.SECRET_KEY,
@@ -123,12 +69,65 @@ authenticationRouter.post("/login", async (req, res) => {
       message: "Login successful",
     };
 
-    res.status(200).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    console.error("Unhandled error:", error.message);
-    res.status(500).json({
+    console.error("Unhandled error:", error);
+    return res.status(500).json({
       error: "Internal Server Error",
       message: "Unexpected error during login",
     });
+  }
+});
+
+authenticationRouter.post("/register", async (req, res) => {
+  try {
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email: req.body.email,
+        password: req.body.password,
+      }
+    );
+
+    if (signUpError) {
+      console.error("Sign-up error:", signUpError.message);
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const userId = signUpData.user.id;
+    let tableName;
+
+    if (req.body.role === "pet_sitter") {
+      tableName = "sitters";
+    } else {
+      tableName = "owners";
+    }
+
+    const { data: insertData, error: insertError } = await supabase
+      .from(tableName)
+      .insert([
+        {
+          id: userId,
+          full_name: req.body.name,
+          email: req.body.email,
+          phone: req.body.phone,
+          password: req.body.password,
+          role: req.body.role,
+        },
+      ]);
+
+    if (insertError) {
+      console.error(
+        `Error inserting data into '${tableName}':`,
+        insertError.message
+      );
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    res.status(200).json({
+      message: "Registration successful",
+    });
+  } catch (error) {
+    console.error("Unhandled error:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
