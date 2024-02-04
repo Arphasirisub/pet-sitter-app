@@ -15,6 +15,7 @@ export function InputBox({ handleInputChange, formData }) {
         name="email"
         value={formData.email}
         onChange={handleInputChange}
+        autoComplete="username"
         required
         css={css`
           width: 100%;
@@ -27,11 +28,13 @@ export function InputBox({ handleInputChange, formData }) {
         name="password"
         value={formData.password}
         onChange={handleInputChange}
+        autoComplete="current-password"
         required
         css={css`
           width: 100%;
         `}
       />
+
       <div
         css={css`
           display: flex;

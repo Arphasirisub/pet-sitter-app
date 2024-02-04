@@ -2,8 +2,10 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { useAuth } from "../../../contexts/authentication";
 
 const Sidebar = ({ activeTap, setActiveTap }) => {
+  const { logout } = useAuth();
   const sidebarStyle = css`
     background-color: #fafafb;
     display: flex;
@@ -97,7 +99,12 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
         </div>
       </div>
 
-      <div css={logoutStyle}>
+      <div
+        css={logoutStyle}
+        onClick={() => {
+          logout();
+        }}
+      >
         <div className="logout">
           <img src="/src/PublicPicture/logout.png" alt="logout" width="240" />
         </div>

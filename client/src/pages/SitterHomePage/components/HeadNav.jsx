@@ -50,7 +50,7 @@ const TopBar = () => {
     try {
       console.log(param.id);
       const result = await axios.get(
-        `http://localhost:4000/sitter/${param.id}`
+        `http://localhost:4000/sitters/${param.id}`
       );
 
       setImg(result.data);

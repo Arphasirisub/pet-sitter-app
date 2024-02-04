@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 import jwtInterceptor from "../utils/jwtInterceptor";
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
+const useAuth = () => useContext(AuthContext); // this is a hook that consume AuthContext
+//In React, when you declare something outside of a component (function AuthProvider(){}),
+//its scope extends beyond the specific rendering of components.
+//The lifespan of entities declared outside components, such as variables, functions,
+//or hooks, is not tied to the lifecycle of a specific component or rendering.
+
+//The AuthProvider and its related context, along with the useAuth hook
+//(if declared outside AuthProvider), will exist beyond this specific rendering.
+//They persist as long as your application is running.
+
+//This ability to declare and use entities at a broader scope is beneficial for
+//creating modular and reusable code. It allows you to organize your logic,
+//state management, and utility functions in a way that promotes maintainability
+//and code separation.
 
 function AuthProvider(props) {
   const navigate = useNavigate();
-  jwtInterceptor();
+  // jwtInterceptor();
 
   const [state, setState] = useState({
     isLoading: false,
@@ -64,7 +78,11 @@ function AuthProvider(props) {
         isError: false,
       });
       console.log(state);
-      navigate("/");
+      if (userDataFromToken.role === "pet_owner") {
+        navigate("/");
+      } else {
+        navigate(`/sitter/${userDataFromToken.id}`);
+      }
     } catch (error) {
       setState({
         ...state,
@@ -126,8 +144,5 @@ function AuthProvider(props) {
     </AuthContext.Provider>
   );
 }
-
-// this is a hook that consume AuthContext
-const useAuth = () => React.useContext(AuthContext);
 
 export { AuthProvider, useAuth };

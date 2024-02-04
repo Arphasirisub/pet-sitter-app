@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { ownersRouter } from "./routers/ownerRouter.js";
 import { authenticationRouter } from "./routers/authenticationRouter.js";
 import { bookingsRouter } from "./routers/bookingsRouter.js";
-import { sittersRouter } from "./routers/sitterRouter.js";
+import { sittersRouter } from "./routers/sittersRouter.js";
 
 function init() {
   dotenv.config();

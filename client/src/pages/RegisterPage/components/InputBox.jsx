@@ -43,6 +43,7 @@ function InputBox({ formData, handleSubmit, handleInputChange, formErrors }) {
           error={!!formErrors.phone}
           helperText={formErrors.phone}
         />
+
         <TextField
           label="Password"
           type="password"
@@ -52,6 +53,7 @@ function InputBox({ formData, handleSubmit, handleInputChange, formErrors }) {
           onChange={handleInputChange}
           error={!!formErrors.password}
           helperText={formErrors.password}
+          autoComplete="current-password"
         />
 
         <button
