@@ -12,11 +12,6 @@ bookingsRouter.get("/:id", async (req, res) => {
       .select("*,owners(full_name), pet_bookings:pet_booking(booking_id) ")
       .eq("sitter_id", id);
 
-    const { data: bookings2, error: bookingsError2 } = await supabase
-      .from("bookings")
-      .select("*");
-    console.log(bookings2);
-
     if (bookingsError) {
       console.error("Error fetching bookings data:", bookingsError.message);
       return res.status(500).json({ error: "Internal Server Error" });

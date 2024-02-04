@@ -56,18 +56,6 @@ function Navbar() {
           }
         `}
       >
-        <img
-          css={css`
-            width: 136.1px;
-            height: 40px;
-            cursor: pointer;
-          `}
-          src={sitterlogo}
-          alt="sitterlogo"
-          onClick={() => {
-            navigate("/");
-          }}
-        />
         <img src={sitterlogo} alt="Sitter Logo" />
       </div>
       <div
