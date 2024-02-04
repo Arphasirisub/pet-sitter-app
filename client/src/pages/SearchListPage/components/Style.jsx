@@ -121,6 +121,7 @@ export const fiveRatingbox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   width: 140px;
   height: 30px;
   border-radius: 8px;
@@ -128,14 +129,8 @@ export const fiveRatingbox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
-  }
-
   &:focus {
-    background-color: rgba(160, 160, 160, 0.5);
-    border: 1px solid rgba(162, 161, 161, 0.5);
+    border: 1px solid #ff7038;
   }
 `;
 
@@ -143,6 +138,7 @@ export const fourRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -150,14 +146,8 @@ export const fourRatingBox = css`
   width: 120px;
   height: 30px;
 
-  &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
-  }
-
   &:focus {
-    background-color: rgba(160, 160, 160, 0.5);
-    border: 1px solid rgba(162, 161, 161, 0.5);
+    border: 1px solid #ff7038;
   }
 `;
 
@@ -165,6 +155,7 @@ export const threeRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   width: 95px;
   height: 30px;
   border-radius: 8px;
@@ -172,14 +163,8 @@ export const threeRatingBox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
-  }
-
   &:focus {
-    background-color: rgba(160, 160, 160, 0.5);
-    border: 1px solid rgba(162, 161, 161, 0.5);
+    border: 1px solid #ff7038;
   }
 `;
 
@@ -187,6 +172,7 @@ export const twoRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -194,14 +180,8 @@ export const twoRatingBox = css`
   width: 70px;
   height: 30px;
 
-  &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
-  }
-
   &:focus {
-    background-color: rgba(160, 160, 160, 0.5);
-    border: 1px solid rgba(162, 161, 161, 0.5);
+    border: 1px solid #ff7038;
   }
 `;
 
@@ -209,6 +189,7 @@ export const oneRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -216,16 +197,11 @@ export const oneRatingBox = css`
   width: 50px;
   height: 30px;
 
-  &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
-  }
-
   &:focus {
-    background-color: rgba(160, 160, 160, 0.5);
-    border: 1px solid rgba(162, 161, 161, 0.5);
+    border: 1px solid #ff7038;
   }
 `;
+
 export const flip = css`
   display: flex;
   width: 100px;
@@ -411,3 +387,18 @@ export const imageGalleryStyle = css`
   height: 170px;
   border-radius: 18px;
 `;
+
+export const checkboxStyles = {
+  color: "#c8ccdb", // สีเทาเมื่อไม่ถูกเลือก
+  "&.Mui-checked": {
+    color: "#ff7038", // สีส้มเมื่อถูกเลือก
+  },
+  "&:hover": {
+    color: "#ffb899", // สีส้มเข้มเมื่อ hover
+  },
+  "&.Mui-focusVisible": {
+    "&.Mui-checked": {
+      color: "#ff7038", // ไม่เปลี่ยนสีเมื่อ checkbox ถูกเลือกและมีการ focus
+    },
+  },
+};

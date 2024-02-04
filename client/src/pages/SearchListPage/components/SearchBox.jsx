@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 import Checkbox from "@mui/material/Checkbox";
 import searchIcon from "../../../PublicPicture/searchIcon.png";
 import { useEffect } from "react";
-// import useSearchData from "./SearchDataFunc.jsx";
 import {
   FiveStar,
   FourStar,
@@ -24,6 +23,7 @@ import {
   clearButton,
   searchButton,
   sticky,
+  checkboxStyles
 } from "./Style.jsx";
 import axios from "axios";
 
@@ -34,7 +34,6 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
     const result = await axios(
       `http://localhost:4000/sitters?full_name=${searchData.searchInput}&experience=${searchData.experience}&rating=${searchData.rating}&dog=${searchData.dog}&cat=${searchData.cat}&bird=${searchData.bird}&rabbit=${searchData.rabbit}`
     );
-    console.log(result);
     setSitterData(result.data.data);
   };
 
@@ -54,6 +53,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
       rabbit: false,
       rating: 0,
     });
+    getInfo();
   };
 
   const handleStateChange = (fieldName, value) => {
@@ -64,7 +64,6 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
   };
 
   useEffect(() => {
-    console.log(searchData);
     getInfo();
   }, []);
 
@@ -94,6 +93,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               onChange={(e) => {
                 handleStateChange("dog", e.target.checked);
               }}
+              sx={checkboxStyles}
             />
             <label css={checkBoxText}>Dog</label>
             <Checkbox
@@ -103,6 +103,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               onChange={(e) => {
                 handleStateChange("cat", e.target.checked);
               }}
+              sx={checkboxStyles}
             />
             <label css={checkBoxText}>Cat</label>
             <Checkbox
@@ -112,6 +113,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               onChange={(e) => {
                 handleStateChange("bird", e.target.checked);
               }}
+              sx={checkboxStyles}
             />
             <label css={checkBoxText}>Bird</label>
             <Checkbox
@@ -121,6 +123,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
               onChange={(e) => {
                 handleStateChange("rabbit", e.target.checked);
               }}
+              sx={checkboxStyles}
             />
             <label css={checkBoxText}>Rabbit</label>
           </div>
