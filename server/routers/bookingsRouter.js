@@ -24,9 +24,7 @@ bookingsRouter.get("/:id", async (req, res) => {
     // Fetch bookings data with an additional column "pets" for the count
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select(
-        "*,owners(full_name), pet_bookings:pet_booking(booking_id) "
-      )
+      .select("*,owners(full_name), pet_bookings:pet_booking(booking_id) ")
       .eq("sitter_id", id);
 
     if (bookingsError) {
@@ -56,13 +54,13 @@ bookingsRouter.get("/:id", async (req, res) => {
       const formattedStopDate = new Date(booking.booked_stop).toLocaleString(
         "en-US",
         {
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            hour12: true,
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
         }
-    );
+      );
       const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
 
       // Calculate duration

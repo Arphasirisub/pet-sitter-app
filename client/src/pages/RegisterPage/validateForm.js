@@ -2,10 +2,13 @@ const validateForm = (formData, setFormErrors, formErrors) => {
   let valid = true;
   const newErrors = { ...formErrors };
 
-  // Validate name
-  const nameRegex = /^.{6,20}$/;
-  if (!nameRegex.test(formData.name)) {
-    newErrors.name = "Name must be 6-20 characters long and not repeated";
+  // Validate name length
+  if (formData.name.length < 6 || formData.name.length > 20) {
+    newErrors.name = "Name must be between 6 and 20 characters long";
+    valid = false;
+  } else if (!/^[a-zA-Z ]+$/.test(formData.name)) {
+    // Check if name contains only letters and spaces
+    newErrors.name = "Name should only contain letters and spaces";
     valid = false;
   } else {
     newErrors.name = "";
