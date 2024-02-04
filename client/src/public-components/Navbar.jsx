@@ -82,6 +82,17 @@ function Navbar() {
               open={open}
               onClose={handleClose}
               TransitionComponent={Fade}
+              // PaperProps={{
+              //   component: "div", // Use a div container for the Paper
+              //   style: {
+              //     width: "186px",
+              //     height: "148px",
+              //     overflow: "hidden", // Prevent scrolling
+              //   },
+              // }}
+              // MenuProps={{
+              //   disableScrollLock: true, // Disable the Scroll Lock
+              // }}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>Your Pet</MenuItem>
