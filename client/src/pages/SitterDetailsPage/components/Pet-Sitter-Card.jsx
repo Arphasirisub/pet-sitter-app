@@ -2,17 +2,16 @@
 import { css } from "@emotion/react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import RoomSharpIcon from "@mui/icons-material/RoomSharp";
-import Chip from "@mui/material/Chip";
 import Rating from "@mui/material/Rating";
 import BookNowModal from "./Pet-Sitter-Card-Book-Now";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Avatar } from "@mui/material";
+// import Chip from "@mui/material/Chip";
 
 const PetSitterCard = () => {
   const petTypeIcon = css`
@@ -84,13 +83,26 @@ const PetSitterCard = () => {
                 padding: 2,
               }}
             >
-              <CardMedia
-                component="img"
-                image={sitterData1.profile_img}
-                alt={sitterData1.full_name}
-              />
+              <Stack
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Avatar
+                  alt={sitterData1.full_name}
+                  src={sitterData1.profile_img}
+                  sx={{
+                    width: 140,
+                    height: 140,
+                  }}
+                />
+              </Stack>
 
-              <CardContent>
+              <CardContent
+                sx={{
+                  marginBottom: 5,
+                }}
+              >
                 <Typography
                   className="pet-sitter-name"
                   gutterBottom
@@ -177,7 +189,22 @@ const PetSitterCard = () => {
                       </div>
                     );
                   })}
-                  {/* <Chip
+                </Stack>
+              </CardContent>
+
+              <BookNowModal />
+            </Card>
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Stack>
+    </>
+  );
+};
+export default PetSitterCard;
+{
+  /* <Chip
                     label="Dog"
                     variant="filled"
                     sx={{
@@ -203,29 +230,5 @@ const PetSitterCard = () => {
                       color: "#FF986F",
                       backgroundColor: "#FFF5EC",
                     }}
-                  /> */}
-                </Stack>
-              </CardContent>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#FF7037",
-                  width: "330px",
-                  borderRadius: "100",
-                }}
-              >Book Now</Button>
-              <BookNowModal />
-            </Card>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </Stack>
-    </>
-  );
-};
-export default PetSitterCard;
-
-// ) : (
-//   <p>Loading...</p>
-// )}
+                  /> */
+}
