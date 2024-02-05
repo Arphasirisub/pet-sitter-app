@@ -8,7 +8,7 @@ export const containerSidebarStyle = css`
   align-items: center;
   width: 240px;
   height: 100vh;
-  border-right: 1px solid #dcdfed;
+  border-right: 1px solid rgba(220, 223, 237, 1);
   padding: 16px 0px 16px 0px;
 `;
 
@@ -19,7 +19,6 @@ export const sectionLogoStyle = css`
 
 export const fontSidebarStyle = css`
   margin-left: 10px;
-  color: var(--gray-500, #5b5d6f);
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -39,8 +38,36 @@ export const sidebarStyle = css`
   width: 240px;
   height: 56px;
   transition: background-color 0.3s;
+  background-color: ${activeTap === "pet-sitter-profile"
+    ? "rgba(255, 241, 236, 1)"
+    : "transparent"};
+  color: ${activeTap === "pet-sitter-profile"
+    ? "rgba(255, 112, 55, 1)"
+    : "rgba(91, 93, 111, 1)"};
+
+  &:hover {
+    background-color: #eeeeee;
+  }
 `;
 
+export const logoutStyle = css`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  width: 220px;
+  margin-left: 20px;
+  justify-content: flex-start;
+`;
+
+export const fontLogoutStyle = css`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: rgba(91, 93, 111, 1);
+`;
 export const sectionLogoutStyle = css`
+  width: 240px;
   margin-top: auto;
+  border-top: 1px solid rgba(220, 223, 237, 1);
 `;
