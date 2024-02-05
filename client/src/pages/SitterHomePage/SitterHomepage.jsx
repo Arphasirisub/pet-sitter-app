@@ -7,14 +7,13 @@ import { useState } from "react";
 import DynamicCompenents from "./components/DynamicComonents";
 
 const appStyle = css`
-  display: flex;
   height: 100vh;
 `;
 
 const contentStyle = css`
   display: flex;
-  flex: 1;
-  position: relative;
+
+  /* position: relative; */
 `;
 
 const topBarStyle = css`
