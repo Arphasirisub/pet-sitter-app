@@ -27,7 +27,7 @@ export const fontSidebarStyle = css`
   width: 152px;
 `;
 
-export const sidebarStyle = css`
+export const sidebarStyle = (theme) => css`
   background-color: #fafafb;
   border: none;
   cursor: pointer;
@@ -38,18 +38,11 @@ export const sidebarStyle = css`
   width: 240px;
   height: 56px;
   transition: background-color 0.3s;
-  background-color: ${activeTap === "pet-sitter-profile"
-    ? "rgba(255, 241, 236, 1)"
-    : "transparent"};
-  color: ${activeTap === "pet-sitter-profile"
-    ? "rgba(255, 112, 55, 1)"
-    : "rgba(91, 93, 111, 1)"};
 
   &:hover {
     background-color: #eeeeee;
   }
 `;
-
 export const logoutStyle = css`
   display: flex;
   align-items: center;
