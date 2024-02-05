@@ -1,7 +1,7 @@
 import { Stack, Typography, Avatar } from "@mui/material";
 import Rating from "@mui/material/Rating";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const PetSitterReviewBox = () => {
@@ -36,6 +36,9 @@ const PetSitterReviewBox = () => {
               key={index}
               className="children-review-box"
               direction="row"
+              padding={3}
+              marginTop={5}
+              marginBottom={5}
               spacing={2}
             >
               {/* Display comment details */}
@@ -45,14 +48,14 @@ const PetSitterReviewBox = () => {
                     <Avatar alt="" src="" />
                     <Stack>
                       <Typography variant="button" display="block" gutterBottom>
-                        1
+                        name
                       </Typography>
                       <Typography
                         variant="caption"
                         display="block"
                         gutterBottom
                       >
-                        2
+                        date
                       </Typography>
                     </Stack>
                   </Stack>

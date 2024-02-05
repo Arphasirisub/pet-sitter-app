@@ -6,8 +6,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import Stack from "@mui/material/Stack";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function Carousel() {
@@ -28,14 +28,20 @@ function Carousel() {
     };
 
     fetchData();
-  }, [param.id]); // Add param.id to the dependency array
+  }, [param.id]);
 
+  // const slideImageRange = () => {
+  //   if (sitterData1.image_gallery.length < 3) {
+  //     return sitterData1.image_gallery.length - 1;
+  //   } else {
+  //     return sitterData1.image_gallery.length == 3;
+  //   }
+  // };
   return (
     <>
       {sitterData1 && sitterData1.image_gallery && (
         <Swiper
           slidesPerView={3}
-          spaceBetween={30}
           loop={true}
           pagination={{
             clickable: true,
@@ -44,15 +50,15 @@ function Carousel() {
           modules={[Pagination, Navigation]}
           className="mySwiper"
           css={css`
-            width: 100%;
+            width: 1280px;
           `}
         >
           {sitterData1.image_gallery?.map((item, index) => (
             <SwiperSlide key={index}>
               <Stack className="comment-reviewer" width="80%" spacing={2}>
                 <img
-                  height={480}
-                  width={640}
+                  height={400}
+                  width={400}
                   alt={`image_gallery_${index}`}
                   src={item}
                 />
