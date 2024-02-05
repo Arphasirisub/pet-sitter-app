@@ -2,7 +2,8 @@
 import { css } from "@emotion/react";
 import Checkbox from "@mui/material/Checkbox";
 import searchIcon from "../../../PublicPicture/searchIcon.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSitter } from "../../../contexts/getSitters.jsx";
 import {
   FiveStar,
   FourStar,
@@ -23,24 +24,19 @@ import {
   clearButton,
   searchButton,
   sticky,
-  checkboxStyles
+  checkboxStyles,
 } from "./Style.jsx";
 import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
-  const getInfo = async () => {
-    const result = await axios(
-      `http://localhost:4000/sitters?full_name=${searchData.searchInput}&experience=${searchData.experience}&rating=${searchData.rating}&dog=${searchData.dog}&cat=${searchData.cat}&bird=${searchData.bird}&rabbit=${searchData.rabbit}`
-    );
-    setSitterData(result.data.data);
-  };
+function SearchBox() {
 
+  const { searchResult, setSearchResult, getSitters, searchData,setSearchData } = useSitter();
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(searchData);
-    getInfo();
   };
 
   const handleClearButtonClick = () => {
@@ -53,7 +49,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
       rabbit: false,
       rating: 0,
     });
-    getInfo();
+    getSitters();
   };
 
   const handleStateChange = (fieldName, value) => {
@@ -63,9 +59,10 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
     }));
   };
 
+
   useEffect(() => {
-    getInfo();
-  }, []);
+    getSitters()
+  }, [searchData]);
 
   return (
     <form css={sticky} onSubmit={handleSubmit}>
@@ -81,6 +78,7 @@ function SearchBox({ searchData, setSearchData, setSitterData, sitterData }) {
                 handleStateChange("searchInput", e.target.value);
               }}
             />
+
             <img css={searchIconStyle} src={searchIcon} alt="Search Icon" />
           </div>
 
