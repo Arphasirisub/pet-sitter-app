@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Avatar } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 // import Chip from "@mui/material/Chip";
 
 const PetSitterCard = () => {
@@ -196,39 +197,10 @@ const PetSitterCard = () => {
             </Card>
           </div>
         ) : (
-          <p>Loading...</p>
+          <CircularProgress />
         )}
       </Stack>
     </>
   );
 };
 export default PetSitterCard;
-{
-  /* <Chip
-                    label="Dog"
-                    variant="filled"
-                    sx={{
-                      border: 2,
-                      color: "#1CCD83",
-                      backgroundColor: "#E7FDF4",
-                    }}
-                  />
-                  <Chip
-                    label="Cat"
-                    variant="filled"
-                    sx={{
-                      border: 2,
-                      color: "#FA8AC0",
-                      backgroundColor: "#FFF0F1",
-                    }}
-                  />
-                  <Chip
-                    label="Rabbit"
-                    variant="filled"
-                    sx={{
-                      border: 2,
-                      color: "#FF986F",
-                      backgroundColor: "#FFF5EC",
-                    }}
-                  /> */
-}

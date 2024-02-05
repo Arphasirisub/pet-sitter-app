@@ -9,10 +9,12 @@ import Stack from "@mui/material/Stack";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 function Carousel() {
   const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,16 +32,39 @@ function Carousel() {
     fetchData();
   }, [param.id]);
 
-  // const slideImageRange = () => {
-  //   if (sitterData1.image_gallery.length < 3) {
-  //     return sitterData1.image_gallery.length - 1;
-  //   } else {
-  //     return sitterData1.image_gallery.length == 3;
-  //   }
-  // };
   return (
+    // <>
+    //   {sitterData1 && sitterData1.image_gallery && (
+    //     <Swiper
+    //       slidesPerView={3}
+    //       loop={true}
+    //       pagination={{
+    //         clickable: true,
+    //       }}
+    //       navigation={true}
+    //       modules={[Pagination, Navigation]}
+    //       className="mySwiper"
+    //       css={css`
+    //         width: 1280px;
+    //       `}
+    //     >
+    //       {sitterData1.image_gallery?.map((item, index) => (
+    //         <SwiperSlide key={index}>
+    //           <Stack className="comment-reviewer" width="80%" spacing={2}>
+    //             <img
+    //               height={400}
+    //               width={400}
+    //               alt={`image_gallery_${index}`}
+    //               src={item}
+    //             />
+    //           </Stack>
+    //         </SwiperSlide>
+    //       ))}
+    //     </Swiper>
+    //   )}
+    // </>
     <>
-      {sitterData1 && sitterData1.image_gallery && (
+      {sitterData1 && sitterData1.image_gallery ? (
         <Swiper
           slidesPerView={3}
           loop={true}
@@ -66,6 +91,8 @@ function Carousel() {
             </SwiperSlide>
           ))}
         </Swiper>
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

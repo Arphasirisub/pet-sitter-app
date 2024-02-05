@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const PetSitterDetailIntro = () => {
   const [sitterData1, setSitterData1] = useState(null);
@@ -96,7 +97,7 @@ const PetSitterDetailIntro = () => {
           </Box>
         </Stack>
       ) : (
-        <p>Loading...</p>
+        <CircularProgress />
       )}
     </Stack>
   );
