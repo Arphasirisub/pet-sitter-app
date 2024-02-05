@@ -7,8 +7,8 @@ import PetSitterReviewBox from "./Pet-Sitter-Review-Box";
 import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { averageRatingBox } from "./Style-SitterDetailPage";
 
