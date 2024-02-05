@@ -130,7 +130,7 @@ export const fiveRatingbox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -150,7 +150,7 @@ export const fourRatingBox = css`
   width: 120px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -170,7 +170,7 @@ export const threeRatingBox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -190,7 +190,7 @@ export const twoRatingBox = css`
   width: 70px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -210,7 +210,7 @@ export const oneRatingBox = css`
   width: 50px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -314,7 +314,7 @@ export const sitterInfoBox = css`
   padding: 15px;
   box-shadow: 5px 5px 5px 6px rgba(242, 242, 242, 0.5);
   background-color: white;
-  justify-content:center;
+  justify-content: center;
 `;
 
 export const SitterNameContainer = css`

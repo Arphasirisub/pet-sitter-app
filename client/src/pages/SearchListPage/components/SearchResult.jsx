@@ -37,7 +37,7 @@ function SearchResult() {
       <div css={sitterListCotainer}>
         {searchResult.isLoading ? (
           <div css={sitterInfoBox}>
-            <CircularProgress size={50} color="primary" />
+            <CircularProgress size={50} color="warning" />
           </div>
         ) : (
           searchResult.result &&
@@ -81,7 +81,11 @@ function SearchResult() {
                   </div>
                   <div css={flip}>
                     <div css={starLayout}>
-                      {/* แสดงดาวโดยใช้ greenStar */}
+                      {Array.from({ length: item.rating }, (_, index) => (
+                        <React.Fragment key={index}>
+                          {greenStar || 0}
+                        </React.Fragment>
+                      ))}
                     </div>
                   </div>
                 </div>

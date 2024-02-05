@@ -8,7 +8,7 @@ const useSitter = () => useContext(getSittersContext);
 function SittersProvider(props) {
   const navigate = useNavigate();
 
-  const [searchData, setSearchData] = useState({
+  const [searchInput, setSearchInput] = useState({
     experience: "",
     searchInput: "",
     dog: false,
@@ -30,7 +30,7 @@ function SittersProvider(props) {
       setSearchResult({ ...searchResult, isLoading: true });
       setTimeout(async () => {
         const response = await axios.get(
-          `http://localhost:4000/sitters?full_name=${searchData.searchInput}&experience=${searchData.experience}&rating=${searchData.rating}&dog=${searchData.dog}&cat=${searchData.cat}&bird=${searchData.bird}&rabbit=${searchData.rabbit}`
+          `http://localhost:4000/sitters?full_name=${searchInput.searchInput}&experience=${searchInput.experience}&rating=${searchInput.rating}&dog=${searchInput.dog}&cat=${searchInput.cat}&bird=${searchInput.bird}&rabbit=${searchInput.rabbit}`
         );
         // After the delay, update the search result
         setSearchResult({
@@ -50,8 +50,13 @@ function SittersProvider(props) {
       });
     }
   };
-  
-  
+
+  const handleStateChange = (fieldName, value) => {
+    setSearchInput((prevSearchInput) => ({
+      ...prevSearchInput,
+      [fieldName]: value,
+    }));
+  };
 
   return (
     <getSittersContext.Provider
@@ -59,8 +64,9 @@ function SittersProvider(props) {
         searchResult,
         setSearchResult,
         getSitters,
-        searchData,  // Include 'searchData' in the context for the SearchBox component
-        setSearchData,
+        searchInput, // Include 'searchData' in the context for the SearchBox component
+        setSearchInput,
+        handleStateChange,
       }}
     >
       {props.children}
