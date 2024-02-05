@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import { RxPerson } from "react-icons/rx";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../../contexts/authentication";
 import { BsFillPersonFill } from "react-icons/bs";
 import {
   containerSidebarStyle,
@@ -24,7 +25,15 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
       <div className="section__sidebar-button">
         <div
           className="sidebar"
-          css={sidebarStyle}
+          css={css`
+            ${sidebarStyle};
+            background-color: ${activeTap === "pet-sitter-profile"
+              ? "rgba(255, 241, 236, 1)"
+              : "transparent"};
+            color: ${activeTap === "pet-sitter-profile"
+              ? "rgba(255, 112, 55, 1)"
+              : "rgba(91, 93, 111, 1)"};
+          `}
           onClick={() => {
             setActiveTap("pet-sitter-profile");
           }}
@@ -42,7 +51,15 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
 
         <div
           className="sidebar"
-          css={sidebarStyle}
+          css={css`
+            ${sidebarStyle};
+            background-color: ${activeTap === "booking-list"
+              ? "rgba(255, 241, 236, 1)"
+              : "transparent"};
+            color: ${activeTap === "booking-list"
+              ? "rgba(255, 112, 55, 1)"
+              : "rgba(91, 93, 111, 1)"};
+          `}
           onClick={() => {
             setActiveTap("booking-list");
           }}
@@ -63,7 +80,15 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
 
         <div
           className="sidebar"
-          css={sidebarStyle}
+          css={css`
+            ${sidebarStyle};
+            background-color: ${activeTap === "payout-option"
+              ? "rgba(255, 241, 236, 1)"
+              : "transparent"};
+            color: ${activeTap === "payout-option"
+              ? "rgba(255, 112, 55, 1)"
+              : "rgba(91, 93, 111, 1)"};
+          `}
           onClick={() => {
             setActiveTap("payout-option");
           }}
