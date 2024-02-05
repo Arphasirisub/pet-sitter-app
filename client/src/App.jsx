@@ -7,6 +7,7 @@ import SearchListPage from "./pages/SearchListPage/SearchListPage";
 import SitterHomepage from "./pages/SitterHomePage/SitterHomepage";
 import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
+import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/sitter/:id" element={<SitterHomepage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
+      <Route path="/owner/:id" element={<OwnerMangementPage />} />
     </Routes>
   );
 }
