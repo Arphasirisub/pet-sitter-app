@@ -1,112 +1,103 @@
-import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
-import { useAuth } from "../../../contexts/authentication";
+import { RxPerson } from "react-icons/rx";
+import React, { useState, useEffect } from "react";
+import { BsFillPersonFill } from "react-icons/bs";
+import {
+  containerSidebarStyle,
+  sectionLogoStyle,
+  fontSidebarStyle,
+  sidebarStyle,
+  logoutStyle,
+  fontLogoutStyle,
+  sectionLogoutStyle,
+} from "./SidebarStyle";
 
 const Sidebar = ({ activeTap, setActiveTap }) => {
   const { logout } = useAuth();
-  const sidebarStyle = css`
-    background-color: #fafafb;
-    display: flex;
-    width: 240px;
-    height: 1024px;
-    flex-direction: column;
-    border-right-color: #dcdfed;
-  `;
-
-  const containerLogo = css`
-    display: flex;
-    padding: 24px;
-    border-radius: 8px;
-    background-color: #fafafb;
-    margin-bottom: 16px;
-  `;
-
-  const logoutStyle = css`
-    margin-top: auto;
-  `;
-
-  const containerButton = css`
-    padding: 10px;
-    align-items: center;
-    margin-left: 10px;
-    justify-content: center;
-    margin-top: 10px;
-  `;
-
-  const fontStyleSidebar = css`
-    display: inline-block;
-    margin-left: 30px;
-    vertical-align: middle;
-    justify-content: center;
-    color: var(--gray-500, #5b5d6f);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
-    letter-spacing: -0.32px;
-  `;
-  const fixcenter = css`
-    justify-content: center;
-  `;
-
   return (
-    <div css={sidebarStyle}>
-      <div css={containerLogo}>
-        <div className="logo">
-          <img src="/src/PublicPicture/logositter.png" alt="Logo" width="140" />
-        </div>
+    <div className="container_sidebar" css={containerSidebarStyle}>
+      <div className="section__logo" css={sectionLogoStyle}>
+        <img src="/src/PublicPicture/logositter.png" alt="Logo" width="140" />
       </div>
 
-      <div
-        css={containerButton}
-        onClick={() => {
-          setActiveTap("pet-sitter-profile");
-        }}
-      >
-        <div css={fixcenter}>
-          <img src="/src/PublicPicture/llogohuman.png" alt="Human" width="20" />
-          <p css={fontStyleSidebar}>Pet Sitter Profile</p>
-        </div>
-      </div>
-
-      <div
-        css={containerButton}
-        onClick={() => {
-          setActiveTap("booking-list");
-        }}
-      >
-        <div css={fixcenter}>
-          <img src="/src/PublicPicture/list.png" alt="booking" width="30" />
-          <p css={fontStyleSidebar}>Booking List</p>
-        </div>
-      </div>
-
-      <div
-        css={containerButton}
-        onClick={() => {
-          setActiveTap("payout-option");
-        }}
-      >
-        <div>
-          <img
-            src="/src/PublicPicture/payouticon.png"
-            alt="payout"
-            width="30"
+      <div className="section__sidebar-button">
+        <div
+          className="sidebar"
+          css={sidebarStyle}
+          onClick={() => {
+            setActiveTap("pet-sitter-profile");
+          }}
+        >
+          <BsFillPersonFill
+            fontSize="24px"
+            color={
+              activeTap === "pet-sitter-profile"
+                ? "rgba(255, 112, 55, 1)"
+                : "rgba(174, 177, 195, 1)"
+            }
           />
-          <p css={fontStyleSidebar}>Payout Option</p>
+          <p css={fontSidebarStyle}>Pet Sitter Profile</p>
+        </div>
+
+        <div
+          className="sidebar"
+          css={sidebarStyle}
+          onClick={() => {
+            setActiveTap("booking-list");
+          }}
+        >
+          <img
+            src={
+              activeTap === "booking-list"
+                ? "/src/PublicPicture/bookingiconorange.png"
+                : "/src/PublicPicture/bookingicon.png"
+            }
+            alt="booking"
+            width="24px"
+            height="24px"
+          />
+
+          <p css={fontSidebarStyle}>Booking List</p>
+        </div>
+
+        <div
+          className="sidebar"
+          css={sidebarStyle}
+          onClick={() => {
+            setActiveTap("payout-option");
+          }}
+        >
+          <img
+            src={
+              activeTap === "payout-option"
+                ? "/src/PublicPicture/payouticonorange.png"
+                : "/src/PublicPicture/payouticon.png"
+            }
+            alt="payout"
+            width="24px"
+            height="24px"
+          />
+          <p css={fontSidebarStyle}>Payout Option</p>
         </div>
       </div>
 
-      <div
-        css={logoutStyle}
-        onClick={() => {
-          logout();
-        }}
-      >
-        <div className="logout">
-          <img src="/src/PublicPicture/logout.png" alt="logout" width="240" />
+      <div className="section_logout" css={sectionLogoutStyle}>
+        <div className="logout" css={logoutStyle}>
+          <img
+            src="/src/PublicPicture/logoutlogo.png"
+            alt="logout"
+            width="16"
+            height="20px"
+          />
+          <p
+            css={fontLogoutStyle}
+            onClick={() => {
+              logout();
+            }}
+          >
+            Log Out
+          </p>
         </div>
       </div>
     </div>

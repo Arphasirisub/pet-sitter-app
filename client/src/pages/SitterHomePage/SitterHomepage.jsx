@@ -8,45 +8,30 @@ import DynamicCompenents from "./components/DynamicComonents";
 
 const appStyle = css`
   height: 100vh;
+  margin: 0;
+  padding: 0;
 `;
 
 const contentStyle = css`
   display: flex;
-
-  /* position: relative; */
-`;
-
-const topBarStyle = css`
-  position: absolute;
 `;
 
 const contentContainerStyle = css`
   display: flex;
   flex-direction: column;
+  width: 100vw;
 `;
 
 function SisterHomepage() {
-  const [activeTap, setActiveTap] = useState("booking-list");
+  const [activeTap, setActiveTap] = useState("pet-sitter-profile");
 
   return (
-    <div
-      css={css`
-        justify-content: center;
-        height: 100%;
-        width: 100vw;
-      `}
-    >
-      <div css={appStyle}>
-        <div css={contentStyle}>
-          <Sidebar
-            css={topBarStyle}
-            activeTap={activeTap}
-            setActiveTap={setActiveTap}
-          />
-          <div css={contentContainerStyle}>
-            <TopBar />
-            <DynamicCompenents activeTap={activeTap} />
-          </div>
+    <div css={appStyle}>
+      <div css={contentStyle}>
+        <Sidebar activeTap={activeTap} setActiveTap={setActiveTap} />
+        <div css={contentContainerStyle}>
+          <TopBar />
+          <DynamicCompenents activeTap={activeTap} />
         </div>
       </div>
     </div>

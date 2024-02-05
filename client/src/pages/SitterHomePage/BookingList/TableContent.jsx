@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
   overflow: "hidden",
+  width: "1120px",
 });
 
 const getColorByStatus = (status) => {
@@ -37,14 +38,13 @@ const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    textAlign: 'start',
-
+    textAlign: "start",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     color: getColorByStatus(status),
     padding: 30,
-    textAlign: 'start',
+    textAlign: "start",
   },
 }));
 
@@ -115,4 +115,3 @@ function CustomizedTables() {
 }
 
 export default CustomizedTables;
-
