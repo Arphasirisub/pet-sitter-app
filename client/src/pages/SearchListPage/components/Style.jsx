@@ -19,13 +19,14 @@ export const greenStar = (
 export const containerStyles = css`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: start;
   align-items: flex-start;
 `;
 
 export const headingStyles = css`
-  margin: 40px 0px 80px 70px;
-  text-align: start;
+  display: flex;
+  margin: 40px 0px 80px 90px;
+  text-align: center;
   font-weight: 700;
   font-size: 22px;
   color: #3a3b46;
@@ -34,7 +35,7 @@ export const headingStyles = css`
 export const seachLishContainer = css`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   top: 30px;
   width: 100vw;
@@ -129,8 +130,11 @@ export const fiveRatingbox = css`
   align-items: center;
   cursor: pointer;
 
-  &:focus {
-    border: 1px solid #ff7038;
+  &:hover {
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -146,8 +150,11 @@ export const fourRatingBox = css`
   width: 120px;
   height: 30px;
 
-  &:focus {
-    border: 1px solid #ff7038;
+  &:hover {
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -163,8 +170,11 @@ export const threeRatingBox = css`
   align-items: center;
   cursor: pointer;
 
-  &:focus {
-    border: 1px solid #ff7038;
+  &:hover {
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -180,8 +190,11 @@ export const twoRatingBox = css`
   width: 70px;
   height: 30px;
 
-  &:focus {
-    border: 1px solid #ff7038;
+  &:hover {
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -197,8 +210,11 @@ export const oneRatingBox = css`
   width: 50px;
   height: 30px;
 
-  &:focus {
-    border: 1px solid #ff7038;
+  &:hover {
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -298,6 +314,7 @@ export const sitterInfoBox = css`
   padding: 15px;
   box-shadow: 5px 5px 5px 6px rgba(242, 242, 242, 0.5);
   background-color: white;
+  justify-content:center;
 `;
 
 export const SitterNameContainer = css`

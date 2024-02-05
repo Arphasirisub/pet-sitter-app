@@ -5,25 +5,16 @@ import Navbar from "../../public-components/Navbar";
 import SearchBox from "./components/SearchBox.jsx";
 import SearchResult from "./components/SearchResult.jsx";
 import PaginationBar from "./components/pagination.jsx";
-import { useState } from "react";
 import {
   seachLishContainer,
   containerStyles,
   headingStyles,
   sticky,
+  // pageContainer,
 } from "./components/Style.jsx";
 
 function SearchListPage() {
-  const [sitterData, setSitterData] = useState([]); //<SearchList />
-  const [searchData, setSearchData] = useState({
-    experience: "",
-    searchInput: "",
-    dog: false,
-    cat: false,
-    bird: false,
-    rabbit: false,
-    rating: 0,
-  });
+
 
   return (
     <>
@@ -32,21 +23,13 @@ function SearchListPage() {
         <p css={headingStyles}>Search For Pet Sitter</p>
         <div css={sticky}>
           <div css={seachLishContainer}>
-            <SearchBox
-              searchData={searchData}
-              setSearchData={setSearchData}
-              setSitterData={setSitterData}
-              sitterData={sitterData}
-            />
-            <SearchResult
-              sitterData={sitterData}
-              setSitterData={setSitterData}
-            />
+            <SearchBox />
+            <SearchResult />
           </div>
         </div>
-
         <PaginationBar />
       </div>
+
       <Footer />
     </>
   );
