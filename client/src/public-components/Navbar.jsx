@@ -76,6 +76,7 @@ function Navbar() {
                 width: 40px;
                 height: 40px;
                 cursor: pointer;
+                border-radius: 100%;
               `}
               onClick={handleClick}
             />
@@ -101,9 +102,27 @@ function Navbar() {
               //   disableScrollLock: true, // Disable the Scroll Lock
               // }}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Your Pet</MenuItem>
-              <MenuItem onClick={handleClose}>History</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(`/owner/${state.user.id}`);
+                }}
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(`/owner/${state.user.id}`);
+                }}
+              >
+                Your Pet
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(`/owner/${state.user.id}`);
+                }}
+              >
+                History
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleClose();
