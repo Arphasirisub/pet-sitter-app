@@ -41,8 +41,7 @@ function Navbar() {
       css={css`
         display: flex;
         justify-content: space-between;
-        padding: 0 20px;
-        margin: 10px 0;
+        padding: 15px 80px;
       `}
     >
       <div

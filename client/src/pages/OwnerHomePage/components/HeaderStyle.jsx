@@ -114,6 +114,7 @@ export const fiveRatingbox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   width: 140px;
   height: 30px;
   border-radius: 8px;
@@ -121,7 +122,7 @@ export const fiveRatingbox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -133,6 +134,7 @@ export const fourRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -140,7 +142,7 @@ export const fourRatingBox = css`
   width: 120px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -152,6 +154,7 @@ export const threeRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   width: 95px;
   height: 30px;
   border-radius: 8px;
@@ -159,7 +162,7 @@ export const threeRatingBox = css`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -171,6 +174,7 @@ export const twoRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -178,7 +182,7 @@ export const twoRatingBox = css`
   width: 70px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -190,6 +194,7 @@ export const oneRatingBox = css`
   display: flex;
   flex-direction: row;
   border: solid 1px rgba(226, 226, 226, 0.5);
+  background-color: white;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
@@ -197,7 +202,7 @@ export const oneRatingBox = css`
   width: 50px;
   height: 30px;
 
-  &:hover {
+  &:focus {
     border: 1px solid rgba(255, 112, 55, 1);
     p {
       color: rgba(255, 112, 55, 1);
@@ -379,11 +384,17 @@ export const halfGreenCircleStyle = css`
   top: 306px;
 `;
 
-export const checkboxStyle = {
+export const checkboxStyles = {
+  color: "#c8ccdb", // สีเทาเมื่อไม่ถูกเลือก
   "&.Mui-checked": {
-    color: "#FF7037", // Checked color
+    color: "#ff7038", // สีส้มเมื่อถูกเลือก
   },
   "&:hover": {
-    color: "#FFB899",
+    color: "#ffb899", // สีส้มเข้มเมื่อ hover
+  },
+  "&.Mui-focusVisible": {
+    "&.Mui-checked": {
+      color: "#ff7038", // ไม่เปลี่ยนสีเมื่อ checkbox ถูกเลือกและมีการ focus
+    },
   },
 };

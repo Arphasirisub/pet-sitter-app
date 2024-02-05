@@ -31,10 +31,15 @@ import axios from "axios";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function SearchBox() {
+  const {
+    searchResult,
+    setSearchResult,
+    getSitters,
+    searchInput,
+    setSearchInput,
+    handleStateChange,
+  } = useSitter();
 
-  const { searchResult, setSearchResult, getSitters, searchData,setSearchData } = useSitter();
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
@@ -52,17 +57,9 @@ function SearchBox() {
     getSitters();
   };
 
-  const handleStateChange = (fieldName, value) => {
-    setSearchData((prevSearchData) => ({
-      ...prevSearchData,
-      [fieldName]: value,
-    }));
-  };
-
-
   useEffect(() => {
-    getSitters()
-  }, [searchData]);
+    getSitters();
+  }, [searchInput]);
 
   return (
     <form css={sticky} onSubmit={handleSubmit}>
@@ -73,7 +70,7 @@ function SearchBox() {
             <input
               type="text"
               css={searchInputStyle}
-              value={searchData.searchInput}
+              value={searchInput.searchInput}
               onChange={(e) => {
                 handleStateChange("searchInput", e.target.value);
               }}
@@ -87,7 +84,7 @@ function SearchBox() {
             <Checkbox
               {...label}
               color="default"
-              checked={searchData.dog}
+              checked={searchInput.dog}
               onChange={(e) => {
                 handleStateChange("dog", e.target.checked);
               }}
@@ -97,7 +94,7 @@ function SearchBox() {
             <Checkbox
               {...label}
               color="default"
-              checked={searchData.cat}
+              checked={searchInput.cat}
               onChange={(e) => {
                 handleStateChange("cat", e.target.checked);
               }}
@@ -107,7 +104,7 @@ function SearchBox() {
             <Checkbox
               {...label}
               color="default"
-              checked={searchData.bird}
+              checked={searchInput.bird}
               onChange={(e) => {
                 handleStateChange("bird", e.target.checked);
               }}
@@ -117,7 +114,7 @@ function SearchBox() {
             <Checkbox
               {...label}
               color="default"
-              checked={searchData.rabbit}
+              checked={searchInput.rabbit}
               onChange={(e) => {
                 handleStateChange("rabbit", e.target.checked);
               }}
@@ -172,7 +169,7 @@ function SearchBox() {
             css={inputStyles}
             id="experience"
             name="experience"
-            value={searchData.experience}
+            value={searchInput.experience}
             onChange={(e) => {
               handleStateChange("experience", e.target.value);
             }}
