@@ -122,8 +122,10 @@ export const fiveRatingbox = css`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -139,8 +141,10 @@ export const fourRatingBox = css`
   height: 30px;
 
   &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -156,8 +160,10 @@ export const threeRatingBox = css`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -173,8 +179,10 @@ export const twoRatingBox = css`
   height: 30px;
 
   &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -190,8 +198,10 @@ export const oneRatingBox = css`
   height: 30px;
 
   &:hover {
-    background-color: rgba(226, 226, 226, 0.5);
-    border: 1px solid rgba(226, 226, 226, 0.5);
+    border: 1px solid rgba(255, 112, 55, 1);
+    p {
+      color: rgba(255, 112, 55, 1);
+    }
   }
 `;
 
@@ -368,3 +378,12 @@ export const halfGreenCircleStyle = css`
   left: 37px;
   top: 306px;
 `;
+
+export const checkboxStyle = {
+  "&.Mui-checked": {
+    color: "#FF7037", // Checked color
+  },
+  "&:hover": {
+    color: "#FFB899",
+  },
+};

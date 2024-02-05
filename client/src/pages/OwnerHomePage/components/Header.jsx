@@ -93,18 +93,33 @@ function Header() {
                 id="animalcategory1"
                 name="animalcategory1"
                 value="dog"
-                color="primary"
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#FF7037", // Checked color
+                  },
+                  "&:hover": {
+                    color: "#FFB899",
+                  },
+                }}
               />
             }
             label="Dog"
           />
+
           <FormControlLabel
             control={
               <Checkbox
                 id="animalcategory2"
                 name="animalcategory2"
                 value="cat"
-                color="primary"
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#FF7037", // Checked color
+                  },
+                  "&:hover": {
+                    color: "#FFB899",
+                  },
+                }}
               />
             }
             label="Cat"
@@ -115,7 +130,14 @@ function Header() {
                 id="animalcategory3"
                 name="animalcategory3"
                 value="bird"
-                color="primary"
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#FF7037", // Checked color
+                  },
+                  "&:hover": {
+                    color: "#FFB899",
+                  },
+                }}
               />
             }
             label="Bird"
@@ -126,7 +148,14 @@ function Header() {
                 id="animalcategory4"
                 name="animalcategory4"
                 value="rabbit"
-                color="primary"
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#FF7037", // Checked color
+                  },
+                  "&:hover": {
+                    color: "#FFB899",
+                  },
+                }}
               />
             }
             label="Rabbit"
