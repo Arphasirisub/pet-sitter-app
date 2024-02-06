@@ -5,12 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { AuthProvider } from "./contexts/authentication.jsx";
 import { SittersProvider } from "./contexts/getSitters.jsx";
+import { PetsProvider } from "./contexts/getPetsByOwnerId.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <SittersProvider>
-          <App />
+          <PetsProvider>
+            <App />
+          </PetsProvider>
         </SittersProvider>
       </AuthProvider>
     </BrowserRouter>
