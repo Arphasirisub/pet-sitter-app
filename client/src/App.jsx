@@ -18,7 +18,7 @@ function App() {
       <Route path="/sitter/:id" element={<SitterHomepage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
-      <Route path="/owner/:id" element={<OwnerMangementPage />} />
+      <Route path="/owner/:id/*" element={<OwnerMangementPage />} />
     </Routes>
   );
 }

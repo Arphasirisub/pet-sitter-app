@@ -25,7 +25,7 @@ import messageimg from "../../../../PublicPicture/messageimg.png";
 import catcircle from "../../../../PublicPicture/catcircle.png";
 import piececircle from "../../../../PublicPicture/piececircle.png";
 import RatingDropdown from "./Rating.jsx";
-import Detail from "./LogogroupDetail.jsx";
+import LogoGruopDetail from "./LogogroupDetail.jsx";
 
 function Header() {
   const { getSitters } = useSitter();
@@ -43,7 +43,7 @@ function Header() {
           <img css={catCircleStyle} src={catcircle} alt="catcircle" />
         </div>
 
-        <Detail />
+        <LogoGruopDetail />
 
         <div className="logogroup_right" css={logoScale}>
           <img

@@ -70,6 +70,7 @@ export const figmaButtonStyle = css`
   padding: 10px; /* Adjust padding for responsiveness */
   border-radius: 20px; /* Adjust border-radius for responsiveness */
   transition: background-color 0.3s ease;
+  text-transform: none;
 
   &:hover {
     color: black;

@@ -44,7 +44,6 @@ function SideBar({ setActiveTaps, activeTaps }) {
           activeImageSrc={ActiveProfile}
           text="Profile"
           isActive={activeTaps === "profile"}
-          handleHover={() => handleHover("profile")}
           handleClick={() => handleClick("profile")}
         />
         <HoverItem
@@ -52,7 +51,6 @@ function SideBar({ setActiveTaps, activeTaps }) {
           activeImageSrc={ActiveYourPet}
           text="Your Pet"
           isActive={activeTaps === "yourPet"}
-          handleHover={() => handleHover("yourPet")}
           handleClick={() => handleClick("yourPet")}
         />
         <HoverItem
@@ -60,7 +58,6 @@ function SideBar({ setActiveTaps, activeTaps }) {
           activeImageSrc={ActiveBookingHistory}
           text="Booking History"
           isActive={activeTaps === "bookingHistory"}
-          handleHover={() => handleHover("bookingHistory")}
           handleClick={() => handleClick("bookingHistory")}
         />
       </div>
