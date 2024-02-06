@@ -68,3 +68,97 @@ bookingsRouter.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// bookingsRouter.get("/owner/history/:id", async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const { data: bookings, error: bookingsError } = await supabase
+//       .from("bookings")
+//       .select("*,sitters(profile_img),pet_bookings:pet_booking(booking_id)")
+//       .eq("owner_id", id);
+
+//     if (bookingsError) {
+//       console.error("Error fetching bookings data:", bookingsError.message);
+//       return res.status(500).json({ error: "Internal Server Error" });
+//     }
+
+//     if (!bookings || bookings.length === 0) {
+//       return res.status(404).json({ error: "Booking not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error fetching data:", error.message);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+bookingsRouter.get("/owner/history/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data: bookings, error: bookingsError } = await supabase
+      .from("bookings")
+      .select("*, sitters(profile_img,full_name,trade_name), pet_booking(pet_id(pet_name))")
+      .eq("owner_id", id);
+
+    if (bookingsError) {
+      console.error("Error fetching bookings data:", bookingsError.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    // Iterate over bookings to calculate duration and format
+    const bookingsWithDuration = bookings.map((booking) => {
+      // Calculate duration
+      const startDateTime = new Date(booking.booked_start);
+      const stopDateTime = new Date(booking.booked_stop);
+      const durationInMilliseconds = stopDateTime - startDateTime;
+      const durationInHours = durationInMilliseconds / (1000 * 60 * 60);
+
+      // Format start and stop dates
+      const startDate = startDateTime.toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      });
+      const startTime = startDateTime.toLocaleString("en-US", {
+        hour: "numeric",
+        hour12: true,
+      });
+      const stopTime = stopDateTime.toLocaleString("en-US", {
+        hour: "numeric",
+        hour12: true,
+      });
+
+      // Combine formatted start and stop dates with times
+      const bookedDate = `${startDate}`;
+      const bookedTime = `${startTime} - ${stopTime}`;
+      // Format transaction date
+      const transactionDate = new Date(booking.created_at).toLocaleString(
+        "en-US",
+        {
+          weekday: "short",
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }
+      );
+
+      return {
+        ...booking,
+        duration: `${durationInHours.toFixed(0)} hours`,
+        transaction_date: transactionDate,
+        booked_time: bookedTime,
+        booked_date: bookedDate
+      };
+    });
+
+    res.json(bookingsWithDuration);
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

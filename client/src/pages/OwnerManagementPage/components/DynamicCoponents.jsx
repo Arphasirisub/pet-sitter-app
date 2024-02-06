@@ -9,7 +9,7 @@ function DynamicComponents({ activeTaps }) {
       <div
         css={css`
           width: 70%;
-          height: 200px;
+          height: 100vw;
           background-color: rgb(255, 255, 255);
           border-radius: 10px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
