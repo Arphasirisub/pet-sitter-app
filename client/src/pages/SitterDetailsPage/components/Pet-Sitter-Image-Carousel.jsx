@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import Stack from "@mui/material/Stack";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
@@ -14,7 +14,6 @@ import { CircularProgress } from "@mui/material";
 function Carousel() {
   const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,36 +32,6 @@ function Carousel() {
   }, [param.id]);
 
   return (
-    // <>
-    //   {sitterData1 && sitterData1.image_gallery && (
-    //     <Swiper
-    //       slidesPerView={3}
-    //       loop={true}
-    //       pagination={{
-    //         clickable: true,
-    //       }}
-    //       navigation={true}
-    //       modules={[Pagination, Navigation]}
-    //       className="mySwiper"
-    //       css={css`
-    //         width: 1280px;
-    //       `}
-    //     >
-    //       {sitterData1.image_gallery?.map((item, index) => (
-    //         <SwiperSlide key={index}>
-    //           <Stack className="comment-reviewer" width="80%" spacing={2}>
-    //             <img
-    //               height={400}
-    //               width={400}
-    //               alt={`image_gallery_${index}`}
-    //               src={item}
-    //             />
-    //           </Stack>
-    //         </SwiperSlide>
-    //       ))}
-    //     </Swiper>
-    //   )}
-    // </>
     <>
       {sitterData1 && sitterData1.image_gallery ? (
         <Swiper

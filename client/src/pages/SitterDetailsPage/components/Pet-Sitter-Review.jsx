@@ -10,6 +10,7 @@ import Rating from "@mui/material/Rating";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { averageRatingBox } from "./Style-SitterDetailPage";
 
 const PetSitterReview = () => {
   const [sitterData1, setSitterData1] = useState(null);
@@ -38,7 +39,29 @@ const PetSitterReview = () => {
 
   const handleStateChange = (value) => {
     setSelectedRating(value);
-    console.log(setSitterData1);
+  };
+  const renderRatingButtons = () => {
+    const buttons = [];
+    for (let i = 5; i >= 1; i--) {
+      buttons.push(
+        <Button
+          key={i}
+          variant="outlined"
+          size="small"
+          onClick={() => handleStateChange(i)}
+        >
+          {i}
+          <Rating
+            name="read-only"
+            value={i}
+            max={i}
+            readOnly
+            sx={{ color: "#1CCD83" }}
+          />
+        </Button>
+      );
+    }
+    return buttons;
   };
   return (
     <>
@@ -75,7 +98,6 @@ const PetSitterReview = () => {
             `}
             direction="row"
             spacing={2}
-            backgroundColor="white"
             borderRadius={10}
           >
             <Stack width="20%" justifyContent={"center"} alignItems={"center"}>
@@ -84,23 +106,7 @@ const PetSitterReview = () => {
               sitterData1.comments.length > 0 ? (
                 <Stack>
                   {sitterData1.comments.reduce((comments, index) => (
-                    <Box
-                      key={index}
-                      css={css`
-                        border-top-left-radius: 100px;
-                        border-top-right-radius: 100px;
-                        border-bottom-left-radius: 100px;
-                        border-bottom-right-radius: 0;
-                        border: 1px solid black;
-                        background-color: black;
-                        -webkit-box-sizing: border-box;
-                        -moz-box-sizing: border-box;
-                        box-sizing: border-box;
-                        color: white;
-                        text-align: center;
-                        padding: 40px;
-                      `}
-                    >
+                    <Box key={index} css={averageRatingBox}>
                       <Typography variant="h4">
                         {(
                           sitterData1.comments.reduce(
@@ -151,86 +157,7 @@ const PetSitterReview = () => {
                     >
                       All Reviews
                     </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        handleStateChange(5);
-                      }}
-                    >
-                      5
-                      <Rating
-                        name="read-only"
-                        value={5}
-                        max={5}
-                        readOnly
-                        sx={{ color: "#1CCD83" }}
-                      />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        handleStateChange(4);
-                      }}
-                    >
-                      4
-                      <Rating
-                        name="read-only"
-                        value={4}
-                        max={4}
-                        readOnly
-                        sx={{ color: "#1CCD83" }}
-                      />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        handleStateChange(3);
-                      }}
-                    >
-                      3
-                      <Rating
-                        name="read-only"
-                        value={3}
-                        max={3}
-                        readOnly
-                        sx={{ color: "#1CCD83" }}
-                      />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        handleStateChange(2);
-                      }}
-                    >
-                      2
-                      <Rating
-                        name="read-only"
-                        value={2}
-                        max={2}
-                        readOnly
-                        sx={{ color: "#1CCD83" }}
-                      />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => {
-                        handleStateChange(1);
-                      }}
-                    >
-                      1
-                      <Rating
-                        name="read-only"
-                        value={1}
-                        max={1}
-                        readOnly
-                        sx={{ color: "#1CCD83" }}
-                      />
-                    </Button>
+                    {renderRatingButtons()}
                   </div>
                 </Box>
               </Stack>

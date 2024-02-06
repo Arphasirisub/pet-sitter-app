@@ -1,55 +1,28 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
+import {
+  Avatar,
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+  Rating,
+  Stack,
+} from "@mui/material";
 import RoomSharpIcon from "@mui/icons-material/RoomSharp";
-import Rating from "@mui/material/Rating";
-import BookNowModal from "./Pet-Sitter-Card-Book-Now";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Avatar } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-// import Chip from "@mui/material/Chip";
+import BookNowModal from "./Pet-Sitter-Card-Book-Now";
+import {
+  petTypeIcon,
+  dogIconStyle,
+  catIconStyle,
+  rabbitIconStyle,
+  birdIconStyle,
+} from "../../SearchListPage/components/Style";
 
 const PetSitterCard = () => {
-  const petTypeIcon = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 25px;
-    border-radius: 99px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 10px;
-  `;
-
-  const dogIconStyle = css`
-    border: solid 1px #1ccd83;
-    background-color: #e7fdf4;
-    color: #1ccd83;
-  `;
-
-  const catIconStyle = css`
-    border: solid 1px #fa8ac0;
-    background-color: #fff0f1;
-    color: #fa8ac0;
-  `;
-
-  const birdIconStyle = css`
-    border: solid 1px #76d0fc;
-    background-color: #ecfbff;
-    color: #76d0fc;
-  `;
-
-  const rabbitIconStyle = css`
-    border: solid 1px #ff986f;
-    background-color: #fff5ec;
-    color: #ff986f;
-  `;
   const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
 

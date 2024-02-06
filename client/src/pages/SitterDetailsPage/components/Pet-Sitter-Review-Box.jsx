@@ -2,6 +2,12 @@ import { Stack, Typography, Avatar } from "@mui/material";
 import Rating from "@mui/material/Rating";
 
 const PetSitterReviewBox = ({ comments }) => {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
+
   return (
     <>
       <Stack className="container-review-box">
@@ -18,13 +24,13 @@ const PetSitterReviewBox = ({ comments }) => {
             <Stack className="profile-reviewer" width="20%" direction="row">
               <Stack>
                 <Stack direction="row" spacing={2}>
-                  <Avatar alt="" src="" />
+                  <Avatar alt="" src={comment.owner_id.profile_img} />
                   <Stack>
                     <Typography variant="button" display="block" gutterBottom>
-                      name
+                      {comment.owner_id.full_name}
                     </Typography>
                     <Typography variant="caption" display="block" gutterBottom>
-                      date
+                      {formatDate(comment.created_at)}
                     </Typography>
                   </Stack>
                 </Stack>
