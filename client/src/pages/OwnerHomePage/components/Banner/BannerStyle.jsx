@@ -31,6 +31,13 @@ export const figmaLeftStyle = css`
   height: 448px;
 `;
 
+export const figmaRightStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 327px;
+`;
+
 export const halfBlueDonutStyle = css`
   border-radius: 0px 16px;
 `;
@@ -40,6 +47,7 @@ export const figmaDescriptionStyle = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 40px;
 `;
 
 export const bannerTopicTextStyle = css`
@@ -52,16 +60,17 @@ export const bannerTopicTextStyle = css`
 `;
 
 export const figmaButtonStyle = css`
-  padding: 0;
-  margin: 0;
-  margin-top: 40px;
   background-color: #ff7037;
-  width: 168px;
   font-family: "Satoshi", sans-serif;
   font-weight: 700;
   font-size: 16px;
   text-align: center;
   color: white;
+  font-size: 12px;
+  padding: 10px; /* Adjust padding for responsiveness */
+  border-radius: 20px; /* Adjust border-radius for responsiveness */
+  transition: background-color 0.3s ease;
+
   &:hover {
     color: black;
   }
@@ -69,14 +78,8 @@ export const figmaButtonStyle = css`
   border-radius: 99px;
   border: none;
   cursor: pointer;
+  margin-left: 20px;
   gap: 8px;
-`;
-
-export const figmaRightStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 327px;
 `;
 
 export const yellowCircleStyle = css`

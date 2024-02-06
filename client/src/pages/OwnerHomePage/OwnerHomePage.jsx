@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import Navbar from "../../public-components/Navbar";
-import Header from "./components/Header";
-import Footer from "../../public-components/Footer";
-import Content from "./components/Content";
-import Banner from "./components/ฺBanner";
-import { useAuth } from "../../contexts/authentication";
+import Navbar from "../../public-components/Navbar.jsx";
+import Header from "./components/Header/Header.jsx";
+import Footer from "../../public-components/Footer.jsx";
+import Content from "./components/Content/Content.jsx";
+import Banner from "./components/Banner/ฺBanner.jsx";
+import { useAuth } from "../../contexts/authentication.jsx";
 
 function OwnerHomePage() {
   const { state } = useAuth();
