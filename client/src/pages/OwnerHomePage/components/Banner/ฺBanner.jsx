@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import yellowcircle from "../../../PublicPicture/yellowcircle.png";
-import halfbluedonut from "../../../PublicPicture/halfbluedonut.png";
-import largegreenstar from "../../../PublicPicture/largegreenstar.png";
+import yellowcircle from "../../../../PublicPicture/yellowcircle.png";
+import halfbluedonut from "../../../../PublicPicture/halfbluedonut.png";
+import largegreenstar from "../../../../PublicPicture/largegreenstar.png";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import {
@@ -43,28 +43,7 @@ function Banner() {
               onClick={() => {
                 navigate("/list");
               }}
-              css={css`
-                background-color: #ff7037;
-                font-family: "Satoshi", sans-serif;
-                font-weight: 700;
-                font-size: 16px;
-                text-align: center;
-                color: white;
-                font-size: 12px;
-                padding: 10px; /* Adjust padding for responsiveness */
-                border-radius: 20px; /* Adjust border-radius for responsiveness */
-                transition: background-color 0.3s ease;
-
-                &:hover {
-                  color: black;
-                }
-                padding: 12px 24px 12px 24px;
-                border-radius: 99px;
-                border: none;
-                cursor: pointer;
-                margin-left: 20px;
-                gap: 8px;
-              `}
+              css={figmaButtonStyle}
             >
               Find A Pet Sitter
             </Button>
