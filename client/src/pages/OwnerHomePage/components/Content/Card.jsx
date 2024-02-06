@@ -5,7 +5,7 @@ import womenandcat from "../../../../PublicPicture/womenandcat.png";
 import catanddog from "../../../../PublicPicture/catanddog.png";
 import womenanddog from "../../../../PublicPicture/womenanddog.png";
 
-function Card() {
+function CardContent() {
   return (
     <div className="section__card" css={sectionCardStyle}>
       <div className="card" css={cardStyle}>
@@ -49,4 +49,4 @@ function Card() {
     </div>
   );
 }
-export default Card;
+export default CardContent;

@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import { containerContentStyle, topicText } from "./ContentStyle";
 import Detail from "./Detail";
+import CardContent from "./Card";
 
 function Content() {
   return (
@@ -13,7 +14,7 @@ function Content() {
       </div>
 
       <Detail />
-      <Content />
+      <CardContent />
     </div>
   );
 }
