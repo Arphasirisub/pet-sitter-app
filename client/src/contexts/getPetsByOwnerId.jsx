@@ -7,11 +7,11 @@ const usePets = () => useContext(getPetsContext);
 function PetsProvider(props) {
   const [selectedPets, setSelectedPets] = useState([]);
 
-  const toggleSelection = (petId) => {
+  const toggleSelection = (pet) => {
     setSelectedPets((prev) =>
-      prev.includes(petId)
-        ? prev.filter((id) => id !== petId)
-        : [...prev, petId]
+      prev.some((selectedPet) => selectedPet.id === pet.id)
+        ? prev.filter((selectedPet) => selectedPet.id !== pet.id)
+        : [...prev, pet]
     );
   };
 

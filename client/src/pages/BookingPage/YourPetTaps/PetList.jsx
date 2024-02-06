@@ -18,8 +18,6 @@ function PetList() {
       return;
     }
     const ownerId = localStorage.getItem("id");
-    console.log(ownerId);
-    console.log(localStorage);
 
     getPets(ownerId);
   }, []);
@@ -79,21 +77,24 @@ function PetList() {
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
-                cursor: pointer; /* Set cursor to pointer by default */
-                transition: background-color 0.3s; /* Add transition for smooth effect */
-                border-color: ${selectedPets.includes(pet.id)
+                cursor: pointer;
+                transition: background-color 0.3s;
+                border-color: ${selectedPets.some(
+                  (selectedPet) => selectedPet.id === pet.id
+                )
                   ? "rgb(255, 152, 110)"
                   : "#dadada"};
-                background-color: ${selectedPets.includes(pet.id)
+                background-color: ${selectedPets.some(
+                  (selectedPet) => selectedPet.id === pet.id
+                )
                   ? "rgb(255, 245, 236)"
                   : "#ffffff"};
+
                 &:hover {
                   background-color: rgba(0, 0, 0, 0.1);
                 }
               `}
-              onClick={() => {
-                toggleSelection(pet.id);
-              }}
+              onClick={() => toggleSelection(pet)}
             >
               <img
                 src={pet.picture}
