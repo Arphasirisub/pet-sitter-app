@@ -48,7 +48,7 @@ const PetSitterCard = () => {
           <div>
             <Card
               sx={{
-                maxWidth: 345,
+                width: 340,
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",

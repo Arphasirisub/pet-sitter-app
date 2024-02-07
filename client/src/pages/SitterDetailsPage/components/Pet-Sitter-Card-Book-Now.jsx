@@ -113,6 +113,8 @@ const BookNowModal = () => {
     console.log(startTimeStamp);
     console.log(endTimeStamp);
     console.log(new Date(startTimeStamp));
+    console.log(new Date(endTimeStamp));
+    console.log(param.id);
     navigate(`/booking/${startTimeStamp}/${endTimeStamp}/${param.id}`);
     handleClose();
   };
