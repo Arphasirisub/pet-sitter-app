@@ -8,6 +8,7 @@ import SitterHomepage from "./pages/SitterHomePage/SitterHomepage";
 import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
+import BookingPage from "./pages/BookingPage/BookingPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
       <Route path="/owner/:id" element={<OwnerMangementPage />} />
+      <Route path="/booking/:start/:end/:id" element={<BookingPage />} />
     </Routes>
   );
 }

@@ -55,11 +55,8 @@ function AuthProvider(props) {
         "http://localhost:4000/authentication/login",
         data
       );
-      console.log(data);
 
       const token = response.data.token;
-
-      localStorage.setItem("token", token);
 
       if (data.isRemember) {
         localStorage.setItem("isRemember", "true");
@@ -70,19 +67,23 @@ function AuthProvider(props) {
       }
 
       const userDataFromToken = jwtDecode(token);
-      setState({
-        ...state,
-        user: userDataFromToken,
+
+      setState((prevState) => ({
+        ...prevState,
+        user: { ...userDataFromToken },
         isAuthenticated: true,
         isLoading: false,
         isError: false,
-      });
-      console.log(state);
+      }));
+
       if (userDataFromToken.role === "pet_owner") {
         navigate("/");
       } else {
         navigate(`/sitter/${userDataFromToken.id}`);
       }
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("id", userDataFromToken.id);
     } catch (error) {
       setState({
         ...state,
@@ -96,6 +97,7 @@ function AuthProvider(props) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     setState({ ...state, user: null });
     console.log(localStorage);
     navigate("/login");

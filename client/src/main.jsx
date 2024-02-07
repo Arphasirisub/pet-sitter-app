@@ -7,15 +7,18 @@ import { AuthProvider } from "./contexts/authentication.jsx";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./customTheme.js";
 import { SittersProvider } from "./contexts/getSitters.jsx";
+import { PetsProvider } from "./contexts/getPetsByOwnerId.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <SittersProvider>
-            <App />
-          </SittersProvider>
-        </ThemeProvider>
+        <SittersProvider>
+          <PetsProvider>
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
+          </PetsProvider>
+        </SittersProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
