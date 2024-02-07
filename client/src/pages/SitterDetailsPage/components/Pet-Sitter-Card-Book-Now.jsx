@@ -16,13 +16,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { buttonOrange, boxModal } from "./Style-SitterDetailPage";
+import moment from "moment";
 
 const BookNowModal = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeStart, setSelectedTimeStart] = useState("");
-  const [selectedTimeEnd, setSelectedTimeEnd] = useState(`00:00`);
+  const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [timeError, setTimeError] = useState("");
   const [sitterData, setSitterData] = useState([]);
   const param = useParams();
@@ -113,7 +114,7 @@ const BookNowModal = () => {
     console.log(startTimeStamp);
     console.log(endTimeStamp);
     console.log(new Date(startTimeStamp));
-    console.log(new Date(endTimeStamp));
+    console.log(moment(new Date(endTimeStamp)).format(" D MMM, YYYY"));
     console.log(param.id);
     navigate(`/booking/${startTimeStamp}/${endTimeStamp}/${param.id}`);
     handleClose();
