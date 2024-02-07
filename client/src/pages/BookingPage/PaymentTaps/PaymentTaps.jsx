@@ -3,7 +3,17 @@ import { css } from "@emotion/react";
 import { Button } from "@mui/material";
 function PaymentTaps({ setActiveSteps }) {
   return (
-    <div>
+    <div
+      css={css`
+        height: fit-content;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      `}
+    >
       <div
         css={css`
           display: flex;

@@ -1,9 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useParams } from "react-router-dom";
 
 function Detail() {
   const { selectedPets } = usePets();
+  const { start, end } = useParams();
+
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    return `${formattedHours}:${minutes.toString().padStart(2, "0")} ${ampm}`;
+  }
+
+  function formatDateTime(startTimestamp, endTimestamp) {
+    const startDate = formatDate(startTimestamp);
+    const startTime = formatTime(startTimestamp);
+    const endTime = formatTime(endTimestamp);
+
+    return `${startDate} | ${startTime} - ${endTime}`;
+  }
+
+  // Calculate duration
+  const durationInMs = Math.abs(Number(end) - Number(start));
+  const durationInHours = durationInMs / (1000 * 60 * 60);
+  const formattedDuration = durationInHours.toFixed(1); // Format to one decimal place
+
+  // Calculate total price
+  const totalPrice = selectedPets.length * durationInHours * 100;
+
+  const formattedDateTime = formatDateTime(Number(start), Number(end));
+
   return (
     <div
       css={css`
@@ -34,7 +70,7 @@ function Detail() {
         css={css`
           display: flex;
           flex-direction: column;
-          justify-content: space-around;
+          justify-content: space-evenly;
           padding-left: 20px;
           height: 324px;
         `}
@@ -59,7 +95,7 @@ function Detail() {
           >
             Date & Time:
           </div>
-          <div></div>
+          <div>{formattedDateTime}</div>
         </div>
         <div>
           <div
@@ -70,7 +106,7 @@ function Detail() {
           >
             Duration:
           </div>
-          <div></div>
+          <div>{formattedDuration} Hours</div>
         </div>
         <div>
           <div
@@ -114,7 +150,7 @@ function Detail() {
         `}
       >
         <div>Total</div>
-        <div>600.00 THB</div>
+        <div>{totalPrice}.00 THB</div>
       </div>
     </div>
   );

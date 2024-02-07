@@ -1,13 +1,89 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
 function InformationTaps({ setActiveSteps }) {
   return (
-    <div>
+    <div
+      css={css`
+        height: fit-content;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      `}
+    >
+      <div>
+        <div>Your Name*</div>
+        <TextField
+          id="outlined-read-only-input"
+          InputProps={{
+            readOnly: true,
+          }}
+          css={css`
+            width: 100%;
+          `}
+        />
+      </div>
       <div
         css={css`
           display: flex;
           justify-content: space-between;
+          width: 100%;
+        `}
+      >
+        <div
+          css={css`
+            width: 45%;
+          `}
+        >
+          <div>Email*</div>
+          <TextField
+            id="outlined-read-only-input"
+            InputProps={{
+              readOnly: true,
+            }}
+            css={css`
+              width: 100%;
+            `}
+          />
+        </div>
+        <div
+          css={css`
+            width: 45%;
+          `}
+        >
+          <div>Phone*</div>
+          <TextField
+            id="outlined-read-only-input"
+            InputProps={{
+              readOnly: true,
+            }}
+            css={css`
+              width: 100%;
+            `}
+          />
+        </div>
+      </div>
+      <div>
+        <div>Additional Message (To petsitter)</div>
+        <TextField
+          id="outlined-read-only-input"
+          variant="outlined"
+          multiline
+          rows={4}
+          css={css`
+            width: 100%;
+          `}
+        />
+      </div>
+      <div
+        css={css`
+          display: flex;
+          justify-content: space-between;
+          margin-top: 40px;
         `}
       >
         <Button

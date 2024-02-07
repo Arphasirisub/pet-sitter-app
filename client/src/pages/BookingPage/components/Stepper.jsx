@@ -11,8 +11,7 @@ function Stepper({ activeSteps }) {
         border-radius: 10px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 3rem;
+        justify-content: space-evenly;
       `}
     >
       <div
