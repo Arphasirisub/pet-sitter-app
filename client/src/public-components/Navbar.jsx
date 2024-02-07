@@ -119,7 +119,7 @@ function Navbar() {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate(`/owner/${state.user.id}`);
+                  navigate(`/owner/${state.user.id}/bookingHistory`);
                   handleClose();
                 }}
               >

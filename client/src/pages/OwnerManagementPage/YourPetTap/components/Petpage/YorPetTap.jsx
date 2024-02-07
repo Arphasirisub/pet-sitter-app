@@ -4,11 +4,16 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../../../contexts/authentication";
 function YourPetTap({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
   const [allPet, setAllPet] = useState([]);
-
   const params = useParams();
+  const { state, checkToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const getPet = async () => {
     try {
@@ -53,6 +58,7 @@ function YourPetTap({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
           aria-expanded={open ? "true" : undefined}
           onClick={() => {
             setIsCreatePet(true);
+            navigate(`/owner/${state.user.id}/yourPet/createPet`);
           }}
           css={css`
             background-color: #ff7037;
@@ -99,6 +105,7 @@ function YourPetTap({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
             <button
               onClick={() => {
                 setIsUpdatePet(true);
+                navigate(`/owner/${state.user.id}/yourPet/editPet/${pet.id}`);
               }}
               key={index}
               css={css`

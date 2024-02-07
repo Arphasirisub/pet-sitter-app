@@ -7,9 +7,13 @@ import YourPetTap from "../YourPetTap/components/Petpage/YorPetTap.jsx";
 import CreatePetPage from "../YourPetTap/components/CreatePetPage.jsx";
 import UpdatePetPage from "../YourPetTap/components/UpdatePetPage.jsx";
 
-function DynamicComponents({ activeTaps }) {
-  const [isCreatePet, setIsCreatePet] = useState(false);
-  const [isUpdatePet, setIsUpdatePet] = useState(false);
+function DynamicComponents({
+  activeTaps,
+  isCreatePet,
+  setIsCreatePet,
+  isUpdatePet,
+  setIsUpdatePet,
+}) {
   const [allPet, setAllPet] = useState([]);
 
   return (

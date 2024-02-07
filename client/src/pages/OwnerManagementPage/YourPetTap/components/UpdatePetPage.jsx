@@ -1,8 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { IoIosArrowBack } from "react-icons/io";
+import { useAuth } from "../../../../contexts/authentication";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function UpdatePetPage({ setIsCreatePet, allPet, setIsUpdatePet }) {
+  const navigate = useNavigate();
+  const { state, checkToken } = useAuth();
+  useEffect(() => {
+    checkToken();
+  }, []);
   return (
     <div
       className="container_createpet"
@@ -36,6 +44,7 @@ function UpdatePetPage({ setIsCreatePet, allPet, setIsUpdatePet }) {
           <h3
             onClick={() => {
               setIsUpdatePet(false);
+              navigate(`/owner/${state.user.id}/yourPet`);
             }}
             css={css`
               font-weight: 700;

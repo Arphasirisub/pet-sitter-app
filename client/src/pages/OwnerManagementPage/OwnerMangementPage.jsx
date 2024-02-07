@@ -9,7 +9,12 @@ function OwnerMangementPage() {
   const params = useParams();
 
   const [activeTaps, setActiveTaps] = useState(params.activeTaps);
+  useEffect(() => {
+    setActiveTaps(params.activeTaps);
+  }, [params.activeTaps]);
 
+  const [isCreatePet, setIsCreatePet] = useState(false);
+  const [isUpdatePet, setIsUpdatePet] = useState(false);
   return (
     <>
       <Navbar />
@@ -25,8 +30,21 @@ function OwnerMangementPage() {
           padding: 40px 0 80px 0;
         `}
       >
-        <SideBar setActiveTaps={setActiveTaps} activeTaps={activeTaps} />
-        <DynamicComponents activeTaps={activeTaps} />
+        <SideBar
+          setActiveTaps={setActiveTaps}
+          activeTaps={activeTaps}
+          isCreatePet={isCreatePet}
+          setIsCreatePet={setIsCreatePet}
+          isUpdatePet={isUpdatePet}
+          setIsUpdatePet={setIsUpdatePet}
+        />
+        <DynamicComponents
+          activeTaps={activeTaps}
+          isCreatePet={isCreatePet}
+          setIsCreatePet={setIsCreatePet}
+          isUpdatePet={isUpdatePet}
+          setIsUpdatePet={setIsUpdatePet}
+        />
       </div>
     </>
   );
