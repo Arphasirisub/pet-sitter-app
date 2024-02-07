@@ -42,12 +42,39 @@ function PetsProvider(props) {
     }
   };
 
+  const [sitterData, setSitterData] = useState({});
+
+  const getSitterData = async (sitter_id) => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/sitters/${sitter_id}`
+      );
+      setSitterData(result.data);
+    } catch (error) {
+      console.error("Error while fetching available pet types:", error);
+    }
+  };
+
+  const [ownerData, setOwnerData] = useState({});
+
+  const getOwnerData = async (owner_id) => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/owners/${owner_id}`
+      );
+      setOwnerData(result.data.data.data);
+    } catch (error) {
+      console.error("Error while fetching available pet types:", error);
+    }
+  };
+
   const toggleSelection = (pet) => {
     setSelectedPets((prev) =>
       prev.some((selectedPet) => selectedPet.id === pet.id)
         ? prev.filter((selectedPet) => selectedPet.id !== pet.id)
         : [...prev, pet]
     );
+    console.log(selectedPets);
   };
 
   return (
@@ -65,6 +92,10 @@ function PetsProvider(props) {
         showVerifyModal,
         showWarningModal,
         setShowWarningModal,
+        getSitterData,
+        sitterData,
+        getOwnerData,
+        ownerData,
       }}
     >
       {props.children}

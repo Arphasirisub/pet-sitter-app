@@ -4,7 +4,7 @@ import { usePets } from "../../../contexts/getPetsByOwnerId";
 import { useParams } from "react-router-dom";
 
 function Detail() {
-  const { selectedPets } = usePets();
+  const { selectedPets, sitterData } = usePets();
   const { start, end } = useParams();
 
   function formatDate(timestamp) {
@@ -84,7 +84,9 @@ function Detail() {
           >
             Petsitter:
           </div>
-          <div></div>
+          <div>
+            {sitterData.trade_name} by {sitterData.full_name}
+          </div>
         </div>
         <div>
           <div

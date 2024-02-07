@@ -1,16 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useAuth } from "../../../contexts/authentication";
-
+import { BsPlusCircle } from "react-icons/bs";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { BsCheckLg } from "react-icons/bs";
+import { useParams } from "react-router-dom";
 
 function PetList() {
+  const params = useParams();
   const navigate = useNavigate();
   const { state } = useAuth();
-  const { petsResults, getPets, toggleSelection, selectedPets } = usePets();
+  const {
+    petsResults,
+    getPets,
+    toggleSelection,
+    selectedPets,
+    sitterData,
+    getSitterData,
+  } = usePets();
 
   useEffect(() => {
     if (!state.isAuthenticated) {
@@ -20,6 +30,7 @@ function PetList() {
     const ownerId = localStorage.getItem("id");
 
     getPets(ownerId);
+    getSitterData(params.id);
   }, []);
 
   return (
@@ -55,7 +66,7 @@ function PetList() {
       )}
 
       {/* Display pets data when loading is complete and no error */}
-      {!petsResults.isLoading && !petsResults.isError && state.user && (
+      {!petsResults.isLoading && !petsResults.isError && (
         <div
           css={css`
             display: grid;
@@ -67,35 +78,52 @@ function PetList() {
           {petsResults.data.map((pet) => (
             <div
               key={pet.id}
+              onClick={() =>
+                sitterData[pet.pet_type.toLowerCase()]
+                  ? toggleSelection(pet)
+                  : null
+              }
               css={css`
+                position: relative;
                 aspect-ratio: 1;
                 border: solid 1px;
-                border-color: #dadada;
+                border-color: ${sitterData[pet.pet_type.toLowerCase()]
+                  ? selectedPets.some(
+                      (selectedPet) => selectedPet.id === pet.id
+                    )
+                    ? "rgb(255, 112, 55)"
+                    : "#dadada"
+                  : "#dadada"};
                 border-radius: 10px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
-                cursor: pointer;
+                cursor: ${sitterData[pet.pet_type.toLowerCase()]
+                  ? "pointer"
+                  : "not-allowed"};
                 transition: background-color 0.3s;
-                border-color: ${selectedPets.some(
-                  (selectedPet) => selectedPet.id === pet.id
-                )
-                  ? "rgb(255, 152, 110)"
-                  : "#dadada"};
-                background-color: ${selectedPets.some(
-                  (selectedPet) => selectedPet.id === pet.id
-                )
-                  ? "rgb(255, 245, 236)"
-                  : "#ffffff"};
-
-                &:hover {
-                  background-color: rgba(0, 0, 0, 0.1);
-                }
+                overflow: hidden;
+                background-color: ${sitterData[pet.pet_type.toLowerCase()]
+                  ? "transparent"
+                  : "rgb(214, 217, 221)"};
               `}
-              onClick={() => toggleSelection(pet)}
             >
+              {/* Transparent overlay */}
+              <div
+                css={css`
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background: ${sitterData[pet.pet_type.toLowerCase()]
+                    ? "none"
+                    : "rgba(255, 255, 255, 0.5)"};
+                  pointer-events: none;
+                `}
+              ></div>
               <img
                 src={pet.picture}
                 css={css`
@@ -133,8 +161,74 @@ function PetList() {
               >
                 {pet.pet_type}
               </div>
+              {/* Checkmark icon */}
+              {sitterData[pet.pet_type.toLowerCase()] &&
+                (selectedPets.some(
+                  (selectedPet) => selectedPet.id === pet.id
+                ) ? (
+                  <div
+                    css={css`
+                      position: absolute;
+                      width: 8%;
+                      aspect-ratio: 1;
+                      border: solid 1px;
+                      border-color: rgb(255, 112, 55);
+                      top: 12px;
+                      right: 12px;
+                      border-radius: 3px;
+                      background-color: rgb(255, 112, 55);
+                    `}
+                  >
+                    <BsCheckLg
+                      css={css`
+                        color: white;
+                        display: flex;
+                      `}
+                    ></BsCheckLg>
+                  </div>
+                ) : (
+                  <div
+                    css={css`
+                      position: absolute;
+                      width: 8%;
+                      aspect-ratio: 1;
+                      border: solid 1px;
+                      border-color: #dadada;
+                      top: 12px;
+                      right: 12px;
+                      border-radius: 3px;
+                    `}
+                  ></div>
+                ))}
             </div>
           ))}
+
+          <div
+            css={css`
+              position: relative;
+              aspect-ratio: 1;
+              color: rgb(255, 112, 55);
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              transition: background-color 0.3s;
+              background-color: rgb(255, 241, 236);
+              font-size: 16px;
+              font-weight: bold;
+              flex-direction: column;
+              gap: 10px;
+            `}
+          >
+            <BsPlusCircle
+              css={css`
+                font-size: 50px;
+                font-weight: bold;
+              `}
+            />
+            Create New Pet
+          </div>
         </div>
       )}
     </div>

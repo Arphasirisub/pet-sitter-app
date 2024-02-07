@@ -2,7 +2,21 @@
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useAuth } from "../../../contexts/authentication";
+import { useEffect } from "react";
 function InformationTaps({ setActiveSteps }) {
+  const { ownerData, getOwnerData } = usePets();
+  const { state } = useAuth();
+  useEffect(() => {
+    if (!state.isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    const ownerId = localStorage.getItem("id");
+
+    getOwnerData(ownerId);
+  }, []);
   return (
     <div
       css={css`
@@ -22,6 +36,7 @@ function InformationTaps({ setActiveSteps }) {
           InputProps={{
             readOnly: true,
           }}
+          value={ownerData.full_name}
           css={css`
             width: 100%;
           `}
@@ -45,6 +60,7 @@ function InformationTaps({ setActiveSteps }) {
             InputProps={{
               readOnly: true,
             }}
+            value={ownerData.email}
             css={css`
               width: 100%;
             `}
@@ -61,6 +77,7 @@ function InformationTaps({ setActiveSteps }) {
             InputProps={{
               readOnly: true,
             }}
+            value={ownerData.phone}
             css={css`
               width: 100%;
             `}
