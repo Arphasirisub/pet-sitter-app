@@ -42,3 +42,24 @@ petsRouter.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+petsRouter.post("/:id", async (req, res) => {
+  try {
+    const owner_id = req.params.id;
+    const newPost = { ...req.body, created_at: new Date(), owner_id };
+
+    // Insert data into 'pets' table
+    const { data, error } = await supabase
+      .from("pets")
+      .insert([newPost], { returning: "minimal" });
+
+    if (error) {
+      throw error; // Throw an error to be caught by the catch block
+    }
+
+    res.status(201).json({ message: "Pet created successfully" }); // Sending success response
+  } catch (error) {
+    console.error("Error creating pet:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

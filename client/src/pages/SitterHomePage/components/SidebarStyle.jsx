@@ -40,7 +40,7 @@ export const sidebarStyle = (theme) => css`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #eeeeee;
+    color: rgba(255, 112, 55, 1);
   }
 `;
 export const logoutStyle = css`
