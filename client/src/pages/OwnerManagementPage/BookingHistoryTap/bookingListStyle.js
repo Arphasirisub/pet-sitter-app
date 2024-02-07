@@ -7,7 +7,6 @@ export const bookingContainer = css`
   align-items: start;
   width: 100%;
   height: 100vw;
-;
 `;
 export const titleSytle = css`
   display: flex;
@@ -23,6 +22,10 @@ export const boxContainer = css`
   height: 255px;
   border-radius: 15px;
   margin: 15px 40px;
+
+  &:hover{
+    border-color: #76d0fc;
+  }
 `;
 
 export const rowLayout = css`
@@ -68,7 +71,7 @@ export const transactionStyle = css`
 export const statusStyle = css`
   margin-top: 7px;
   font-size: 12px;
-  margin-left: 86px;
+  margin-left: auto;
 `;
 
 export const line = css`

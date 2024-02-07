@@ -50,7 +50,6 @@ function BookingHistoryTap() {
   return (
     <div css={bookingContainer}>
       <p css={titleSytle}>Booking History</p>
-
       {ownerHistory.map((history, index) => {
         return (
           <div css={boxContainer} key={index}>
@@ -66,137 +65,45 @@ function BookingHistoryTap() {
                 </p>
                 <p css={statusStyle}>⏺ {history.status}</p>
               </div>
-              <hr css={line} />
-              <div css={dateTimeRowLayout}>
-                <div css={flexColumn}>
-                  <p css={dateTimeTitle}>Date & Time:</p>
-                  <div css={dateTimeFont}>
-                    {history.booked_date}
-                    <span
-                      css={css`
-                        color: #7b7e8f;
-                        margin: 0px 6px;
-                      `}
-                    >
-                      |
-                    </span>
-                    {history.booked_time}
-                  </div>
-                </div>
-                <div css={perpendicular}></div>
-                <div css={detailBox}>
-                  <p css={dateTimeTitle}>Hour:</p>
-                  <p css={detailFont}>{history.duration} hours</p>
-                </div>
-                <div css={perpendicular}></div>
-                <div css={detailBox}>
-                  <p css={dateTimeTitle}>Pet:</p>
-                  <p css={detailFont}>
-                    {history.pet_booking.map((pet, index) => (
-                      <span key={index}>{pet.pet_id.pet_name}, </span>
-                    ))}
-                  </p>
+            </div>
+            <hr css={line} />
+            <div css={dateTimeRowLayout}>
+              <div css={flexColumn}>
+                <p css={dateTimeTitle}>Date & Time:</p>
+                <div css={dateTimeFont}>
+                  {history.booked_date}
+                  <span
+                    css={css`
+                      color: #7b7e8f;
+                      margin: 0px 6px;
+                    `}
+                  >
+                    |
+                  </span>
+                  {history.booked_time}
                 </div>
               </div>
-              <div css={statusBoxContainer}>
-                <p css={statusBoxFont}>
-                  Waiting Pet Sitter for confirm booking
+              <div css={perpendicular}></div>
+              <div css={detailBox}>
+                <p css={dateTimeTitle}>Hour:</p>
+                <p css={detailFont}>{history.duration}</p>
+              </div>
+              <div css={perpendicular}></div>
+              <div css={detailBox}>
+                <p css={dateTimeTitle}>Pet:</p>
+                <p css={detailFont}>
+                  {history.pet_booking.map((pet, index) => (
+                    <span key={index}>{pet.pet_id.pet_name} </span>
+                  ))}
                 </p>
               </div>
+            </div>
+            <div css={statusBoxContainer}>
+              <p css={statusBoxFont}>Waiting Pet Sitter for confirm booking</p>
             </div>
           </div>
         );
       })}
-      {/* 
-      <div css={boxContainer}>
-        <div css={rowLayout}>
-          <img css={imageProflie} src={newUser} />
-          <div css={ownerNameContainer}>
-            <p css={tradeNameStyle}>Happy House</p>
-            <p css={fontsStyle}>By Jane Maison</p>
-          </div>
-          <div css={flexColumn}>
-            <p css={transactionStyle}>Transaction date: Tue, 16 Aug 2023</p>
-            <p css={statusStyle}>⏺ Waiting for confirm</p>
-          </div>
-        </div>
-        <hr css={line} />
-        <div css={dateTimeRowLayout}>
-          <div css={flexColumn}>
-            <p css={dateTimeTitle}>Date & Time:</p>
-            <div css={dateTimeFont}>
-              25 Aug,2023
-              <span
-                css={css`
-                  color: #7b7e8f;
-                  margin: 0px 6px;
-                `}
-              >
-                |
-              </span>
-              7 AM - 10AM
-            </div>
-          </div>
-          <div css={perpendicular}></div>
-          <div css={detailBox}>
-            <p css={dateTimeTitle}>Hour:</p>
-            <p css={detailFont}>3 Hours</p>
-          </div>
-          <div css={perpendicular}></div>
-          <div css={detailBox}>
-            <p css={dateTimeTitle}>Pet:</p>
-            <p css={detailFont}>Bubba, Daisy</p>
-          </div>
-        </div>
-        <div css={statusBoxContainer}>
-          <p css={statusBoxFont}>Waiting Pet Sitter for confirm booking</p>
-        </div>
-      </div>
-
-      <div css={boxContainer}>
-        <div css={rowLayout}>
-          <img css={imageProflie} src={newUser} />
-          <div css={ownerNameContainer}>
-            <p css={tradeNameStyle}>Happy House</p>
-            <p css={fontsStyle}>By Jane Maison</p>
-          </div>
-          <div css={flexColumn}>
-            <p css={transactionStyle}>Transaction date: Tue, 16 Aug 2023</p>
-            <p css={statusStyle}>⏺ Waiting for confirm</p>
-          </div>
-        </div>
-        <hr css={line} />
-        <div css={dateTimeRowLayout}>
-          <div css={flexColumn}>
-            <p css={dateTimeTitle}>Date & Time:</p>
-            <div css={dateTimeFont}>
-              25 Aug,2023
-              <span
-                css={css`
-                  color: #7b7e8f;
-                  margin: 0px 6px;
-                `}
-              >
-                |
-              </span>
-              7 AM - 10AM
-            </div>
-          </div>
-          <div css={perpendicular}></div>
-          <div css={detailBox}>
-            <p css={dateTimeTitle}>Hour:</p>
-            <p css={detailFont}>3 Hours</p>
-          </div>
-          <div css={perpendicular}></div>
-          <div css={detailBox}>
-            <p css={dateTimeTitle}>Pet:</p>
-            <p css={detailFont}>Bubba, Daisy</p>
-          </div>
-        </div>
-        <div css={statusBoxContainer}>
-          <p css={statusBoxFont}>Waiting Pet Sitter for confirm booking</p>
-        </div>
-      </div> */}
     </div>
   );
 }
