@@ -6,9 +6,10 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import Stack from "@mui/material/Stack";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 function Carousel() {
   const [sitterData1, setSitterData1] = useState(null);
@@ -30,16 +31,9 @@ function Carousel() {
     fetchData();
   }, [param.id]);
 
-  // const slideImageRange = () => {
-  //   if (sitterData1.image_gallery.length < 3) {
-  //     return sitterData1.image_gallery.length - 1;
-  //   } else {
-  //     return sitterData1.image_gallery.length == 3;
-  //   }
-  // };
   return (
     <>
-      {sitterData1 && sitterData1.image_gallery && (
+      {sitterData1 && sitterData1.image_gallery ? (
         <Swiper
           slidesPerView={3}
           loop={true}
@@ -66,6 +60,8 @@ function Carousel() {
             </SwiperSlide>
           ))}
         </Swiper>
+      ) : (
+        <CircularProgress />
       )}
     </>
   );

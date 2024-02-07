@@ -4,14 +4,18 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { AuthProvider } from "./contexts/authentication.jsx";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./customTheme.js";
 import { SittersProvider } from "./contexts/getSitters.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <SittersProvider>
-          <App />
-        </SittersProvider>
+        <ThemeProvider theme={theme}>
+          <SittersProvider>
+            <App />
+          </SittersProvider>
+        </ThemeProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
