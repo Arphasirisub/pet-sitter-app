@@ -5,13 +5,14 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import VerifyModal from "./VerifyModal";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import WarningModal from "./WarningModal";
 
 function YourPetTaps({ setActiveSteps }) {
   const navigate = useNavigate();
   const params = useParams();
-  const { isSelect, setShowVerifyModal, setShowWarningModal } = usePets();
+  const { isSelect, setShowVerifyModal, setShowWarningModal } =
+    useBookingTools();
   return (
     <>
       <div

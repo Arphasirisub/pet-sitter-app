@@ -4,12 +4,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 
 function VerifyModal() {
-  const { showVerifyModal, setShowVerifyModal } = usePets();
+  const { showVerifyModal, setShowVerifyModal } = useBookingTools();
 
   return (
     <Modal

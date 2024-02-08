@@ -1,5 +1,6 @@
 import { Router } from "express";
 import supabase from "../utills/supabase.js";
+import { protect } from "../middlewares/protect.js";
 
 export const ownersRouter = Router();
 
@@ -13,8 +14,8 @@ ownersRouter.get("/", async (req, res) => {
   }
 });
 
-ownersRouter.get("/:id", async (req, res) => {
-  const ownerId = req.params.id;
+ownersRouter.get("/myProfile", protect, async (req, res) => {
+  const ownerId = req.userId;
 
   try {
     const owner = await supabase

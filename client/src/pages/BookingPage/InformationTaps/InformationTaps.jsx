@@ -2,20 +2,18 @@
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import { useAuth } from "../../../contexts/authentication";
 import { useEffect } from "react";
 function InformationTaps({ setActiveSteps }) {
-  const { ownerData, getOwnerData } = usePets();
+  const { ownerData, getOwnerData } = useBookingTools();
   const { state } = useAuth();
   useEffect(() => {
     if (!state.isAuthenticated) {
       navigate("/login");
       return;
     }
-    const ownerId = localStorage.getItem("id");
-
-    getOwnerData(ownerId);
+    getOwnerData();
   }, []);
   return (
     <div

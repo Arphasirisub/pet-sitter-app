@@ -9,8 +9,9 @@ import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
-
+import jwtInterceptor from "./utils/jwtInterceptor.js";
 function App() {
+  jwtInterceptor();
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />

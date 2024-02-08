@@ -1,6 +1,3 @@
-// 🐨 Todo: Exercise #5
-// สร้าง Middleware ขึ้นมา 1 อันชื่อ Function ว่า `protect`
-// เพื่อเอาไว้ตรวจสอบว่า Client แนบ Token มาใน Header ของ Request หรือไม่
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -30,7 +27,13 @@ export const protect = async (req, res, next) => {
         message: "Token is invalid",
       });
     }
-    req.user = payload;
+
+    // Extract user ID from payload
+    const userId = payload.id;
+
+    // Set userId on req object
+    req.userId = userId;
+
     next();
   });
 };

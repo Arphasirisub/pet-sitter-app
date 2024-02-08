@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import { useParams } from "react-router-dom";
 
 function Detail() {
-  const { selectedPets, sitterData } = usePets();
+  const { selectedPets, sitterData } = useBookingTools();
   const { start, end } = useParams();
 
   function formatDate(timestamp) {

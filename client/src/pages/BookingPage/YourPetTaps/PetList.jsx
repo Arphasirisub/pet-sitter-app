@@ -5,7 +5,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import { BsCheckLg } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 
@@ -20,16 +20,15 @@ function PetList() {
     selectedPets,
     sitterData,
     getSitterData,
-  } = usePets();
+  } = useBookingTools();
 
   useEffect(() => {
     if (!state.isAuthenticated) {
       navigate("/login");
       return;
     }
-    const ownerId = localStorage.getItem("id");
-
-    getPets(ownerId);
+    // const ownerId = localStorage.getItem("id");
+    getPets();
     getSitterData(params.id);
   }, []);
 

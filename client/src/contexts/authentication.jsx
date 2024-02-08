@@ -3,8 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-import jwtInterceptor from "../utils/jwtInterceptor";
-
 const AuthContext = createContext();
 const useAuth = () => useContext(AuthContext); // this is a hook that consume AuthContext
 //In React, when you declare something outside of a component (function AuthProvider(){}),
@@ -23,7 +21,6 @@ const useAuth = () => useContext(AuthContext); // this is a hook that consume Au
 
 function AuthProvider(props) {
   const navigate = useNavigate();
-  // jwtInterceptor();
 
   const [state, setState] = useState({
     isLoading: false,
@@ -84,6 +81,7 @@ function AuthProvider(props) {
 
       localStorage.setItem("token", token);
       localStorage.setItem("id", userDataFromToken.id);
+      console.log(token);
     } catch (error) {
       setState({
         ...state,

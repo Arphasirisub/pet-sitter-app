@@ -4,14 +4,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { usePets } from "../../../contexts/getPetsByOwnerId";
+import { useBookingTools } from "../../../contexts/BookingTools";
 import Divider from "@mui/material/Divider";
 import Fade from "@mui/material/Fade";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 function WarningModal() {
-  const { showWarningModal, setShowWarningModal, setSelectedPets } = usePets();
+  const { showWarningModal, setShowWarningModal, setSelectedPets } =
+    useBookingTools();
   const navigate = useNavigate();
   const params = useParams();
 
