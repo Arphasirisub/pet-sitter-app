@@ -7,9 +7,10 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../../contexts/authentication";
 function YourPetTap({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
-  const [allPet, setAllPet] = useState([]);
   const params = useParams();
   const { state, checkToken } = useAuth();
+
+  const [allPet, setAllPet] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     checkToken();
@@ -17,13 +18,15 @@ function YourPetTap({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
 
   const getPet = async () => {
     try {
-      const result = await axios.get(`http://localhost:4000/pets/${params.id}`);
+      const result = await axios.get(
+        `http://localhost:4000/pets/owner/${params.id}`
+      );
       setAllPet(result.data.data);
     } catch (error) {
       console.error("Error fetching pets:", error);
     }
   };
-  console.log(allPet);
+
   useEffect(() => {
     getPet();
   }, []);

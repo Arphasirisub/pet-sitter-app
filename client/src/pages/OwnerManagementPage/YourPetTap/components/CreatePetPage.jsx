@@ -9,14 +9,40 @@ import {
   inputNoButtomMargin,
   selectCenterStyle,
 } from "../CreatePetStyle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSitter } from "../../../../contexts/getSitters";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../../contexts/authentication";
+import { useMyPetsTools } from "../../../../contexts/myPetsTools";
 
-function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
-  const [selectedOption, setSelectedOption] = useState("");
+function CreatePetPage() {
+  const {
+    setIsCreatePet,
+    setResetFlag,
+    handleSubmit,
+    handleCancel,
+    setInputData,
+    resetFlag,
+  } = useMyPetsTools();
+  const navigate = useNavigate();
+  const { state, checkToken } = useAuth();
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
+  useEffect(() => {
+    checkToken();
+    if (resetFlag) {
+      setResetFlag(false); // Reset the flag after re-render
+    }
+  }, [resetFlag]);
+
+  // const { pet_name, pet_type, breed, sex, age, color, weight } = inputData;
+
+  const handleStateChange = (fieldName, value) => {
+    setInputData((prevSearchInput) => ({
+      ...prevSearchInput,
+      [fieldName]: value,
+    }));
   };
+
   return (
     <div
       className="container_createpet"
@@ -65,7 +91,7 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
       <div
         className="section_importimg"
         css={css`
-          padding: 30px 36px;
+          padding: 0px 36px;
           position: relative;
         `}
       >
@@ -81,13 +107,15 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
           alt="importbutton"
           css={css`
             position: absolute;
-            top: 209px;
+            top: 185px;
             left: 217px;
           `}
         />
       </div>
+
       <div className="section_inputdetail">
         <form
+          onSubmit={handleSubmit}
           action="petdeail"
           css={css`
             display: flex;
@@ -124,6 +152,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 }
               `}
               placeholder="Name of your pet"
+              value={inputData.pet_name}
+              onChange={(e) => {
+                handleStateChange("pet_name", e.target.value);
+              }}
             />
           </div>
           <div
@@ -149,14 +181,22 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
               >
                 Pet Type*
               </label>
-              <select id="pettype" name="pettype" css={selectCenterStyle}>
-                <option value="" disabled hidden={selectedOption}>
+              <select
+                id="pettype"
+                name="pettype"
+                css={selectCenterStyle}
+                value={inputData.pet_type}
+                onChange={(e) => {
+                  handleStateChange("pet_type", e.target.value);
+                }}
+              >
+                <option disabled value="">
                   Select your pet type
                 </option>
-                <option value="Dog">Dog</option>
-                <option value="Dat">Cat</option>
-                <option value="Dird">Bird</option>
-                <option value="Dabbit">Rabbit</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="bird">Bird</option>
+                <option value="rabbit">Rabbit</option>
               </select>
 
               <label
@@ -168,8 +208,16 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
               >
                 Sex*
               </label>
-              <select id="country" name="country" css={selectCenterStyle}>
-                <option value="" disabled hidden={selectedOption}>
+              <select
+                id="sex"
+                name="sex"
+                css={selectCenterStyle}
+                value={inputData.sex}
+                onChange={(e) => {
+                  handleStateChange("sex", e.target.value);
+                }}
+              >
+                <option disabled value="">
                   Select sex of your pet
                 </option>
                 <option value="Male">Male</option>
@@ -190,6 +238,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 type="text"
                 css={inputNoButtomMargin}
                 placeholder="Describe color of your pet"
+                value={inputData.color}
+                onChange={(e) => {
+                  handleStateChange("color", e.target.value);
+                }}
               />
             </div>
 
@@ -214,6 +266,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 type="text"
                 css={inputCenterStyle}
                 placeholder="Breed of your pet"
+                value={inputData.breed}
+                onChange={(e) => {
+                  handleStateChange("breed", e.target.value);
+                }}
               />
               <label
                 htmlFor="age"
@@ -229,6 +285,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 type="text"
                 css={inputCenterStyle}
                 placeholder="Age of your pet"
+                value={inputData.age}
+                onChange={(e) => {
+                  handleStateChange("age", e.target.value);
+                }}
               />
               <label
                 htmlFor="weight"
@@ -245,6 +305,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 type="text"
                 css={inputNoButtomMargin}
                 placeholder="Weight of your pet"
+                value={inputData.weight}
+                onChange={(e) => {
+                  handleStateChange("weight", e.target.value);
+                }}
               />
             </div>
           </div>
@@ -288,6 +352,10 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 }
               `}
               placeholder="Describe color of your pet..."
+              value={inputData.about}
+              onChange={(e) => {
+                handleStateChange("about", e.target.value);
+              }}
             />
           </div>
           <div
@@ -314,14 +382,12 @@ function CreatePetPage({ setIsCreatePet, isCreatePet, setIsUpdatePet }) {
                 border: none;
                 cursor: pointer;
               `}
-              // onClick={() => {
-              //   handleSubmit();
-              //   navigate("/list");
-              // }}
+              onClick={handleCancel}
             >
               Cancel
             </button>
             <Button
+              type="submit"
               id="fade-button"
               aria-controls={open ? "fade-menu" : undefined}
               aria-expanded={open ? "true" : undefined}

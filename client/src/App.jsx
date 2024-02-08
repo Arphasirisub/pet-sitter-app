@@ -26,7 +26,7 @@ function App() {
         element={<OwnerMangementPage />}
       />
       <Route
-        path="/owner/:id/:activeTaps/:subTaps/:pedId"
+        path="/owner/:id/:activeTaps/:subTaps/:petId"
         element={<OwnerMangementPage />}
       />
     </Routes>
