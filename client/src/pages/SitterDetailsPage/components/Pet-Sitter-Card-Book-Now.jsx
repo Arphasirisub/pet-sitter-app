@@ -15,10 +15,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, startTransition } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { buttonOrange, boxModal } from "./Style-SitterDetailPage";
-import moment from "moment";
 
 const BookNowModal = () => {
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ const BookNowModal = () => {
   const [selectedTimeStart, setSelectedTimeStart] = useState("");
   const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [timeError, setTimeError] = useState("");
-  const [sitterData, setSitterData] = useState([]);
   const [sitterTimeData, setSitterTimData] = useState([]);
   const param = useParams();
 
@@ -47,9 +45,6 @@ const BookNowModal = () => {
 
   const fetchData = async () => {
     try {
-      const response1 = await axios.get(
-        `http://localhost:4000/sitters/${param.id}`
-      );
       const response2 = await axios.get(
         `http://localhost:4000/bookings/${param.id}`,
         {
@@ -59,9 +54,7 @@ const BookNowModal = () => {
           },
         }
       );
-      setSitterData(response1.data);
       setSitterTimData(response2.data);
-      console.log(response1);
       console.log(response2);
     } catch (error) {
       console.error("Error fetching sitter details:", error);
@@ -71,8 +64,6 @@ const BookNowModal = () => {
   useEffect(() => {
     fetchData();
     if (selectedDate) {
-      const start = convertTime(selectedDate, selectedTimeStart);
-      const stop = convertTime(selectedDate, selectedTimeEnd);
       console.log("Start time:", start);
       console.log("Stop time:", stop);
       validateTime();
@@ -119,7 +110,19 @@ const BookNowModal = () => {
   };
 
   const handleSubmit = () => {
-    if (timeError) {
+    const currentTime = new Date().getTime();
+    const minimumTime = currentTime + 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+
+    if (start < minimumTime || stop < minimumTime) {
+      setTimeError(
+        "Selected time must be at least 3 hours after of the current time"
+      );
+      console.error(
+        "Selected time must be at least 3 hours after of the current time",
+        timeError
+      );
+      return;
+    } else if (timeError) {
       console.error("Invalid time selection:", timeError);
       return;
     } else if (!selectedDate || !selectedTimeStart || !selectedTimeEnd) {
@@ -127,7 +130,6 @@ const BookNowModal = () => {
       console.error("Invalid selection:", timeError);
       return;
     }
-
     console.log(new Date(start));
     console.log(new Date(stop));
     console.log(param.id);
@@ -137,9 +139,9 @@ const BookNowModal = () => {
 
   const generateTimeOptions = () => {
     const options = [];
-    const startTime = 0 * 60; // Start time in minutes
-    const endTime = 23.5 * 60; // End time in minutes (24 hours)
-    const step = 30; // Time step in minutes
+    const startTime = 0 * 60;
+    const endTime = 23.5 * 60;
+    const step = 30;
 
     for (let time = startTime; time < endTime; time += step) {
       const hours = Math.floor(time / 60);
@@ -147,7 +149,24 @@ const BookNowModal = () => {
       const formattedTime = `${String(hours).padStart(2, "0")}:${String(
         minutes
       ).padStart(2, "0")}`;
-      options.push({ value: formattedTime, label: formattedTime });
+
+      const timeSlotStart = convertTime(selectedDate, formattedTime);
+      const timeSlotEnd = timeSlotStart + step * 60 * 1000;
+
+      // ตรวจสอบว่าช่วงเวลาที่กำลังพิจารณาอยู่ไม่ซ้ำกับการจองในฐานข้อมูล
+      const isOverlapping = sitterTimeData.some((booking) => {
+        const bookingStart = new Date(booking.booked_start).getTime();
+        const bookingEnd = new Date(booking.booked_stop).getTime();
+        return (
+          (timeSlotStart >= bookingStart && timeSlotStart < bookingEnd) ||
+          (timeSlotEnd > bookingStart && timeSlotEnd <= bookingEnd) ||
+          (timeSlotStart <= bookingStart && timeSlotEnd >= bookingEnd)
+        );
+      });
+
+      if (!isOverlapping) {
+        options.push({ value: formattedTime, label: formattedTime });
+      }
     }
 
     return options;
@@ -246,13 +265,11 @@ const BookNowModal = () => {
                   </Select>
                 </Stack>
               </LocalizationProvider>
-              <Stack>
-                <Typography>
-                  {timeError && (
-                    <Typography color="error">{timeError}</Typography>
-                  )}
+              {timeError && (
+                <Typography variant="body1" color="error">
+                  {timeError}
                 </Typography>
-              </Stack>
+              )}
               <Button onClick={handleSubmit} sx={buttonOrange}>
                 Submit
               </Button>

@@ -2,7 +2,6 @@
 import { css } from "@emotion/react";
 import { Stack, Typography, Avatar } from "@mui/material";
 import Rating from "@mui/material/Rating";
-import { grey } from "@mui/material/colors";
 
 const PetSitterReviewBox = ({ comments }) => {
   const formatDate = (dateString) => {

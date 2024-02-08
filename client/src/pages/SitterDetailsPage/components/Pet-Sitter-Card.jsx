@@ -21,24 +21,21 @@ import {
   rabbitIconStyle,
   birdIconStyle,
 } from "../../SearchListPage/components/Style";
-import TestBookTimeData from "./Book-Now-Time";
 
 const PetSitterCard = () => {
   const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+      setSitterData1(response.data);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData1(response.data);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -88,7 +85,6 @@ const PetSitterCard = () => {
                 >
                   {sitterData1.trade_name}
                 </Typography>
-
                 <Stack
                   className="pet-sitter-name-and-exp"
                   sx={{
@@ -116,7 +112,6 @@ const PetSitterCard = () => {
                     {sitterData1.experience} Year Exp.
                   </Typography>
                 </Stack>
-
                 <Rating
                   name="read-only"
                   value={sitterData1.rating}
@@ -124,7 +119,6 @@ const PetSitterCard = () => {
                   readOnly
                   sx={{ color: "#1CCD83" }}
                 />
-
                 <Stack
                   className="pet-sitter-location-content"
                   sx={{
@@ -142,7 +136,6 @@ const PetSitterCard = () => {
                     {sitterData1.district}, {sitterData1.province}
                   </Typography>
                 </Stack>
-
                 <Stack direction="row" spacing={1} justifyContent={"center"}>
                   {sitterData1.pet_type?.map((typelist, index) => {
                     return (
@@ -166,9 +159,7 @@ const PetSitterCard = () => {
                     );
                   })}
                 </Stack>
-                {/* <TestBookTimeData /> */}
               </CardContent>
-
               <BookNowModal />
             </Card>
           </div>

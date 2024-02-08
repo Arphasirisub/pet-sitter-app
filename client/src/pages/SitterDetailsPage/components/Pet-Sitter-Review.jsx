@@ -7,31 +7,29 @@ import PetSitterReviewBox from "./Pet-Sitter-Review-Box";
 import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { averageRatingBox } from "./Style-SitterDetailPage";
 
 const PetSitterReview = () => {
-  const [sitterData1, setSitterData1] = useState(null);
+  const [sitterData, setSitterData] = useState(null);
   const param = useParams();
   const [selectedRating, setSelectedRating] = useState(0);
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+      setSitterData(response.data);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData1(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
-
     fetchData();
-  }, [param.id]);
+  }, []);
 
   const handleClearButtonClick = () => {
     setSelectedRating(0);
@@ -95,7 +93,6 @@ const PetSitterReview = () => {
               -moz-box-sizing: border-box;
               box-sizing: border-box;
               color: white;
-
               padding: 15px 15px 15px 25px;
             `}
             direction="row"
@@ -103,22 +100,22 @@ const PetSitterReview = () => {
             borderRadius={10}
           >
             <Stack width="20%" justifyContent={"center"} alignItems={"center"}>
-              {sitterData1 &&
-              sitterData1.comments &&
-              sitterData1.comments.length > 0 ? (
+              {sitterData &&
+              sitterData.comments &&
+              sitterData.comments.length > 0 ? (
                 <Stack>
-                  {sitterData1.comments.reduce((comments, index) => (
+                  {sitterData.comments.reduce((comments, index) => (
                     <Box key={index} css={averageRatingBox}>
                       <Typography variant="h4">
                         {(
-                          sitterData1.comments.reduce(
+                          sitterData.comments.reduce(
                             (sum, comments) => sum + comments.rating,
                             0
-                          ) / sitterData1.comments.length
+                          ) / sitterData.comments.length
                         ).toFixed(2)}
                       </Typography>
                       <Typography variant="body2">
-                        {sitterData1.comments.length} Reviews
+                        {sitterData.comments.length} Reviews
                       </Typography>
                     </Box>
                   ))}
@@ -174,10 +171,10 @@ const PetSitterReview = () => {
             <PetSitterReviewBox
               comments={
                 selectedRating
-                  ? sitterData1?.comments.filter(
+                  ? sitterData?.comments.filter(
                       (comment) => comment.rating === selectedRating
                     )
-                  : sitterData1?.comments
+                  : sitterData?.comments
               }
             />
           </Stack>
