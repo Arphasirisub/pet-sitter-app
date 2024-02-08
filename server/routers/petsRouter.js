@@ -49,7 +49,8 @@ petsRouter.get("/getpet/:petid", async (req, res) => {
     const { data, error } = await supabase
       .from("pets")
       .select("*")
-      .eq("id", petId); // Fetch the pet data based on the 'id' column
+      .eq("id", petId)
+      .single(); // Fetch the pet data based on the 'id' column
 
     if (error) {
       throw error; // Throw an error to be caught by the catch block

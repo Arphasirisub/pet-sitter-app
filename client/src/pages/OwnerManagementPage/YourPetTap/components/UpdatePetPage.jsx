@@ -31,7 +31,7 @@ function UpdatePetPage() {
     setPostById(results.data.data);
     console.log(results.data.data);
   };
-  console.log(postById[0].picture);
+  console.log(postById.picture);
 
   useEffect(() => {
     checkToken();
@@ -97,7 +97,7 @@ function UpdatePetPage() {
           `}
         /> */}
         <img
-          src={postById[0].picture}
+          src={postById.picture}
           alt=""
           css={css`
             width: 240px;
