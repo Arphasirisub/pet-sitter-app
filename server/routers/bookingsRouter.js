@@ -98,7 +98,9 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
   try {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select("*, sitters(profile_img,full_name,trade_name), pet_booking(pet_id(pet_name))")
+      .select(
+        "*, sitters(profile_img,full_name,trade_name), pet_booking(pet_id(pet_name))"
+      )
       .eq("owner_id", id);
 
     if (bookingsError) {
@@ -152,7 +154,7 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
         duration: `${durationInHours.toFixed(0)} hours`,
         transaction_date: transactionDate,
         booked_time: bookedTime,
-        booked_date: bookedDate
+        booked_date: bookedDate,
       };
     });
 

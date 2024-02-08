@@ -65,17 +65,19 @@ const PetSitterReview = () => {
   };
   return (
     <>
-      <Stack width={1280}>
+      <Stack
+        width={1280}
+        css={css`
+          margin-left: 100px;
+        `}
+      >
         <Stack
           className="review-container"
-          height="auto"
-          width="60%"
-          padding={3}
-          marginLeft="2%"
-          marginTop={10}
-          spacing={2}
           borderRadius={10}
           css={css`
+            height: auto;
+            width: 60%;
+            padding: 25px;
             border-top-left-radius: 100px;
             border-bottom-left-radius: 100px;
             background-color: #f5f6f9;
@@ -94,7 +96,7 @@ const PetSitterReview = () => {
               box-sizing: border-box;
               color: white;
 
-              padding: 40px;
+              padding: 15px 15px 15px 25px;
             `}
             direction="row"
             spacing={2}
@@ -134,7 +136,12 @@ const PetSitterReview = () => {
                 </Box>
               )}
             </Stack>
-            <Stack width="75%">
+            <Stack
+              width="75%"
+              css={css`
+                padding-left: 30px;
+              `}
+            >
               <Stack>
                 <Typography
                   variant="h6"
@@ -147,7 +154,7 @@ const PetSitterReview = () => {
                 </Typography>
               </Stack>
               <Stack>
-                <Box sx={{ "& button": { m: 1 } }}>
+                <Box sx={{ "& button": { m: "2px" } }}>
                   <div>
                     <Button
                       variant="outlined"

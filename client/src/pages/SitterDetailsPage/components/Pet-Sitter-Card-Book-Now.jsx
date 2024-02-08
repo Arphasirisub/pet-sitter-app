@@ -1,4 +1,6 @@
 // step30min-----------------------------------------------------------------------------------------------------------------------------------------------
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import {
   Box,
   Modal,
@@ -13,7 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import axios from "axios";
 import { buttonOrange, boxModal } from "./Style-SitterDetailPage";
 import moment from "moment";
@@ -26,49 +28,83 @@ const BookNowModal = () => {
   const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [timeError, setTimeError] = useState("");
   const [sitterData, setSitterData] = useState([]);
+  const [sitterTimeData, setSitterTimData] = useState([]);
   const param = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
+  const convertTime = (date, time) => {
+    const startTimeParts = time.split(":");
+    const startHours = parseInt(startTimeParts[0], 10);
+    const startMinutes = parseInt(startTimeParts[1], 10);
+    const currentDate = new Date(date);
+    currentDate.setHours(startHours);
+    currentDate.setMinutes(startMinutes);
+    const timeStamp = currentDate.getTime();
+    return timeStamp;
+  };
 
+  const start = convertTime(selectedDate, selectedTimeStart);
+  const stop = convertTime(selectedDate, selectedTimeEnd);
+
+  const fetchData = async () => {
+    try {
+      const response1 = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+      const response2 = await axios.get(
+        `http://localhost:4000/bookings/${param.id}`,
+        {
+          params: {
+            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
+            booked_stop: selectedTimeEnd,
+          },
+        }
+      );
+      setSitterData(response1.data);
+      setSitterTimData(response2.data);
+      console.log(response1);
+      console.log(response2);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, [param.id]);
+    if (selectedDate) {
+      const start = convertTime(selectedDate, selectedTimeStart);
+      const stop = convertTime(selectedDate, selectedTimeEnd);
+      console.log("Start time:", start);
+      console.log("Stop time:", stop);
+      validateTime();
+    }
+  }, [selectedDate, selectedTimeStart, selectedTimeEnd]);
 
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setSelectedDate(null);
+    setSelectedTimeStart("");
+    setSelectedTimeEnd("");
     setOpen(false);
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    validateTime();
   };
 
   const handleTimeChangeStart = (event) => {
     setSelectedTimeStart(event.target.value);
-    validateTime();
   };
 
   const handleTimeChangeEnd = (event) => {
     setSelectedTimeEnd(event.target.value);
-    validateTime();
   };
 
   const validateTime = () => {
     if (
+      selectedDate &&
       selectedTimeStart &&
       selectedTimeEnd &&
       selectedTimeEnd <= selectedTimeStart
@@ -91,32 +127,11 @@ const BookNowModal = () => {
       console.error("Invalid selection:", timeError);
       return;
     }
-    // Convert time strings to hours and minutes
-    const startTimeParts = selectedTimeStart.split(":");
-    const stopTimeParts = selectedTimeEnd.split(":");
-    const startHours = parseInt(startTimeParts[0], 10);
-    const startMinutes = parseInt(startTimeParts[1], 10);
-    const stopHours = parseInt(stopTimeParts[0], 10);
-    const stopMinutes = parseInt(stopTimeParts[1], 10);
 
-    // Set hours and minutes in the date object
-    const currentDate = new Date(selectedDate);
-    currentDate.setHours(startHours);
-    currentDate.setMinutes(startMinutes);
-    const startTimeStamp = currentDate.getTime();
-
-    // To get the combined date and stop time, create a new date object and set the stop time
-    const endDate = new Date(currentDate);
-    endDate.setHours(stopHours);
-    endDate.setMinutes(stopMinutes);
-    const endTimeStamp = endDate.getTime();
-
-    console.log(startTimeStamp);
-    console.log(endTimeStamp);
-    console.log(new Date(startTimeStamp));
-    console.log(moment(new Date(endTimeStamp)).format(" D MMM, YYYY"));
+    console.log(new Date(start));
+    console.log(new Date(stop));
     console.log(param.id);
-    navigate(`/booking/${startTimeStamp}/${endTimeStamp}/${param.id}`);
+    navigate(`/booking/${start}/${stop}/${param.id}`);
     handleClose();
   };
 
@@ -140,7 +155,11 @@ const BookNowModal = () => {
 
   return (
     <>
-      <Stack>
+      <Stack
+        css={css`
+          border-top: 1px solid #e0e0e0;
+        `}
+      >
         <Button onClick={handleOpen} sx={buttonOrange}>
           Book Now
         </Button>
@@ -225,11 +244,15 @@ const BookNowModal = () => {
                       </MenuItem>
                     ))}
                   </Select>
+                </Stack>
+              </LocalizationProvider>
+              <Stack>
+                <Typography>
                   {timeError && (
                     <Typography color="error">{timeError}</Typography>
                   )}
-                </Stack>
-              </LocalizationProvider>
+                </Typography>
+              </Stack>
               <Button onClick={handleSubmit} sx={buttonOrange}>
                 Submit
               </Button>

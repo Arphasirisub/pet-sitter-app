@@ -21,6 +21,7 @@ import {
   rabbitIconStyle,
   birdIconStyle,
 } from "../../SearchListPage/components/Style";
+import TestBookTimeData from "./Book-Now-Time";
 
 const PetSitterCard = () => {
   const [sitterData1, setSitterData1] = useState(null);
@@ -43,18 +44,19 @@ const PetSitterCard = () => {
 
   return (
     <>
-      <Stack paddingRight={5} paddingLeft={5}>
+      <Stack>
         {sitterData1 ? (
           <div>
             <Card
               sx={{
-                width: 340,
+                width: 345,
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
                 borderRadius: 5,
                 boxShadow: 20,
                 padding: 2,
+                marginRight: 8,
               }}
             >
               <Stack
@@ -136,7 +138,7 @@ const PetSitterCard = () => {
                     className="location-icon"
                     sx={{ color: "grey" }}
                   />
-                  <Typography className="pet-sitter-location">
+                  <Typography className="pet-sitter-location" color="grey">
                     {sitterData1.district}, {sitterData1.province}
                   </Typography>
                 </Stack>
@@ -164,13 +166,14 @@ const PetSitterCard = () => {
                     );
                   })}
                 </Stack>
+                {/* <TestBookTimeData /> */}
               </CardContent>
 
               <BookNowModal />
             </Card>
           </div>
         ) : (
-          <CircularProgress />
+          <CircularProgress color="warning" />
         )}
       </Stack>
     </>

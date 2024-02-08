@@ -33,8 +33,8 @@ const PetSitterDetailIntro = () => {
         direction="row"
         className="body-detail"
         width="60%"
-        paddingLeft="5%"
-        paddingRight="5%"
+        paddingLeft="10%"
+        paddingRight="8%"
       >
         {sitterData1 ? (
           <Stack>
@@ -43,10 +43,18 @@ const PetSitterDetailIntro = () => {
               variant="h3"
               gutterBottom
               fontWeight="bold"
+              css={css`
+                margin-bottom: 40px;
+              `}
             >
               {sitterData1.trade_name}
             </Typography>
-            <Box className="introduction" sx={{ width: "100%" }}>
+            <Box
+              className="introduction"
+              css={css`
+                margin-bottom: 40px;
+              `}
+            >
               <Typography
                 className="pet-sitter-intro"
                 variant="h6"
@@ -58,13 +66,18 @@ const PetSitterDetailIntro = () => {
               <Typography
                 className="pet-sitter-intro-subtitle"
                 variant="subtitle2"
+                color={"#5B5D6F"}
                 gutterBottom
-                sx={{ width: "100%" }}
               >
                 {sitterData1.introduction}
               </Typography>
             </Box>
-            <Box className="introduction">
+            <Box
+              className="introduction"
+              css={css`
+                margin-bottom: 40px;
+              `}
+            >
               <Typography
                 className="pet-sitter-intro"
                 variant="h6"
@@ -76,12 +89,18 @@ const PetSitterDetailIntro = () => {
               <Typography
                 className="pet-sitter-service-subtitle"
                 variant="subtitle2"
+                color={"#5B5D6F"}
                 gutterBottom
               >
                 {sitterData1.service}
               </Typography>
             </Box>
-            <Box className="my-place">
+            <Box
+              className="my-place"
+              css={css`
+                margin-bottom: 40px;
+              `}
+            >
               <Typography
                 className="pet-sitter-my-place"
                 variant="h6"
@@ -93,6 +112,7 @@ const PetSitterDetailIntro = () => {
               <Typography
                 className="pet-sitter-my-place-subtitle"
                 variant="subtitle2"
+                color={"#5B5D6F"}
                 gutterBottom
               >
                 {sitterData1.my_place}
@@ -100,7 +120,7 @@ const PetSitterDetailIntro = () => {
             </Box>
           </Stack>
         ) : (
-          <CircularProgress />
+          <CircularProgress color="warning" />
         )}
       </Stack>
     </>
