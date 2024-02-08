@@ -131,3 +131,25 @@ authenticationRouter.post("/register", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+authenticationRouter.put("/forgotPassword", async (req, res) => {
+  const email = req.body.email; // Assuming email is provided in the request body
+  console.log(email);
+  if (!email) {
+    return res.status(400).json({ error: "Email is required." });
+  }
+
+  try {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+    // If successful, Supabase sends an email with a password reset link
+    res
+      .status(200)
+      .json({ message: "Password reset email sent successfully." });
+  } catch (error) {
+    console.error("Error resetting password:", error.message);
+    res.status(500).json({ error: "An unexpected error occurred." });
+  }
+});

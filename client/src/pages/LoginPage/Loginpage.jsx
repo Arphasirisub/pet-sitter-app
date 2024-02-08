@@ -6,7 +6,7 @@ import { AlternativeLogin } from "./components/AlternativeLogin";
 import { Header } from "./components/Header";
 import { InputBox } from "./components/InputBox";
 import { SignUpLink } from "./components/SignUpLink";
-import axios from "axios";
+
 import AuthBackground from "../../public-components/AuthBackground";
 import { useAuth } from "../../contexts/authentication";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -17,6 +17,8 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+
+import ForgetPasswordModal from "./components/Modal/ForgetPasswordModal";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ function LoginPage() {
       isRemember: storedIsRemember === "true",
     };
   });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     await login({
@@ -51,7 +54,6 @@ function LoginPage() {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
-    console.log(formData);
   };
 
   const pageLayout = css`
@@ -78,16 +80,14 @@ function LoginPage() {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 500px;
     background-color: white;
-
     box-shadow: 24px;
     padding: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 20px;
   `;
 
@@ -115,7 +115,7 @@ function LoginPage() {
         <AuthBackground />
       </div>
 
-      {/* modal */}
+      {/*invalid user modal */}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -154,6 +154,9 @@ function LoginPage() {
           </Box>
         </Fade>
       </Modal>
+
+      {/*forget password modal */}
+      <ForgetPasswordModal />
     </>
   );
 }

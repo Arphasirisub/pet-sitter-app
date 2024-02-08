@@ -29,6 +29,7 @@ function AuthProvider(props) {
     isSignUpError: null,
     user: null,
     isAuthenticated: Boolean(localStorage.getItem("token")),
+    isForgetPassword: false,
   });
 
   const register = async (data) => {

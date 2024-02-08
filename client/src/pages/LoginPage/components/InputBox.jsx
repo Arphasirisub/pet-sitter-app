@@ -4,8 +4,10 @@ import { css } from "@emotion/react";
 import { TextField } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useAuth } from "../../../contexts/authentication";
 
 export function InputBox({ handleInputChange, formData }) {
+  const { setState, state } = useAuth();
   return (
     <>
       <TextField
@@ -61,6 +63,10 @@ export function InputBox({ handleInputChange, formData }) {
               cursor: pointer;
             }
           `}
+          onClick={() => {
+            setState({ ...state, isForgetPassword: true });
+            console.log(state);
+          }}
         >
           Forget Password?
         </p>
