@@ -12,28 +12,28 @@ import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
 function Carousel() {
-  const [sitterData1, setSitterData1] = useState(null);
+  const [sitterData, setSitterData] = useState(null);
   const param = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData1(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+      setSitterData(response.data);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [param.id]);
+  }, []);
 
   return (
     <>
-      {sitterData1 && sitterData1.image_gallery ? (
+      {sitterData && sitterData.image_gallery ? (
         <Swiper
           slidesPerView={3}
           loop={true}
@@ -47,21 +47,25 @@ function Carousel() {
             width: 1280px;
           `}
         >
-          {sitterData1.image_gallery?.map((item, index) => (
+          {sitterData.image_gallery?.map((item, index) => (
             <SwiperSlide key={index}>
               <Stack className="comment-reviewer" width="80%" spacing={2}>
                 <img
-                  height={400}
-                  width={400}
                   alt={`image_gallery_${index}`}
                   src={item}
+                  height="240px"
+                  width="415px"
+                  css={css`
+                    object-fit: cover;
+                    margin: auto;
+                  `}
                 />
               </Stack>
             </SwiperSlide>
           ))}
         </Swiper>
       ) : (
-        <CircularProgress />
+        <CircularProgress color="warning" />
       )}
     </>
   );

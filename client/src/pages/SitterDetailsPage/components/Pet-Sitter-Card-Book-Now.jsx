@@ -1,4 +1,6 @@
 // step30min-----------------------------------------------------------------------------------------------------------------------------------------------
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import {
   Box,
   Modal,
@@ -16,7 +18,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { buttonOrange, boxModal } from "./Style-SitterDetailPage";
-import moment from "moment";
 
 const BookNowModal = () => {
   const navigate = useNavigate();
@@ -25,50 +26,76 @@ const BookNowModal = () => {
   const [selectedTimeStart, setSelectedTimeStart] = useState("");
   const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [timeError, setTimeError] = useState("");
-  const [sitterData, setSitterData] = useState([]);
+  const [sitterTimeData, setSitterTimData] = useState([]);
   const param = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
+  const convertTime = (date, time) => {
+    const startTimeParts = time.split(":");
+    const startHours = parseInt(startTimeParts[0], 10);
+    const startMinutes = parseInt(startTimeParts[1], 10);
+    const currentDate = new Date(date);
+    currentDate.setHours(startHours);
+    currentDate.setMinutes(startMinutes);
+    const timeStamp = currentDate.getTime();
+    return timeStamp;
+  };
 
+  const start = convertTime(selectedDate, selectedTimeStart);
+  const stop = convertTime(selectedDate, selectedTimeEnd);
+
+  const fetchData = async () => {
+    try {
+      const response2 = await axios.get(
+        `http://localhost:4000/bookings/${param.id}`,
+        {
+          params: {
+            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
+            booked_stop: selectedTimeEnd,
+          },
+        }
+      );
+      setSitterTimData(response2.data);
+      console.log(response2);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, [param.id]);
+    if (selectedDate) {
+      console.log("Start time:", start);
+      console.log("Stop time:", stop);
+      validateTime();
+    }
+  }, [selectedDate, selectedTimeStart, selectedTimeEnd]);
 
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setSelectedDate(null);
+    setSelectedTimeStart("");
+    setSelectedTimeEnd("");
     setOpen(false);
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    validateTime();
   };
 
   const handleTimeChangeStart = (event) => {
     setSelectedTimeStart(event.target.value);
-    validateTime();
   };
 
   const handleTimeChangeEnd = (event) => {
     setSelectedTimeEnd(event.target.value);
-    validateTime();
   };
 
   const validateTime = () => {
     if (
+      selectedDate &&
       selectedTimeStart &&
       selectedTimeEnd &&
       selectedTimeEnd <= selectedTimeStart
@@ -83,7 +110,32 @@ const BookNowModal = () => {
   };
 
   const handleSubmit = () => {
-    if (timeError) {
+    const currentTime = new Date().getTime();
+    const minimumTime = currentTime + 3 * 60 * 60 * 1000; // 3 hours in milliseconds
+    const isOverlapping = sitterTimeData.some((booking) => {
+      const bookingStart = new Date(booking.booked_start).getTime();
+      const bookingEnd = new Date(booking.booked_stop).getTime();
+      return (
+        (start >= bookingStart && start < bookingEnd) ||
+        (stop > bookingStart && stop <= bookingEnd) ||
+        (start <= bookingStart && stop >= bookingEnd)
+      );
+    });
+
+    if (isOverlapping) {
+      setTimeError("Invalid time between");
+      console.log("Invalid time between", timeError);
+      return;
+    } else if (start < minimumTime || stop < minimumTime) {
+      setTimeError(
+        "Selected time must be at least 3 hours after of the current time"
+      );
+      console.error(
+        "Selected time must be at least 3 hours after of the current time",
+        timeError
+      );
+      return;
+    } else if (timeError) {
       console.error("Invalid time selection:", timeError);
       return;
     } else if (!selectedDate || !selectedTimeStart || !selectedTimeEnd) {
@@ -91,40 +143,16 @@ const BookNowModal = () => {
       console.error("Invalid selection:", timeError);
       return;
     }
-    // Convert time strings to hours and minutes
-    const startTimeParts = selectedTimeStart.split(":");
-    const stopTimeParts = selectedTimeEnd.split(":");
-    const startHours = parseInt(startTimeParts[0], 10);
-    const startMinutes = parseInt(startTimeParts[1], 10);
-    const stopHours = parseInt(stopTimeParts[0], 10);
-    const stopMinutes = parseInt(stopTimeParts[1], 10);
 
-    // Set hours and minutes in the date object
-    const currentDate = new Date(selectedDate);
-    currentDate.setHours(startHours);
-    currentDate.setMinutes(startMinutes);
-    const startTimeStamp = currentDate.getTime();
-
-    // To get the combined date and stop time, create a new date object and set the stop time
-    const endDate = new Date(currentDate);
-    endDate.setHours(stopHours);
-    endDate.setMinutes(stopMinutes);
-    const endTimeStamp = endDate.getTime();
-
-    console.log(startTimeStamp);
-    console.log(endTimeStamp);
-    console.log(new Date(startTimeStamp));
-    console.log(moment(new Date(endTimeStamp)).format(" D MMM, YYYY"));
-    console.log(param.id);
-    navigate(`/booking/${startTimeStamp}/${endTimeStamp}/${param.id}`);
+    navigate(`/booking/${start}/${stop}/${param.id}`);
     handleClose();
   };
 
   const generateTimeOptions = () => {
     const options = [];
-    const startTime = 0 * 60; // Start time in minutes
-    const endTime = 23.5 * 60; // End time in minutes (24 hours)
-    const step = 30; // Time step in minutes
+    const startTime = 0 * 60;
+    const endTime = 23.5 * 60;
+    const step = 30;
 
     for (let time = startTime; time < endTime; time += step) {
       const hours = Math.floor(time / 60);
@@ -132,7 +160,24 @@ const BookNowModal = () => {
       const formattedTime = `${String(hours).padStart(2, "0")}:${String(
         minutes
       ).padStart(2, "0")}`;
-      options.push({ value: formattedTime, label: formattedTime });
+
+      const timeSlotStart = convertTime(selectedDate, formattedTime);
+      const timeSlotEnd = timeSlotStart + step * 60 * 1000;
+
+      // ตรวจสอบว่าช่วงเวลาที่กำลังพิจารณาอยู่ไม่ซ้ำกับการจองในฐานข้อมูล
+      const isOverlapping = sitterTimeData.some((booking) => {
+        const bookingStart = new Date(booking.booked_start).getTime();
+        const bookingEnd = new Date(booking.booked_stop).getTime();
+        return (
+          (timeSlotStart >= bookingStart && timeSlotStart < bookingEnd) ||
+          (timeSlotEnd > bookingStart && timeSlotEnd <= bookingEnd) ||
+          (timeSlotStart <= bookingStart && timeSlotEnd >= bookingEnd)
+        );
+      });
+
+      if (!isOverlapping) {
+        options.push({ value: formattedTime, label: formattedTime });
+      }
     }
 
     return options;
@@ -140,7 +185,11 @@ const BookNowModal = () => {
 
   return (
     <>
-      <Stack>
+      <Stack
+        css={css`
+          border-top: 1px solid #e0e0e0;
+        `}
+      >
         <Button onClick={handleOpen} sx={buttonOrange}>
           Book Now
         </Button>
@@ -225,11 +274,13 @@ const BookNowModal = () => {
                       </MenuItem>
                     ))}
                   </Select>
-                  {timeError && (
-                    <Typography color="error">{timeError}</Typography>
-                  )}
                 </Stack>
               </LocalizationProvider>
+              {timeError && (
+                <Typography variant="body1" color="error">
+                  {timeError}
+                </Typography>
+              )}
               <Button onClick={handleSubmit} sx={buttonOrange}>
                 Submit
               </Button>

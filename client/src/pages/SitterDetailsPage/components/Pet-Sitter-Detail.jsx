@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import Stack from "@mui/material/Stack";
 import PetSitterCard from "./Pet-Sitter-Card";
 import PetSitterDetailIntro from "./Pet-Sitter-Detail-Intro";
@@ -8,8 +10,10 @@ const PetSitterDetail = () => {
       <Stack
         direction="row"
         className="body-detail"
-        paddingTop={10}
-        width={1280}
+        css={css`
+          width: 1280px;
+          padding-top: 60px;
+        `}
       >
         <PetSitterDetailIntro />
         <PetSitterCard />

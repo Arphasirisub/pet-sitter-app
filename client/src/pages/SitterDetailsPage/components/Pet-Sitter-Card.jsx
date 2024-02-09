@@ -25,36 +25,35 @@ import {
 const PetSitterCard = () => {
   const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+      setSitterData1(response.data);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData1(response.data);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
   return (
     <>
-      <Stack paddingRight={5} paddingLeft={5}>
+      <Stack>
         {sitterData1 ? (
           <div>
             <Card
               sx={{
-                width: 340,
+                width: 345,
                 justifyContent: "center",
                 alignItems: "center",
                 textAlign: "center",
                 borderRadius: 5,
                 boxShadow: 20,
                 padding: 2,
+                marginRight: 8,
               }}
             >
               <Stack
@@ -86,7 +85,6 @@ const PetSitterCard = () => {
                 >
                   {sitterData1.trade_name}
                 </Typography>
-
                 <Stack
                   className="pet-sitter-name-and-exp"
                   sx={{
@@ -114,7 +112,6 @@ const PetSitterCard = () => {
                     {sitterData1.experience} Year Exp.
                   </Typography>
                 </Stack>
-
                 <Rating
                   name="read-only"
                   value={sitterData1.rating}
@@ -122,7 +119,6 @@ const PetSitterCard = () => {
                   readOnly
                   sx={{ color: "#1CCD83" }}
                 />
-
                 <Stack
                   className="pet-sitter-location-content"
                   sx={{
@@ -136,11 +132,10 @@ const PetSitterCard = () => {
                     className="location-icon"
                     sx={{ color: "grey" }}
                   />
-                  <Typography className="pet-sitter-location">
+                  <Typography className="pet-sitter-location" color="grey">
                     {sitterData1.district}, {sitterData1.province}
                   </Typography>
                 </Stack>
-
                 <Stack direction="row" spacing={1} justifyContent={"center"}>
                   {sitterData1.pet_type?.map((typelist, index) => {
                     return (
@@ -165,12 +160,11 @@ const PetSitterCard = () => {
                   })}
                 </Stack>
               </CardContent>
-
               <BookNowModal />
             </Card>
           </div>
         ) : (
-          <CircularProgress />
+          <CircularProgress color="warning" />
         )}
       </Stack>
     </>
