@@ -3,9 +3,9 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import BookingHistoryTap from "../BookingHistoryTap/BookingHistoryTap";
 import ProfileTap from "../ProfileTap/ProfileTap";
-import YourPetTap from "../YourPetTap/components/Petpage/YorPetTap.jsx";
-import CreatePetPage from "../YourPetTap/components/CreatePetPage.jsx";
-import UpdatePetPage from "../YourPetTap/components/UpdatePetPage.jsx";
+import YourPetPage from "../YourPetTap/YourPetPage/YourPetPage.jsx";
+import CreatePetPage from "../YourPetTap/CreatePetPage/CreatePetPage.jsx";
+import UpdatePetPage from "../YourPetTap/UpdatePetPage/UpdatePetPage.jsx";
 
 function DynamicComponents({
   activeTaps,
@@ -28,7 +28,7 @@ function DynamicComponents({
     >
       {activeTaps === "profile" && <ProfileTap />}
       {activeTaps === "yourPet" && !isCreatePet && !isUpdatePet && (
-        <YourPetTap
+        <YourPetPage
           setIsCreatePet={setIsCreatePet}
           isCreatePet={isCreatePet}
           setIsUpdatePet={setIsUpdatePet}

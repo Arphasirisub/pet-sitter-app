@@ -22,13 +22,14 @@ petsRouter.get("/", async (req, res) => {
   }
 });
 
-petsRouter.get("/owner/:id", async (req, res) => {
+petsRouter.get("/ownerPet/:id", async (req, res) => {
   try {
     const ownerId = req.params.id;
     const { data, error } = await supabase
       .from("pets")
       .select("*")
-      .eq("owner_id", ownerId);
+      .eq("owner_id", ownerId)
+      .order("created_at", { ascending: false });
 
     if (error) {
       throw error; // Throw an error to be caught by the catch block
@@ -52,6 +53,8 @@ petsRouter.get("/getpet/:petid", async (req, res) => {
       .eq("id", petId)
       .single(); // Fetch the pet data based on the 'id' column
 
+    console.log("Data:", data); // Add this line to log the data
+
     if (error) {
       throw error; // Throw an error to be caught by the catch block
     }
@@ -73,7 +76,7 @@ petsRouter.post("/:id", async (req, res) => {
     // Insert data into 'pets' table
     const { data, error } = await supabase
       .from("pets")
-      .insert([newPost], { returning: "minimal" });
+      .insert(newPost, { returning: "minimal" });
 
     if (error) {
       throw error; // Throw an error to be caught by the catch block
@@ -89,7 +92,7 @@ petsRouter.post("/:id", async (req, res) => {
 petsRouter.put("/:id", async (req, res) => {
   try {
     const petId = req.params.id;
-    const updatedPetData = { ...req.body, updated_at: new Date() };
+    const updatedPetData = { ...req.body };
 
     // Update data in 'pets' table
     const { data, error } = await supabase
@@ -98,7 +101,14 @@ petsRouter.put("/:id", async (req, res) => {
       .eq("id", petId);
 
     if (error) {
-      throw error; // Throw an error to be caught by the catch block
+      console.error("Error updating pet:", error.message);
+      return res.status(500).json({ error: "Failed to update pet" });
+    }
+
+    if (data && data.length === 0) {
+      // If no rows were affected by the update
+      console.error("No pet found with id:", petId);
+      return res.status(404).json({ error: "Pet not found" });
     }
 
     res.status(200).json({ message: "Pet updated successfully" }); // Sending success response

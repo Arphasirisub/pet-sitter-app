@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import Navbar from "../../public-components/Navbar";
 import SideBar from "./components/SideBar";
-import DynamicComponents from "./components/DynamicCoponents";
+import DynamicComponents from "./components/DynamicCoponents.jsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 function OwnerMangementPage() {
