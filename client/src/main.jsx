@@ -7,18 +7,24 @@ import { AuthProvider } from "./contexts/authentication.jsx";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./customTheme.js";
 import { SittersProvider } from "./contexts/getSitters.jsx";
+import { MyPetsToolsProvider } from "./contexts/myPetsTools.jsx";
+import { PetsProvider } from "./contexts/getPetsByOwnerId.jsx";
 import { BookingToolsProvider } from "./contexts/BookingTools.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <SittersProvider>
-          <BookingToolsProvider>
+        <MyPetsToolsProvider>
+          <SittersProvider>
+            <PetsProvider>
+              <BookingToolsProvider>
             <ThemeProvider theme={theme}>
               <App />
-            </ThemeProvider>
-          </BookingToolsProvider>
+              </ThemeProvider>
+               </BookingToolsProvider>
+         </PetsProvider>
         </SittersProvider>
+        </MyPetsToolsProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

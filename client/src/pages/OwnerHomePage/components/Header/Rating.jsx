@@ -19,10 +19,13 @@ import { useNavigate } from "react-router-dom";
 
 function RatingDropdown() {
   const { searchInput, handleStateChange, getSitters } = useSitter();
+
   const navigate = useNavigate();
+
   const handleSubmit = async () => {
     getSitters();
   };
+
   return (
     <div className="bargroup_rating" css={ratingStyle}>
       <span css={text}>Rating:</span>

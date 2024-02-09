@@ -6,11 +6,22 @@ import Profile from "../../../PublicPicture/ProfileIcon.png";
 import ActiveProfile from "../../../PublicPicture/ActiveProfileIcon.png";
 import YourPet from "../../../PublicPicture/YourPetIcon.png";
 import ActiveYourPet from "../../../PublicPicture/ActiveYourPetIcon.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/authentication";
 
-function SideBar({ setActiveTaps, activeTaps }) {
+function SideBar({ setActiveTaps, activeTaps, setIsCreatePet, setIsUpdatePet }) {
+  const { state, checkToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    checkToken();
+  }, []);
+
   const handleClick = (key) => {
+    navigate(`/owner/${state.user.id}/${key}`);
     setActiveTaps(key);
+    setIsCreatePet(false);
+    setIsUpdatePet(false);
   };
 
   return (

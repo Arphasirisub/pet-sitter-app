@@ -64,7 +64,7 @@ function SittersProvider(props) {
         searchResult,
         setSearchResult,
         getSitters,
-        searchInput, // Include 'searchData' in the context for the SearchBox component
+        searchInput, 
         setSearchInput,
         handleStateChange,
       }}

@@ -2,6 +2,10 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import marieimg from "../../../PublicPicture/marieimg.png";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 const TopBar = () => {
   const containerHeadNavStyle = css`
@@ -26,10 +30,30 @@ const TopBar = () => {
     font-weight: 500;
   `;
 
+  const [img, setImg] = useState("");
+  const param = useParams();
+  const getImg = async () => {
+    try {
+      console.log(param.id);
+      const result = await axios.get(
+        `http://localhost:4000/sitters/${param.id}`
+      );
+
+      setImg(result.data);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getImg();
+  }, [param.id]);
+
   return (
     <div className="container_headnav" css={containerHeadNavStyle}>
-      <img src={marieimg} alt="Logo" css={logoStyle} />
-      <p css={nameStyle}>Name Surname</p>
+      {img && <img src={img.profile_img} alt="Profile" css={logoStyle} />}
+      {img && <p css={nameStyle}>{img.full_name}</p>}
     </div>
   );
 };

@@ -2,5 +2,25 @@
 body {
   margin: 0;
   font-family: "Satoshi", sans-serif;
+  box-sizing: border-box;
   background-color: #fafafb;
+}
+input,
+button,
+textarea,
+select {
+  appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+}
+input:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: none; /* Remove default box shadow */
+  /* Add any other custom styles for focus state */
+}
+select:focus {
+  outline: none;
+  box-shadow: none;
+  /* Add any other custom styles for focus state */
 }

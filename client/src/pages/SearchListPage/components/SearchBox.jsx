@@ -26,7 +26,6 @@ import {
   sticky,
   checkboxStyles,
 } from "./Style.jsx";
-import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -42,10 +41,11 @@ function SearchBox() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    getSitters();
   };
 
   const handleClearButtonClick = () => {
-    setSearchData({
+    setSearchInput({
       experience: "",
       searchInput: "",
       dog: false,

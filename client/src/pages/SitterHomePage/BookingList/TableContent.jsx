@@ -65,7 +65,7 @@ function CustomizedTables() {
     try {
       console.log(param.id);
       const result = await axios.get(
-        `http://localhost:4000/bookings/${param.id}`
+        `http://localhost:4000/bookings/sitter/${param.id}`
       );
 
       setBookingHistory(result.data);

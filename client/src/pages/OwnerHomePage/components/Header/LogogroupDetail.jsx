@@ -6,7 +6,7 @@ import {
   detailDescriptionText,
 } from "./HeaderStyle.jsx";
 
-function Detail() {
+function LogoGruopDetail() {
   return (
     <div className="logogroup_detail" css={detailScale}>
       <p css={detailHeaderText}>
@@ -41,4 +41,4 @@ function Detail() {
     </div>
   );
 }
-export default Detail;
+export default LogoGruopDetail;

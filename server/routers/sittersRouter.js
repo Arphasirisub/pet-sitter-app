@@ -35,6 +35,7 @@ sittersRouter.get("/:id", async (req, res) => {
 sittersRouter.get("/", async (req, res) => {
   const experienceRange = req.query.experience;
   const fullName = req.query.full_name;
+  const district = req.query.district
   const rating = Number(req.query.rating);
   const dog = req.query.dog === "true";
   const cat = req.query.cat === "true";
@@ -60,10 +61,19 @@ sittersRouter.get("/", async (req, res) => {
       query = query.gte("experience", minExp).lte("experience", maxExp);
     }
 
-    if (fullName) {
+    if (fullName && district) {
+      // Add filter for both full_name and district using ilike and eq
+      query = query
+        .ilike("full_name", `%${fullName}%`)
+        .eq("district", `%${district}%`);
+    } else if (fullName) {
       // Add filter for full_name using ilike
       query = query.ilike("full_name", `%${fullName}%`);
+    } else if (district) {
+      // Add filter for district using eq
+      query = query.eq("district", `%${district}%`);
     }
+
 
     if (!isNaN(rating) && rating >= 1 && rating <= 5) {
       // Add filter for rating if it's a valid number between 1 and 5

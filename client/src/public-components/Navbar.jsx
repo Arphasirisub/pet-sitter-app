@@ -103,21 +103,24 @@ function Navbar() {
             >
               <MenuItem
                 onClick={() => {
-                  navigate(`/owner/${state.user.id}`);
+                  navigate(`/owner/${state.user.id}/profile`);
+                  handleClose();
                 }}
               >
                 Profile
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate(`/owner/${state.user.id}`);
+                  navigate(`/owner/${state.user.id}/yourPet`);
+                  handleClose();
                 }}
               >
                 Your Pet
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate(`/owner/${state.user.id}`);
+                  navigate(`/owner/${state.user.id}/bookingHistory`);
+                  handleClose();
                 }}
               >
                 History
@@ -167,6 +170,7 @@ function Navbar() {
               padding: 10px; /* Adjust padding for responsiveness */
               border-radius: 20px; /* Adjust border-radius for responsiveness */
               transition: background-color 0.3s ease;
+              text-transform: none;
 
               &:hover {
                 color: black;

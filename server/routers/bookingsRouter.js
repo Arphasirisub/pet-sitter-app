@@ -3,7 +3,7 @@ import supabase from "../utills/supabase.js";
 
 export const bookingsRouter = Router();
 
-bookingsRouter.get("/:id", async (req, res) => {
+bookingsRouter.get("/sitter/:id", async (req, res) => {
   const { id } = req.params;
   try {
     // Fetch bookings data with an additional column "pets" for the count
@@ -69,37 +69,17 @@ bookingsRouter.get("/:id", async (req, res) => {
   }
 });
 
-// bookingsRouter.get("/owner/history/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const { data: bookings, error: bookingsError } = await supabase
-//       .from("bookings")
-//       .select("*,sitters(profile_img),pet_bookings:pet_booking(booking_id)")
-//       .eq("owner_id", id);
-
-//     if (bookingsError) {
-//       console.error("Error fetching bookings data:", bookingsError.message);
-//       return res.status(500).json({ error: "Internal Server Error" });
-//     }
-
-//     if (!bookings || bookings.length === 0) {
-//       return res.status(404).json({ error: "Booking not found" });
-//     }
-//   } catch (error) {
-//     console.error("Error fetching data:", error.message);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
-bookingsRouter.get("/owner/history/:id", async (req, res) => {
+bookingsRouter.get("/owner/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select("*, sitters(profile_img,full_name,trade_name), pet_booking(pet_id(pet_name))")
-      .eq("owner_id", id);
+      .select(
+        "*, sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
+      )
+      .eq("owner_id", id)
+      .order("booked_start", { ascending: false });
 
     if (bookingsError) {
       console.error("Error fetching bookings data:", bookingsError.message);
@@ -124,6 +104,13 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
         day: "2-digit",
         year: "numeric",
       });
+
+      const stopDate = stopDateTime.toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      });
+
       const startTime = startDateTime.toLocaleString("en-US", {
         hour: "numeric",
         hour12: true,
@@ -134,8 +121,9 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
       });
 
       // Combine formatted start and stop dates with times
-      const bookedDate = `${startDate}`;
+      const bookedDate = `${startDate} -${stopDate}`;
       const bookedTime = `${startTime} - ${stopTime}`;
+
       // Format transaction date
       const transactionDate = new Date(booking.created_at).toLocaleString(
         "en-US",
@@ -152,7 +140,9 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
         duration: `${durationInHours.toFixed(0)} hours`,
         transaction_date: transactionDate,
         booked_time: bookedTime,
-        booked_date: bookedDate
+        booked_date: bookedDate,
+        stop_book_date: stopDate,
+        stop_book_time: stopTime,
       };
     });
 
@@ -162,3 +152,4 @@ bookingsRouter.get("/owner/history/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
