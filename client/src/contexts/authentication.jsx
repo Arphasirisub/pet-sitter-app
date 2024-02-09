@@ -73,10 +73,6 @@ function AuthProvider(props) {
       setState((prevState) => ({
         ...prevState,
         user: { ...userDataFromToken },
-
-      setState((prevState) => ({
-        ...prevState,
-        user: { ...userDataFromToken },
         isAuthenticated: true,
         isLoading: false,
         isSignInError: false, // Reset isSignInError on successful login

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import supabase from "../utills/supabase.js";
+import { protect } from "../middlewares/protect.js";
 
 export const petsRouter = Router();
 
@@ -128,11 +129,6 @@ petsRouter.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-import { Router } from "express";
-import supabase from "../utills/supabase.js";
-import { protect } from "../middlewares/protect.js";
-
-export const petsRouter = Router();
 
 petsRouter.get("/myPets", protect, async (req, res) => {
   try {
