@@ -1,76 +1,81 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
-const bgbox = css`
-  background-color: white;
-  height: 747px;
-  width: 802px;
-`;
-
-const bgbox2 = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const textprofilebox = css`
-  width: 735px;
-  height: 24px;
-  font-size: 18px;
-  margin-top: 20px;
-  font-weight: 500;
-  margin-left: 40px;
-`;
-
-const profilepicturebox = css`
-  margin-left: 40px;
-  margin-top: 20px;
-`;
-
-const inputContainer = css`
-  width: 840px;
-  height: 18px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  margin-left: 40px;
-`;
-
-const inputStyle = css`
-  flex-grow: 1;
-  border: none;
-  outline: none;
-`;
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers";
+import {
+  textprofilebox,
+  profilepicturebox,
+  inputContainer,
+  inputStyle,
+  emailPhoneContainer,
+  columnContainer,
+  input,
+  fontStyle,
+  buttonContainer,
+  updateButton,
+  yourNameTitle,
+  datePickerStyle
+} from "./ProflieStyle";
+import { useState } from "react";
 
 function EditProfileTab() {
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <>
-      <div css={bgbox}>
-        <div css={bgbox2}>
-          <div css={textprofilebox}>Profile</div>
+      <div css={textprofilebox}>Profile</div>
+
+      <div css={profilepicturebox}>
+        <img
+          src="\src\PublicPicture\mogupforprofilepicture.png"
+          alt="profilepicture"
+          css={{
+            width: 180,
+            height: 180,
+          }}
+        />
+      </div>
+      <p css={yourNameTitle}>Your Name*</p>
+      <div css={inputContainer}>
+        <input css={inputStyle} type="text" placeholder="Your Name" />
+      </div>
+      <div css={emailPhoneContainer}>
+        <div css={columnContainer}>
+          <p css={fontStyle}>Email*</p>
+          <input css={input} placeholder="Email" />
         </div>
-        <div css={profilepicturebox}>
-          <img
-            src="\src\PublicPicture\mogupforprofilepicture.png"
-            alt="profilepicture"
-            css={{
-              width: 180,
-              height: 180,
-            }}
-          />
+        <div css={columnContainer}>
+          <p css={fontStyle}>Phone*</p>
+          <input css={input} placeholder="Phone" />
         </div>
-        <p css={textprofilebox}>Your Name*</p>
-        <div css={inputContainer}>
-          <input css={inputStyle} type="text" placeholder="Your Name" />
+      </div>
+      <div css={emailPhoneContainer}>
+        <div css={columnContainer}>
+          <p css={fontStyle}>ID Number</p>
+          <input css={input} placeholder="ID Number" />
         </div>
-        <div css={inputContainer}>
-          <input css={inputStyle} type="text" placeholder="Your Name" />
+        <div css={columnContainer}>
+          <p css={fontStyle}>Date ot Birth</p>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Select Date"
+              value={selectedDate}
+              disablePast={true}
+              css={datePickerStyle}
+              onChange={(newDate) => handleDateChange(newDate)}
+              textField={(params) => (
+                <TextField {...params} variant="standard" />
+              )}
+            />
+          </LocalizationProvider>
         </div>
+      </div>
+      <div css={buttonContainer}>
+        <button css={updateButton}>Update Profile</button>
       </div>
     </>
   );
