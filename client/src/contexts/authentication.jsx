@@ -23,31 +23,46 @@ function AuthProvider(props) {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    isLoading: false,
-    isError: false,
-    isSignInError: false,
-    isSignUpError: null,
     user: null,
+    signIn: { isLoading: false, isSignInError: false },
+    signUp: { isLoading: false, isSignUpError: null },
+    forgetPassword: {
+      isForgetPassword: false,
+      isLoading: false,
+      isError: false,
+      isComplete: false,
+    },
     isAuthenticated: Boolean(localStorage.getItem("token")),
-    isForgetPassword: false,
   });
 
   const register = async (data) => {
     try {
-      setState({ ...state, isLoading: true });
+      setState((prevState) => ({
+        ...prevState,
+        signUp: { ...prevState.signUp, isLoading: true }, // Update isLoading inside signUp
+      }));
 
       await axios.post("http://localhost:4000/authentication/register", data);
 
-      setState({ ...state, isLoading: false, isSignUpError: false });
+      setState((prevState) => ({
+        ...prevState,
+        signUp: { ...prevState.signUp, isLoading: false, isSignUpError: false }, // Update isLoading and isSignUpError inside signUp
+      }));
     } catch (error) {
       console.error("Registration failed:", error);
-      setState({ ...state, isLoading: false, isSignUpError: true });
+      setState((prevState) => ({
+        ...prevState,
+        signUp: { ...prevState.signUp, isLoading: false, isSignUpError: true }, // Update isLoading and isSignUpError inside signUp
+      }));
     }
   };
 
   const login = async (data) => {
     try {
-      setState({ ...state, isLoading: true });
+      setState((prevState) => ({
+        ...prevState,
+        signIn: { ...prevState.signIn, isLoading: true }, // Update isLoading inside signIn
+      }));
 
       const response = await axios.post(
         "http://localhost:4000/authentication/login",
@@ -71,7 +86,8 @@ function AuthProvider(props) {
         user: { ...userDataFromToken },
         isAuthenticated: true,
         isLoading: false,
-        isError: false,
+        isSignInError: false, // Reset isSignInError on successful login
+        signIn: { ...prevState.signIn, isLoading: false }, // Update isLoading inside signIn
       }));
 
       if (userDataFromToken.role === "pet_owner") {
@@ -81,25 +97,64 @@ function AuthProvider(props) {
       }
 
       localStorage.setItem("token", token);
-      localStorage.setItem("id", userDataFromToken.id);
+
       console.log(token);
     } catch (error) {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         user: null,
         isAuthenticated: false,
-        isLoading: false,
-        isSignInError: true,
-      });
+        signIn: { ...prevState.signIn, isLoading: false, isSignInError: true }, // Update isLoading inside signIn
+      }));
+      console.log(state);
     }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("id");
+
     setState({ ...state, user: null });
     console.log(localStorage);
     navigate("/login");
+  };
+
+  const forgetPassword = async (email) => {
+    try {
+      setState((prevState) => ({
+        ...prevState,
+        forgetPassword: {
+          ...prevState.forgetPassword,
+          isLoading: true,
+          isError: false,
+          isComplete: false,
+        },
+      }));
+
+      // Introduce a delay of 2 seconds before making the API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      await axios.put("http://localhost:4000/authentication/forgotPassword", {
+        email,
+      });
+
+      setState((prevState) => ({
+        ...prevState,
+        forgetPassword: {
+          ...prevState.forgetPassword,
+          isLoading: false,
+          isComplete: true,
+        },
+      }));
+    } catch (error) {
+      setState((prevState) => ({
+        ...prevState,
+        forgetPassword: {
+          ...prevState.forgetPassword,
+          isLoading: false,
+          isError: true,
+        },
+      }));
+    }
   };
 
   const checkToken = () => {
@@ -139,7 +194,15 @@ function AuthProvider(props) {
 
   return (
     <AuthContext.Provider
-      value={{ state, setState, checkToken, login, logout, register }}
+      value={{
+        state,
+        setState,
+        checkToken,
+        login,
+        logout,
+        register,
+        forgetPassword,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

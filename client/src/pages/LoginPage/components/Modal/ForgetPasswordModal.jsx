@@ -10,17 +10,33 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import { useEffect } from "react";
 
 function ForgetPasswordModal() {
   const [forgetEmail, setForgetEmail] = useState("");
-  const { state, setState } = useAuth();
+  const { state, setState, forgetPassword } = useAuth();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await forgetPassword(forgetEmail);
+  };
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={state.isForgetPassword}
+      open={state.forgetPassword.isForgetPassword}
       onClose={() => {
-        setState({ ...state, isForgetPassword: false });
+        setState({
+          ...state,
+          forgetPassword: {
+            ...state.forgetPassword,
+            isForgetPassword: false,
+            isError: false,
+            isComplete: false,
+          },
+        });
+        setForgetEmail("");
       }}
       closeAfterTransition
       slots={{ backdrop: Backdrop }}
@@ -30,7 +46,7 @@ function ForgetPasswordModal() {
         },
       }}
     >
-      <Fade in={state.isForgetPassword}>
+      <Fade in={state.forgetPassword.isForgetPassword}>
         <Box
           css={css`
             position: absolute;
@@ -66,10 +82,7 @@ function ForgetPasswordModal() {
               width: 100%;
               align-items: center;
             `}
-            onSubmit={(event) => {
-              event.preventDefault();
-              setState({ ...state, isForgetPassword: false });
-            }}
+            onSubmit={handleSubmit}
           >
             <p>Input your email for reset your password</p>
             <div
@@ -88,17 +101,45 @@ function ForgetPasswordModal() {
                 type="email"
                 sx={{ width: "65%" }}
                 value={forgetEmail}
-                onChange={() => {
+                onChange={(e) => {
                   setForgetEmail(e.target.value);
                 }}
               />
+
               <Button type="submit">Confirm</Button>
             </div>
           </form>
+          {state.forgetPassword.isLoading && (
+            <CircularProgress
+              css={css`
+                margin-top: 20px;
+              `}
+            />
+          )}
+          {state.forgetPassword.isError && <div>Invalid email address</div>}
+          {state.forgetPassword.isComplete && (
+            <div
+              css={css`
+                color: green;
+              `}
+            >
+              Reset password successfully, Please check your email
+            </div>
+          )}
+
           <Divider sx={{ my: 2, height: 3 }} />
           <Button
             onClick={() => {
-              setState({ ...state, isForgetPassword: false });
+              setState({
+                ...state,
+                forgetPassword: {
+                  ...state.forgetPassword,
+                  isForgetPassword: false,
+                  isError: false,
+                  isComplete: false,
+                },
+              });
+              setForgetEmail("");
             }}
           >
             Close

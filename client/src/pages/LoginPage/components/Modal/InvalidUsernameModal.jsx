@@ -9,7 +9,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 function InvalidUsernameModal() {
   const { state, setState } = useAuth();
@@ -32,9 +32,12 @@ function InvalidUsernameModal() {
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
-      open={state.isSignInError}
+      open={state.signIn.isSignInError}
       onClose={() => {
-        setState({ ...state, isSignInError: false });
+        setState((prevState) => ({
+          ...prevState,
+          signIn: { ...prevState.signIn, isSignInError: false },
+        }));
         setFormData({ ...formData, password: "" });
       }}
       closeAfterTransition
@@ -45,9 +48,8 @@ function InvalidUsernameModal() {
         },
       }}
     >
-      <Fade in={state.isSignInError}>
+      <Fade in={state.signIn.isSignInError}>
         <Box css={modalStlye} sx={{ minHeight: 150 }}>
-          {" "}
           {/* Set a minimum height */}
           <Typography id="transition-modal-title" variant="h6" component="h2">
             Login Failed
@@ -58,7 +60,10 @@ function InvalidUsernameModal() {
           <Divider sx={{ my: 2, backgroundColor: "red", height: 3 }} />
           <Button
             onClick={() => {
-              setState({ ...state, isSignInError: false });
+              setState((prevState) => ({
+                ...prevState,
+                signIn: { ...prevState.signIn, isSignInError: false },
+              }));
               setFormData({ ...formData, password: "" });
             }}
           >

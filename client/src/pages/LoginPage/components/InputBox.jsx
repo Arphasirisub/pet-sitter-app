@@ -64,7 +64,13 @@ export function InputBox({ handleInputChange, formData }) {
             }
           `}
           onClick={() => {
-            setState({ ...state, isForgetPassword: true });
+            setState({
+              ...state,
+              forgetPassword: {
+                ...state.forgetPassword,
+                isForgetPassword: true,
+              },
+            });
             console.log(state);
           }}
         >
