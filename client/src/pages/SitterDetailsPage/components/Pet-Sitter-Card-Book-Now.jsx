@@ -142,16 +142,8 @@ const BookNowModal = () => {
       setTimeError("End time must be after start time");
       console.error("Invalid selection:", timeError);
       return;
-    } else if (
-      start <= new Date(sitterTimeData.booked_start).getTime() ||
-      new Date(sitterTimeData.booked_stop).getTime() >= stop
-    ) {
-      setTimeError("Invalid");
     }
-    console.log(sitterTimeData.booked_start);
-    // console.log(new Date(start));
-    // console.log(new Date(stop));
-    // console.log(param.id);
+
     navigate(`/booking/${start}/${stop}/${param.id}`);
     handleClose();
   };

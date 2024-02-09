@@ -16,6 +16,8 @@ const PetSitterReview = () => {
   const [sitterData, setSitterData] = useState(null);
   const param = useParams();
   const [selectedRating, setSelectedRating] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -36,8 +38,9 @@ const PetSitterReview = () => {
   };
 
   const handleStateChange = (value) => {
-    setSelectedRating(value);
+    setSelectedRating((prevRating) => (prevRating === value ? 0 : value));
   };
+
   const renderRatingButtons = () => {
     const buttons = [];
     for (let i = 5; i >= 1; i--) {
@@ -47,8 +50,18 @@ const PetSitterReview = () => {
           variant="outlined"
           size="small"
           onClick={() => handleStateChange(i)}
+          sx={{
+            gap: "2px",
+            borderColor: selectedRating === i ? "#FF7037" : undefined, // เปลี่ยนสีของเส้นขอบเมื่อปุ่มถูกเลือก
+            "&:hover": {
+              borderColor: selectedRating === i ? "#FF7037" : undefined, // เปลี่ยนสีของเส้นขอบเมื่อโฮเวอร์
+            },
+            "&.Mui-focusVisible": {
+              borderColor: selectedRating === i ? "#FF7037" : undefined, // เปลี่ยนสีของเส้นขอบเมื่อได้รับการโฟกัส
+            },
+          }}
         >
-          {i}
+          <Typography color={"#5B5D6F"}>{i}</Typography>
           <Rating
             name="read-only"
             value={i}
@@ -60,6 +73,9 @@ const PetSitterReview = () => {
       );
     }
     return buttons;
+  };
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
   };
   return (
     <>
@@ -156,7 +172,19 @@ const PetSitterReview = () => {
                     <Button
                       variant="outlined"
                       size="small"
-                      sx={{ color: "#FF7037" }}
+                      sx={{
+                        color: selectedRating === 0 ? "#FF7037" : undefined, // กำหนดสีของปุ่มตามสถานะ active/de-active
+                        borderColor:
+                          selectedRating === 0 ? "#FF7037" : undefined, // กำหนดสีของเส้นขอบปุ่มตามสถานะ active/de-active
+                        "&:hover": {
+                          borderColor:
+                            selectedRating === 0 ? "#FF7037" : undefined, // เปลี่ยนสีของเส้นขอบเมื่อโฮเวอร์
+                        },
+                        "&.Mui-focusVisible": {
+                          borderColor:
+                            selectedRating === 0 ? "#FF7037" : undefined, // เปลี่ยนสีของเส้นขอบเมื่อได้รับการโฟกัส
+                        },
+                      }}
                       onClick={handleClearButtonClick}
                     >
                       All Reviews
@@ -171,16 +199,23 @@ const PetSitterReview = () => {
             <PetSitterReviewBox
               comments={
                 selectedRating
-                  ? sitterData?.comments.filter(
-                      (comment) => comment.rating === selectedRating
+                  ? sitterData?.comments
+                      .filter((comment) => comment.rating === selectedRating)
+                      .slice((currentPage - 1) * 5, currentPage * 5)
+                  : sitterData?.comments.slice(
+                      (currentPage - 1) * 5,
+                      currentPage * 5
                     )
-                  : sitterData?.comments
               }
             />
           </Stack>
           <Stack justifyContent="center" alignItems="center" padding="20px">
             <Stack spacing={2}>
-              <Pagination count={1} />
+              <Pagination
+                count={Math.ceil((sitterData?.comments?.length || 0) / 5)}
+                page={currentPage}
+                onChange={handleChangePage}
+              />
             </Stack>
           </Stack>
         </Stack>
