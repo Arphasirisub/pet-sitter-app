@@ -4,20 +4,11 @@ import { protect } from "../middlewares/protect.js";
 
 export const ownersRouter = Router();
 
-ownersRouter.get("/", async (req, res) => {
-  try {
-    const data = await supabase.from("owners").select("*");
-    res.json({ data });
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-ownersRouter.get("/:id", async (req, res) => {
-  const ownerId = req.params.id;
+ownersRouter.get("/myProfile", protect, async (req, res) => {
+  const ownerId = req.userId;
 
   try {
+    console.log(ownerId);
     const owner = await supabase
       .from("owners")
       .select("*")
@@ -35,8 +26,18 @@ ownersRouter.get("/:id", async (req, res) => {
   }
 });
 
-ownersRouter.get("/myProfile", protect, async (req, res) => {
-  const ownerId = req.userId;
+ownersRouter.get("/", async (req, res) => {
+  try {
+    const data = await supabase.from("owners").select("*");
+    res.json({ data });
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+ownersRouter.get("/:id", async (req, res) => {
+  const ownerId = req.params.id;
 
   try {
     const owner = await supabase
