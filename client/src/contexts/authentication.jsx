@@ -4,20 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
-const useAuth = () => useContext(AuthContext); // this is a hook that consume AuthContext
-//In React, when you declare something outside of a component (function AuthProvider(){}),
-//its scope extends beyond the specific rendering of components.
-//The lifespan of entities declared outside components, such as variables, functions,
-//or hooks, is not tied to the lifecycle of a specific component or rendering.
-
-//The AuthProvider and its related context, along with the useAuth hook
-//(if declared outside AuthProvider), will exist beyond this specific rendering.
-//They persist as long as your application is running.
-
-//This ability to declare and use entities at a broader scope is beneficial for
-//creating modular and reusable code. It allows you to organize your logic,
-//state management, and utility functions in a way that promotes maintainability
-//and code separation.
+const useAuth = () => useContext(AuthContext);
 
 function AuthProvider(props) {
   const navigate = useNavigate();
@@ -35,6 +22,7 @@ function AuthProvider(props) {
     isAuthenticated: Boolean(localStorage.getItem("token")),
   });
 
+  //register
   const register = async (data) => {
     try {
       setState((prevState) => ({
@@ -57,6 +45,7 @@ function AuthProvider(props) {
     }
   };
 
+  //login
   const login = async (data) => {
     try {
       setState((prevState) => ({
@@ -110,6 +99,7 @@ function AuthProvider(props) {
     }
   };
 
+  //logout
   const logout = () => {
     localStorage.removeItem("token");
 
@@ -118,6 +108,7 @@ function AuthProvider(props) {
     navigate("/login");
   };
 
+  //forget password flow
   const forgetPassword = async (email) => {
     try {
       setState((prevState) => ({
@@ -129,10 +120,7 @@ function AuthProvider(props) {
           isComplete: false,
         },
       }));
-
-      // Introduce a delay of 2 seconds before making the API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-
       await axios.put("http://localhost:4000/authentication/forgotPassword", {
         email,
       });
@@ -157,6 +145,39 @@ function AuthProvider(props) {
     }
   };
 
+  const checkOTP = async (forgetEmail, OTP) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/authentication/forgotPasswordOTP",
+        {
+          email: forgetEmail,
+          token: OTP,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
+  const updatePassword = async (email, password) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/authentication/updatePassword`,
+        {
+          email,
+          password,
+        }
+      );
+
+      console.log("Password updated successfully");
+    } catch (error) {
+      console.error("Error updating password:", error.message);
+      throw error;
+    }
+  };
+
+  //decode token
   const checkToken = () => {
     try {
       const storedToken = localStorage.getItem("token");
@@ -202,6 +223,8 @@ function AuthProvider(props) {
         logout,
         register,
         forgetPassword,
+        checkOTP,
+        updatePassword,
       }}
     >
       {props.children}

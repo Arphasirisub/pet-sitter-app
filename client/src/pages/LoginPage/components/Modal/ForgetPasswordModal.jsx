@@ -10,13 +10,13 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import { useEffect } from "react";
+import axios from "axios";
 
 function ForgetPasswordModal() {
   const [forgetEmail, setForgetEmail] = useState("");
   const { state, setState, forgetPassword } = useAuth();
 
-  const handleSubmit = async (event) => {
+  const handleSubmitEmail = async (event) => {
     event.preventDefault();
     await forgetPassword(forgetEmail);
   };
@@ -74,6 +74,7 @@ function ForgetPasswordModal() {
           >
             Forgot password?
           </div>
+          {/* email form */}
           <form
             css={css`
               display: flex;
@@ -82,7 +83,7 @@ function ForgetPasswordModal() {
               width: 100%;
               align-items: center;
             `}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitEmail}
           >
             <p>Input your email for reset your password</p>
             <div
@@ -98,7 +99,7 @@ function ForgetPasswordModal() {
                 id="outlined-required"
                 label="Your email"
                 placeholder="example@email.com"
-                type="email"
+                type="text"
                 sx={{ width: "65%" }}
                 value={forgetEmail}
                 onChange={(e) => {
@@ -109,22 +110,31 @@ function ForgetPasswordModal() {
               <Button type="submit">Confirm</Button>
             </div>
           </form>
-          {state.forgetPassword.isLoading && (
-            <CircularProgress
+          {/* result submit */}
+          {state.forgetPassword.isError && (
+            <div
               css={css`
-                margin-top: 20px;
+                color: red;
               `}
-            />
+            >
+              Invalid email address
+            </div>
           )}
-          {state.forgetPassword.isError && <div>Invalid email address</div>}
           {state.forgetPassword.isComplete && (
             <div
               css={css`
                 color: green;
               `}
             >
-              Reset password successfully, Please check your email
+              Please check your email for OTP number
             </div>
+          )}
+          {state.forgetPassword.isLoading && (
+            <CircularProgress
+              css={css`
+                margin-top: 20px;
+              `}
+            />
           )}
 
           <Divider sx={{ my: 2, height: 3 }} />

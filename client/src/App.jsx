@@ -18,13 +18,13 @@ function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
       <Route path="/" element={<OwnerHomePage />} />
       <Route path="/sitter/:id" element={<SitterHomepage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
       <Route path="/owner/:id" element={<OwnerMangementPage />} />
       <Route path="/booking/:start/:end/:id" element={<BookingPage />} />
-      <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
     </Routes>
   );
 }

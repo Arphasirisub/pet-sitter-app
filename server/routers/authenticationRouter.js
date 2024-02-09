@@ -153,3 +153,64 @@ authenticationRouter.put("/forgotPassword", async (req, res) => {
     res.status(500).json({ error: "An unexpected error occurred." });
   }
 });
+
+authenticationRouter.post("/forgotPasswordOTP", async (req, res) => {
+  try {
+    const { email, token } = req.body;
+
+    console.log(email, token);
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "email", // Make sure the type is set to 'email'
+    });
+
+    if (error) {
+      console.log(error.message);
+      return res.status(400).json({ error: error.message });
+    }
+
+    // Handle the verification response based on your requirements
+    if (data) {
+      return res
+        .status(200)
+        .json({ message: "Email OTP verification successful" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Password reset email sent successfully." });
+  } catch (error) {
+    console.error("Error resetting password:", error.message);
+    res.status(500).json({ error: "An unexpected error occurred." });
+  }
+});
+
+authenticationRouter.put("/updatePassword", async (req, res) => {
+  try {
+    console.log("Request body:", req.body);
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Email and password are required." });
+    }
+
+    const { data, error } = await supabase.auth.updateUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    // If successful, Supabase sends an email with a password reset link
+    res.status(200).json({ message: "new Password create successfully." });
+  } catch (error) {
+    console.error("Error updating password:", error.message);
+    res.status(500).json({ error: "An unexpected error occurred." });
+  }
+});
