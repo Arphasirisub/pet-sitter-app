@@ -23,26 +23,27 @@ petsRouter.get("/", async (req, res) => {
   }
 });
 
-petsRouter.get("/owner/:id", async (req, res) => {
-  try {
-    const ownerId = req.params.id;
-    const { data, error } = await supabase
-      .from("pets")
-      .select("*")
-      .eq("owner_id", ownerId);
+// petsRouter.get("/ownerPet",protect, async (req, res) => {
+//   try {
+//     const ownerId = req.userId
+//     const { data, error } = await supabase
+//       .from("pets")
+//       .select("*")
+//       .eq("owner_id", ownerId)
+//       .order("createdAt", { ascending: false }); // Sort by createdAt in descending order
 
-    if (error) {
-      throw error; // Throw an error to be caught by the catch block
-    }
+//     if (error) {
+//       throw error; // Throw an error to be caught by the catch block
+//     }
 
-    // Send the fetched data back to the client
-    res.json({ data });
-  } catch (error) {
-    // Handle errors
-    console.error("Error fetching data from 'pets' table:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+//     // Send the fetched data back to the client
+//     res.json({ data });
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Error fetching data from 'pets' table:", error.message);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 petsRouter.get("/getpet/:petid", async (req, res) => {
   try {
@@ -90,8 +91,8 @@ petsRouter.post("/:id", async (req, res) => {
 petsRouter.put("/:id", async (req, res) => {
   try {
     const petId = req.params.id;
-    const updatedPetData = { ...req.body, updated_at: new Date() };
-
+    const updatedPetData = { ...req.body };
+    // , updated_at: new Date()
     // Update data in 'pets' table
     const { data, error } = await supabase
       .from("pets")
@@ -133,11 +134,11 @@ petsRouter.delete("/:id", async (req, res) => {
 petsRouter.get("/myPets", protect, async (req, res) => {
   try {
     const ownerId = req.userId;
-    console.log(ownerId);
     const { data, error } = await supabase
       .from("pets")
       .select("*")
-      .eq("owner_id", ownerId);
+      .eq("owner_id", ownerId)
+      .order("created_at", { ascending: false }); // Sort by createdAt in descending order
 
     if (error) {
       console.error("Error fetching data:", error.message);

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { centerRightStyle } from "../CreatePetPage/CreatePetStyle";
 
 export const containerUpdatePetStyle = css`
   display: flex;
@@ -124,6 +125,7 @@ export const buttonGroupStyle = css`
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
+  margin-top: 24px;
 `;
 
 export const cancleButtonStyle = css`
@@ -262,4 +264,19 @@ export const inputStyle = css`
 export const inputNoButtomStyle = css`
   ${inputStyle};
   margin-bottom: 0;
+`;
+
+export const sectionDeleteButton = css`
+  display: flex;
+  align-items: center;
+`;
+
+export const centerInRightStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const centerInLeftStyle = css`
+  display: flex;
+  flex-direction: column;
 `;

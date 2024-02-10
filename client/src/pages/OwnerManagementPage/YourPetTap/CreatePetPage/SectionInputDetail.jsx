@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Button from "@mui/material/Button";
+import axios from "axios";
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -29,8 +30,7 @@ function SectionInputDetail() {
   useEffect(() => {
     checkToken();
   }, []);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     try {
       await axios.post(`http://localhost:4000/pets/${params.id}`, inputData);
       navigate(`/owner/${state.user.id}/yourPet/`);

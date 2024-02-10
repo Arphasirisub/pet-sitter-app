@@ -8,7 +8,6 @@ import SitterHomepage from "./pages/SitterHomePage/SitterHomepage";
 import OwnerHomePage from "./pages/OwnerHomePage/OwnerHomePage";
 import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
-import YourPetTap from "./pages/OwnerManagementPage/YourPetTap/components/Petpage/YorPetTap";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage/ForgetPasswordPage.Jsx";
