@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import EditProfileTab from "./components/EditProfileTab";
+import EditProfileTab from "./components/EditProfileTab.jsx";
 
 function ProfileTap() {
   return (

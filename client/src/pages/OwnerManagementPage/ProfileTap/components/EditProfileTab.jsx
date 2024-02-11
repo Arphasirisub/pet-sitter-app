@@ -16,18 +16,56 @@ import {
   buttonContainer,
   updateButton,
   yourNameTitle,
-  datePickerStyle
+  datePickerStyle,
 } from "./ProflieStyle";
 import { useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function EditProfileTab() {
+  const [profileData, setprofileData] = useState({});
+  const [nameData, setnameData] = useState("");
+  const [phoneData, setphoneData] = useState("");
+  const [emailData, setemailData] = useState("");
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
+  const handleSubmit = async () => {
+    await axios.put(`http://localhost:4000/owners/${params.id}`, {
+      full_name: nameData,
+      phone: phoneData,
+      email: emailData,
+    });
+  };
+  const params = useParams();
+  const getDataProfile = async () => {
+    const result = await axios.get(`http://localhost:4000/owners/${params.id}`);
+    setprofileData(result.data.data);
+  };
+
+  useEffect(() => {
+    getDataProfile();
+  }, []);
+  useEffect(() => {
+    if (
+      profileData &&
+      profileData.full_name &&
+      profileData.phone &&
+      profileData.email
+    ) {
+      setnameData(profileData.full_name);
+      setphoneData(profileData.phone);
+      setemailData(profileData.email);
+    }
+  }, [profileData]);
+
   const [selectedDate, setSelectedDate] = useState(null);
   return (
-    <>
-      <div css={textprofilebox}>Profile</div>
+    <form onSubmit={handleSubmit}>
+      <div css={textprofilebox}>Profie</div>
 
       <div css={profilepicturebox}>
         <img
@@ -41,22 +79,43 @@ function EditProfileTab() {
       </div>
       <p css={yourNameTitle}>Your Name*</p>
       <div css={inputContainer}>
-        <input css={inputStyle} type="text" placeholder="Your Name" />
+        <input
+          css={inputStyle}
+          type="text"
+          value={nameData}
+          onChange={(e) => {
+            setnameData(e.target.value);
+          }}
+        />
       </div>
       <div css={emailPhoneContainer}>
         <div css={columnContainer}>
           <p css={fontStyle}>Email*</p>
-          <input css={input} placeholder="Email" />
+          <input
+            css={input}
+            type="email"
+            value={emailData}
+            onChange={(e) => {
+              setemailData(e.target.value);
+            }}
+          />
         </div>
         <div css={columnContainer}>
           <p css={fontStyle}>Phone*</p>
-          <input css={input} placeholder="Phone" />
+          <input
+            css={input}
+            type="text"
+            value={phoneData}
+            onChange={(e) => {
+              setphoneData(e.target.value);
+            }}
+          />
         </div>
       </div>
       <div css={emailPhoneContainer}>
         <div css={columnContainer}>
           <p css={fontStyle}>ID Number</p>
-          <input css={input} placeholder="ID Number" />
+          <input css={input} value={profileData.id} />
         </div>
         <div css={columnContainer}>
           <p css={fontStyle}>Date ot Birth</p>
@@ -75,9 +134,11 @@ function EditProfileTab() {
         </div>
       </div>
       <div css={buttonContainer}>
-        <button css={updateButton}>Update Profile</button>
+        <button type="submit" css={updateButton}>
+          Update Profile
+        </button>
       </div>
-    </>
+    </form>
   );
 }
 export default EditProfileTab;
