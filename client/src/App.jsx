@@ -13,6 +13,7 @@ import BookingPage from "./pages/BookingPage/BookingPage";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage/ForgetPasswordPage.Jsx";
 import SelectRolePage from "./pages/SelectRolePage/SelectRolePage.jsx";
+import BookingResultPage from "./pages/BookingPage/BookingResult/BookingResultPage.jsx";
 
 function App() {
   jwtInterceptor();
@@ -37,6 +38,7 @@ function App() {
         element={<OwnerMangementPage />}
       />
       <Route path="/booking/:start/:end/:id" element={<BookingPage />} />
+      <Route path="/booking/result" element={<BookingResultPage />} />
       <Route path="/role" element={<SelectRolePage />} />
     </Routes>
   );

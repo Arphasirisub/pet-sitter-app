@@ -32,7 +32,6 @@ const BookNowModal = () => {
     setSelectedTimeStart,
     selectedTimeEnd,
     setSelectedTimeEnd,
-    selectedSitter,
     bookedTimeData,
   } = useBookingTools();
 
