@@ -8,23 +8,24 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./customTheme.js";
 import { SittersProvider } from "./contexts/getSitters.jsx";
 import { MyPetsToolsProvider } from "./contexts/myPetsTools.jsx";
-import { PetsProvider } from "./contexts/getPetsByOwnerId.jsx";
+
 import { BookingToolsProvider } from "./contexts/BookingTools.jsx";
+import { FacebookProvider } from "./contexts/facebook.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <MyPetsToolsProvider>
-          <SittersProvider>
-            <PetsProvider>
+        <FacebookProvider>
+          <MyPetsToolsProvider>
+            <SittersProvider>
               <BookingToolsProvider>
                 <ThemeProvider theme={theme}>
                   <App />
                 </ThemeProvider>
               </BookingToolsProvider>
-            </PetsProvider>
-          </SittersProvider>
-        </MyPetsToolsProvider>
+            </SittersProvider>
+          </MyPetsToolsProvider>
+        </FacebookProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -67,7 +67,7 @@ function Navbar() {
       >
         {state.isAuthenticated && state.user ? (
           <>
-            <div>{state.user.role}</div>
+            <div>{state.user.name}</div>
             <img
               src={state.user.profile_img}
               alt="Profile"
