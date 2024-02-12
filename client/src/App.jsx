@@ -12,9 +12,11 @@ import YourPetTap from "./pages/OwnerManagementPage/YourPetTap/components/Petpag
 import BookingPage from "./pages/BookingPage/BookingPage";
 import jwtInterceptor from "./utils/jwtInterceptor.js";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage/ForgetPasswordPage.Jsx";
+import SelectRolePage from "./pages/SelectRolePage/SelectRolePage.jsx";
 
 function App() {
   jwtInterceptor();
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
@@ -35,6 +37,7 @@ function App() {
         element={<OwnerMangementPage />}
       />
       <Route path="/booking/:start/:end/:id" element={<BookingPage />} />
+      <Route path="/role" element={<SelectRolePage />} />
     </Routes>
   );
 }

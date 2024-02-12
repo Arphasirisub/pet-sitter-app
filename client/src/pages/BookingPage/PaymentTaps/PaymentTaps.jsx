@@ -1,7 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
-function PaymentTaps({ setActiveSteps }) {
+import { useState } from "react";
+import SelectPaymentMethods from "./PaymentMethods";
+import { useBookingTools } from "../../../contexts/BookingTools";
+function PaymentTaps() {
+  const [paymentMethods, setPaymentMethods] = useState("cash");
+  const { setActiveSteps } = useBookingTools();
   return (
     <div
       css={css`
@@ -14,6 +19,7 @@ function PaymentTaps({ setActiveSteps }) {
         gap: 40px;
       `}
     >
+      <SelectPaymentMethods setPaymentMethods={setPaymentMethods} />
       <div
         css={css`
           display: flex;

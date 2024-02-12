@@ -77,6 +77,12 @@ function BookingToolsProvider(props) {
   const [selectedTimeStart, setSelectedTimeStart] = useState("");
   const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [bookedTimeData, setBookedTimeData] = useState([]);
+  const [activeSteps, setActiveSteps] = useState("yourPet");
+  const [completeStep, setCompleteStep] = useState({
+    yourPet: false,
+    information: false,
+    payment: false,
+  });
 
   //detect isSelect
   const verifySelect = () => {
@@ -121,6 +127,10 @@ function BookingToolsProvider(props) {
         getBookingData,
         bookedTimeData,
         setBookedTimeData,
+        activeSteps,
+        setActiveSteps,
+        completeStep,
+        setCompleteStep,
       }}
     >
       {props.children}

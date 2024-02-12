@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { Bs1CircleFill, Bs2CircleFill, Bs3CircleFill } from "react-icons/bs";
-
-function Stepper({ activeSteps }) {
+import { useBookingTools } from "../../../contexts/BookingTools";
+function Stepper() {
+  const { activeSteps, completeStep } = useBookingTools();
   return (
     <div
       css={css`

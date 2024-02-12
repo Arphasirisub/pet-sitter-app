@@ -7,7 +7,6 @@ import DynamicContents from "./components/DynamicContents";
 import { useState } from "react";
 
 function BookingPage() {
-  const [activeSteps, setActiveSteps] = useState("yourPet");
   return (
     <>
       <Navbar />
@@ -26,11 +25,8 @@ function BookingPage() {
             gap: 2rem;
           `}
         >
-          <Stepper activeSteps={activeSteps} />
-          <DynamicContents
-            setActiveSteps={setActiveSteps}
-            activeSteps={activeSteps}
-          />
+          <Stepper />
+          <DynamicContents />
         </div>
         <Detail />
       </div>

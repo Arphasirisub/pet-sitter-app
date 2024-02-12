@@ -1,11 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react"; // Import React
+
 import facebook from "../../../PublicPicture/facebook.png";
 import google from "../../../PublicPicture/google.png";
-import FacebookLogin from "./FacebookLogin";
-
+import { useFacebook } from "../../../contexts/facebook";
 export function AlternativeLogin() {
+  const { facebookLogin } = useFacebook();
+
+  const handleFacebookLogin = async () => {
+    facebookLogin();
+  };
+
   return (
     <>
       <div
@@ -13,7 +18,7 @@ export function AlternativeLogin() {
           display: flex;
           align-items: center;
           text-align: center;
-          width: 30%; /* Ensure the container takes up the full width */
+          width: 30%;
         `}
       >
         <div
@@ -51,7 +56,7 @@ export function AlternativeLogin() {
           }
         `}
       >
-        <img src={facebook} alt="Facebook" />
+        <img src={facebook} alt="Facebook" onClick={handleFacebookLogin} />
 
         <img src={google} alt="Google" />
       </div>
