@@ -9,28 +9,17 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { averageRatingBox } from "./Style-SitterDetailPage";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 const PetSitterReview = () => {
-  const [sitterData, setSitterData] = useState(null);
-  const param = useParams();
   const [selectedRating, setSelectedRating] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const param = useParams();
+  const { getSitterData, sitterData } = useBookingTools();
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/sitters/${param.id}`
-      );
-      setSitterData(response.data);
-      console.log(response);
-    } catch (error) {
-      console.error("Error fetching sitter details:", error);
-    }
-  };
   useEffect(() => {
-    fetchData();
+    getSitterData(param.id);
   }, []);
 
   const handleClearButtonClick = () => {
@@ -200,9 +189,9 @@ const PetSitterReview = () => {
               comments={
                 selectedRating
                   ? sitterData?.comments
-                      .filter((comment) => comment.rating === selectedRating)
-                      .slice((currentPage - 1) * 5, currentPage * 5)
-                  : sitterData?.comments.slice(
+                      ?.filter((comment) => comment.rating === selectedRating)
+                      ?.slice((currentPage - 1) * 5, currentPage * 5)
+                  : sitterData?.comments?.slice(
                       (currentPage - 1) * 5,
                       currentPage * 5
                     )

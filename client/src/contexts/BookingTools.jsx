@@ -44,6 +44,24 @@ function BookingToolsProvider(props) {
     }
   };
 
+  const getBookingData = async (sitter_id) => {
+    try {
+      const response2 = await axios.get(
+        `http://localhost:4000/bookings/sitter/${sitter_id}`,
+        {
+          params: {
+            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
+            booked_stop: selectedTimeEnd,
+          },
+        }
+      );
+      setBookedTimeData(response2.data);
+      // console.log(response2);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
+
   //global state
   const [selectedPets, setSelectedPets] = useState([]);
   const [petsResults, setPetsResults] = useState({
@@ -56,6 +74,9 @@ function BookingToolsProvider(props) {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [sitterData, setSitterData] = useState({});
   const [ownerData, setOwnerData] = useState({});
+  const [selectedTimeStart, setSelectedTimeStart] = useState("");
+  const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
+  const [bookedTimeData, setBookedTimeData] = useState([]);
 
   //detect isSelect
   const verifySelect = () => {
@@ -93,6 +114,13 @@ function BookingToolsProvider(props) {
         sitterData,
         getOwnerData,
         ownerData,
+        selectedTimeEnd,
+        setSelectedTimeEnd,
+        selectedTimeStart,
+        setSelectedTimeStart,
+        getBookingData,
+        bookedTimeData,
+        setBookedTimeData,
       }}
     >
       {props.children}

@@ -16,18 +16,25 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { buttonOrange, boxModal } from "./Style-SitterDetailPage";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 const BookNowModal = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTimeStart, setSelectedTimeStart] = useState("");
-  const [selectedTimeEnd, setSelectedTimeEnd] = useState("");
   const [timeError, setTimeError] = useState("");
-  const [sitterTimeData, setSitterTimData] = useState([]);
+
   const param = useParams();
+  const {
+    getBookingData,
+    selectedTimeStart,
+    setSelectedTimeStart,
+    selectedTimeEnd,
+    setSelectedTimeEnd,
+    selectedSitter,
+    bookedTimeData,
+  } = useBookingTools();
 
   const convertTime = (date, time) => {
     const startTimeParts = time.split(":");
@@ -43,26 +50,8 @@ const BookNowModal = () => {
   const start = convertTime(selectedDate, selectedTimeStart);
   const stop = convertTime(selectedDate, selectedTimeEnd);
 
-  const fetchData = async () => {
-    try {
-      const response2 = await axios.get(
-        `http://localhost:4000/bookings/${param.id}`,
-        {
-          params: {
-            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
-            booked_stop: selectedTimeEnd,
-          },
-        }
-      );
-      setSitterTimData(response2.data);
-      console.log(response2);
-    } catch (error) {
-      console.error("Error fetching sitter details:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    getBookingData(param.id);
     if (selectedDate) {
       console.log("Start time:", start);
       console.log("Stop time:", stop);
@@ -112,7 +101,7 @@ const BookNowModal = () => {
   const handleSubmit = () => {
     const currentTime = new Date().getTime();
     const minimumTime = currentTime + 3 * 60 * 60 * 1000; // 3 hours in milliseconds
-    const isOverlapping = sitterTimeData.some((booking) => {
+    const isOverlapping = bookedTimeData.some((booking) => {
       const bookingStart = new Date(booking.booked_start).getTime();
       const bookingEnd = new Date(booking.booked_stop).getTime();
       return (
@@ -165,7 +154,7 @@ const BookNowModal = () => {
       const timeSlotEnd = timeSlotStart + step * 60 * 1000;
 
       // ตรวจสอบว่าช่วงเวลาที่กำลังพิจารณาอยู่ไม่ซ้ำกับการจองในฐานข้อมูล
-      const isOverlapping = sitterTimeData.some((booking) => {
+      const isOverlapping = bookedTimeData.some((booking) => {
         const bookingStart = new Date(booking.booked_start).getTime();
         const bookingEnd = new Date(booking.booked_stop).getTime();
         return (

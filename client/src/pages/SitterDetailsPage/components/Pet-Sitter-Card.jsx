@@ -10,9 +10,8 @@ import {
   Stack,
 } from "@mui/material";
 import RoomSharpIcon from "@mui/icons-material/RoomSharp";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import BookNowModal from "./Pet-Sitter-Card-Book-Now";
 import {
   petTypeIcon,
@@ -21,28 +20,20 @@ import {
   rabbitIconStyle,
   birdIconStyle,
 } from "../../SearchListPage/components/Style";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 const PetSitterCard = () => {
-  const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/sitters/${param.id}`
-      );
-      setSitterData1(response.data);
-    } catch (error) {
-      console.error("Error fetching sitter details:", error);
-    }
-  };
+  const { getSitterData, sitterData } = useBookingTools();
+
   useEffect(() => {
-    fetchData();
+    getSitterData(param.id);
   }, []);
 
   return (
     <>
       <Stack>
-        {sitterData1 ? (
+        {sitterData && sitterData?.rating ? (
           <div>
             <Card
               sx={{
@@ -62,8 +53,8 @@ const PetSitterCard = () => {
                 alignItems={"center"}
               >
                 <Avatar
-                  alt={sitterData1.full_name}
-                  src={sitterData1.profile_img}
+                  alt={sitterData.full_name}
+                  src={sitterData.profile_img}
                   sx={{
                     width: 140,
                     height: 140,
@@ -83,7 +74,7 @@ const PetSitterCard = () => {
                   component="div"
                   sx={{ fontWeight: "bold" }}
                 >
-                  {sitterData1.trade_name}
+                  {sitterData.trade_name}
                 </Typography>
                 <Stack
                   className="pet-sitter-name-and-exp"
@@ -101,7 +92,7 @@ const PetSitterCard = () => {
                     sx={{ fontWeight: "bold" }}
                     gutterBottom
                   >
-                    {sitterData1.full_name}
+                    {sitterData.full_name}
                   </Typography>
                   <Typography
                     className="pet-sitter-Exp"
@@ -109,13 +100,13 @@ const PetSitterCard = () => {
                     gutterBottom
                     sx={{ color: "#1CCD83" }}
                   >
-                    {sitterData1.experience} Year Exp.
+                    {sitterData.experience} Year Exp.
                   </Typography>
                 </Stack>
                 <Rating
                   name="read-only"
-                  value={sitterData1.rating}
-                  max={sitterData1.rating}
+                  value={sitterData.rating}
+                  max={sitterData.rating}
                   readOnly
                   sx={{ color: "#1CCD83" }}
                 />
@@ -133,31 +124,36 @@ const PetSitterCard = () => {
                     sx={{ color: "grey" }}
                   />
                   <Typography className="pet-sitter-location" color="grey">
-                    {sitterData1.district}, {sitterData1.province}
+                    {sitterData.district}, {sitterData.province}
                   </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1} justifyContent={"center"}>
-                  {sitterData1.pet_type?.map((typelist, index) => {
-                    return (
-                      <div
-                        key={index}
-                        css={[
-                          petTypeIcon,
-                          typelist === "Dog"
-                            ? dogIconStyle
-                            : typelist === "Bird"
-                            ? birdIconStyle
-                            : typelist === "Rabbit"
-                            ? rabbitIconStyle
-                            : typelist === "Cat"
-                            ? catIconStyle
-                            : null,
-                        ]}
-                      >
-                        {typelist}
-                      </div>
-                    );
-                  })}
+                  {sitterData.dog === true ? (
+                    <div className="dog" css={[petTypeIcon, dogIconStyle]}>
+                      Dog
+                    </div>
+                  ) : null}
+
+                  {sitterData.cat === true ? (
+                    <div className="cat" css={[petTypeIcon, catIconStyle]}>
+                      Cat
+                    </div>
+                  ) : null}
+
+                  {sitterData.bird === true ? (
+                    <div className="bird" css={[petTypeIcon, birdIconStyle]}>
+                      Bird
+                    </div>
+                  ) : null}
+
+                  {sitterData.rabbit === true ? (
+                    <div
+                      className="rabbit"
+                      css={[petTypeIcon, rabbitIconStyle]}
+                    >
+                      Rabbit
+                    </div>
+                  ) : null}
                 </Stack>
               </CardContent>
               <BookNowModal />

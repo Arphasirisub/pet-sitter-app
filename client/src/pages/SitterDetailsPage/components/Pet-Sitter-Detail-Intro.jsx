@@ -3,28 +3,17 @@ import { css } from "@emotion/react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 const PetSitterDetailIntro = () => {
-  const [sitterData1, setSitterData1] = useState(null);
   const param = useParams();
+  const { getSitterData, sitterData } = useBookingTools();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/sitters/${param.id}`
-        );
-        setSitterData1(response.data);
-      } catch (error) {
-        console.error("Error fetching sitter details:", error);
-      }
-    };
-
-    fetchData();
+    getSitterData(param.id);
   }, []);
 
   return (
@@ -36,7 +25,7 @@ const PetSitterDetailIntro = () => {
         paddingLeft="10%"
         paddingRight="8%"
       >
-        {sitterData1 ? (
+        {sitterData ? (
           <Stack>
             <Typography
               className="pet-sitter-name"
@@ -47,7 +36,7 @@ const PetSitterDetailIntro = () => {
                 margin-bottom: 40px;
               `}
             >
-              {sitterData1.trade_name}
+              {sitterData.trade_name}
             </Typography>
             <Box
               className="introduction"
@@ -69,7 +58,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData1.introduction}
+                {sitterData.introduction}
               </Typography>
             </Box>
             <Box
@@ -92,7 +81,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData1.service}
+                {sitterData.service}
               </Typography>
             </Box>
             <Box
@@ -115,7 +104,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData1.my_place}
+                {sitterData.my_place}
               </Typography>
             </Box>
           </Stack>
