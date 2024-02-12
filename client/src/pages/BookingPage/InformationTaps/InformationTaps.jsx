@@ -5,8 +5,9 @@ import TextField from "@mui/material/TextField";
 import { useBookingTools } from "../../../contexts/BookingTools";
 import { useAuth } from "../../../contexts/authentication";
 import { useEffect } from "react";
-function InformationTaps({ setActiveSteps }) {
-  const { ownerData, getOwnerData } = useBookingTools();
+function InformationTaps() {
+  const { ownerData, getOwnerData, setActiveSteps, setCompleteStep } =
+    useBookingTools();
   const { state } = useAuth();
   useEffect(() => {
     if (!state.isAuthenticated) {

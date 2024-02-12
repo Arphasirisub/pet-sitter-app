@@ -8,11 +8,17 @@ import VerifyModal from "./VerifyModal";
 import { useBookingTools } from "../../../contexts/BookingTools";
 import WarningModal from "./WarningModal";
 
-function YourPetTaps({ setActiveSteps }) {
+function YourPetTaps() {
   const navigate = useNavigate();
   const params = useParams();
-  const { isSelect, setShowVerifyModal, setShowWarningModal } =
-    useBookingTools();
+  const {
+    isSelect,
+    setShowVerifyModal,
+    setShowWarningModal,
+    setActiveSteps,
+    setCompleteStep,
+    completeStep,
+  } = useBookingTools();
   return (
     <>
       <div
@@ -52,6 +58,11 @@ function YourPetTaps({ setActiveSteps }) {
                 setShowWarningModal(true);
               } else {
                 navigate(`/detail/${params.id}`);
+                setCompleteStep({
+                  yourPet: false,
+                  information: false,
+                  payment: false,
+                });
               }
             }}
           >
@@ -73,6 +84,10 @@ function YourPetTaps({ setActiveSteps }) {
             onClick={() => {
               if (isSelect) {
                 setActiveSteps("information");
+                setCompleteStep({
+                  ...completeStep,
+                  yourPet: true,
+                });
               } else {
                 setShowVerifyModal(true);
               }

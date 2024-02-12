@@ -3,19 +3,15 @@ import { css } from "@emotion/react";
 import YourPetTaps from "../YourPetTaps/YourPetTaps";
 import InformationTaps from "../InformationTaps/InformationTaps";
 import PaymentTaps from "../PaymentTaps/PaymentTaps";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
-function DynamicContents({ setActiveSteps, activeSteps }) {
+function DynamicContents() {
+  const { activeSteps } = useBookingTools();
   return (
     <>
-      {activeSteps === "yourPet" && (
-        <YourPetTaps setActiveSteps={setActiveSteps} />
-      )}
-      {activeSteps === "information" && (
-        <InformationTaps setActiveSteps={setActiveSteps} />
-      )}
-      {activeSteps === "payment" && (
-        <PaymentTaps setActiveSteps={setActiveSteps} />
-      )}
+      {activeSteps === "yourPet" && <YourPetTaps />}
+      {activeSteps === "information" && <InformationTaps />}
+      {activeSteps === "payment" && <PaymentTaps />}
     </>
   );
 }

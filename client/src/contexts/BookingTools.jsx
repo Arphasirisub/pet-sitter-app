@@ -56,6 +56,12 @@ function BookingToolsProvider(props) {
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [sitterData, setSitterData] = useState({});
   const [ownerData, setOwnerData] = useState({});
+  const [activeSteps, setActiveSteps] = useState("yourPet");
+  const [completeStep, setCompleteStep] = useState({
+    yourPet: false,
+    information: false,
+    payment: false,
+  });
 
   //detect isSelect
   const verifySelect = () => {
@@ -93,6 +99,10 @@ function BookingToolsProvider(props) {
         sitterData,
         getOwnerData,
         ownerData,
+        activeSteps,
+        setActiveSteps,
+        completeStep,
+        setCompleteStep,
       }}
     >
       {props.children}
