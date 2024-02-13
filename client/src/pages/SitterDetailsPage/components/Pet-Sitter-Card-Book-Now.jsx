@@ -164,7 +164,17 @@ const BookNowModal = () => {
       });
 
       if (!isOverlapping) {
-        options.push({ value: formattedTime, label: formattedTime });
+        options.push({
+          value: formattedTime,
+          label: formattedTime,
+          disabled: false,
+        });
+      } else if (isOverlapping) {
+        options.push({
+          value: formattedTime,
+          label: formattedTime,
+          disabled: true,
+        });
       }
     }
 
@@ -243,7 +253,11 @@ const BookNowModal = () => {
                     sx={{ mt: 2, width: "200px" }}
                   >
                     {generateTimeOptions().map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        disabled={option.disabled}
+                      >
                         {option.label}
                       </MenuItem>
                     ))}
@@ -257,7 +271,11 @@ const BookNowModal = () => {
                     sx={{ mt: 2, width: "200px" }}
                   >
                     {generateTimeOptions().map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        disabled={option.disabled}
+                      >
                         {option.label}
                       </MenuItem>
                     ))}
