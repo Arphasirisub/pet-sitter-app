@@ -16,9 +16,11 @@ import {
   resultBoxMain,
   resultHeader,
 } from "./BookingResultPageStyle";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 function BookingResultPage(param) {
   const navigate = useNavigate();
+  const { bookingId, setBookingId } = useBookingTools();
 
   return (
     <Stack

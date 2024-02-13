@@ -4,32 +4,39 @@ import Navbar from "../../public-components/Navbar";
 import Stepper from "./components/Stepper";
 import Detail from "./components/Detail";
 import DynamicContents from "./components/DynamicContents";
-import { useState } from "react";
+import { useBookingTools } from "../../contexts/BookingTools";
+import BookingResultPage from "./BookingResult/BookingResultPage";
 
 function BookingPage() {
+  const { bookingId } = useBookingTools();
   return (
     <>
       <Navbar />
-      <div
-        css={css`
-          padding: 2rem;
-          display: flex;
-          justify-content: space-around;
-        `}
-      >
+
+      {!bookingId && (
         <div
           css={css`
-            width: 60%;
+            padding: 2rem;
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            justify-content: space-around;
           `}
         >
-          <Stepper />
-          <DynamicContents />
+          <div
+            css={css`
+              width: 60%;
+              display: flex;
+              flex-direction: column;
+              gap: 2rem;
+            `}
+          >
+            <Stepper />
+            <DynamicContents />
+          </div>
+          <Detail />
         </div>
-        <Detail />
-      </div>
+      )}
+
+      {bookingId && <BookingResultPage />}
     </>
   );
 }

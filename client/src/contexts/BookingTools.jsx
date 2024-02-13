@@ -85,7 +85,7 @@ function BookingToolsProvider(props) {
   });
   const [message, setMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [bookingId, setBookingId] = useState(0);
+  const [bookingId, setBookingId] = useState(null);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
