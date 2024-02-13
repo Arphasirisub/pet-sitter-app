@@ -83,6 +83,7 @@ function BookingToolsProvider(props) {
     information: false,
     payment: false,
   });
+  const [bookingData, setBookingData] = useState({});
 
   //detect isSelect
   const verifySelect = () => {
@@ -131,6 +132,8 @@ function BookingToolsProvider(props) {
         setActiveSteps,
         completeStep,
         setCompleteStep,
+        bookingData,
+        setBookingData,
       }}
     >
       {props.children}
