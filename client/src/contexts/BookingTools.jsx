@@ -69,7 +69,7 @@ function BookingToolsProvider(props) {
     isError: false,
     isLoading: false,
   });
-  const [isSelect, setIsSelect] = useState(false);
+
   const [showVerifyModal, setShowVerifyModal] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [sitterData, setSitterData] = useState({});
@@ -83,14 +83,9 @@ function BookingToolsProvider(props) {
     information: false,
     payment: false,
   });
-
-  //detect isSelect
-  const verifySelect = () => {
-    return selectedPets.length > 0;
-  };
-  useEffect(() => {
-    setIsSelect(verifySelect());
-  }, [selectedPets]);
+  const [message, setMessage] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [bookingId, setBookingId] = useState(0);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -110,8 +105,6 @@ function BookingToolsProvider(props) {
         setPetsResults,
         getPets,
         toggleSelection,
-        verifySelect,
-        isSelect,
         setShowVerifyModal,
         showVerifyModal,
         showWarningModal,
@@ -131,6 +124,12 @@ function BookingToolsProvider(props) {
         setActiveSteps,
         completeStep,
         setCompleteStep,
+        message,
+        setMessage,
+        totalPrice,
+        setTotalPrice,
+        bookingId,
+        setBookingId,
       }}
     >
       {props.children}

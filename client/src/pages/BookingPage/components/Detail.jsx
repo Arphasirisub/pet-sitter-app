@@ -3,8 +3,11 @@ import { css } from "@emotion/react";
 import { useBookingTools } from "../../../contexts/BookingTools";
 import { useParams } from "react-router-dom";
 
+import { useEffect } from "react";
+
 function Detail() {
-  const { selectedPets, sitterData } = useBookingTools();
+  const { selectedPets, sitterData, totalPrice, setTotalPrice } =
+    useBookingTools();
   const { start, end } = useParams();
 
   function formatDate(timestamp) {
@@ -30,15 +33,20 @@ function Detail() {
     return `${startDate} | ${startTime} - ${endTime}`;
   }
 
-  // Calculate duration
+  useEffect(() => {
+    // Calculate duration
+    const durationInMs = Math.abs(Number(end) - Number(start));
+    const durationInHours = durationInMs / (1000 * 60 * 60);
+
+    // Calculate total price
+    const totalPrice = selectedPets.length * durationInHours * 100;
+    setTotalPrice(totalPrice);
+  }, [selectedPets, start, end, setTotalPrice]);
+
+  const formattedDateTime = formatDateTime(Number(start), Number(end));
   const durationInMs = Math.abs(Number(end) - Number(start));
   const durationInHours = durationInMs / (1000 * 60 * 60);
   const formattedDuration = durationInHours.toFixed(1); // Format to one decimal place
-
-  // Calculate total price
-  const totalPrice = selectedPets.length * durationInHours * 100;
-
-  const formattedDateTime = formatDateTime(Number(start), Number(end));
 
   return (
     <div

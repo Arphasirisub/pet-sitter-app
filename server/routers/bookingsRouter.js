@@ -1,5 +1,6 @@
 import { Router } from "express";
 import supabase from "../utills/supabase.js";
+import { protect } from "../middlewares/protect.js";
 
 export const bookingsRouter = Router();
 
@@ -150,5 +151,72 @@ bookingsRouter.get("/owner/:id", async (req, res) => {
   } catch (error) {
     console.error("Error fetching data:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
+  const sitterId = req.params.id;
+  const ownerId = req.userId;
+  const { start, end, pets, price, message, payment } = req.body;
+  console.log(req.body);
+
+  try {
+    // Insert data into the 'bookings' table
+    const { data: bookingData, error: bookingError } = await supabase
+      .from("bookings")
+      .insert([
+        {
+          sitter_id: sitterId,
+          owner_id: ownerId,
+          booked_start: start,
+          booked_stop: end,
+          price: price,
+          status: "Waiting for confirm",
+          message: message,
+          payment: payment,
+        },
+      ]);
+
+    if (bookingError) {
+      throw bookingError;
+    }
+
+    console.log(bookingData);
+
+    // Retrieve the ID of the inserted booking
+    const { data: insertedBooking, error: selectError } = await supabase
+      .from("bookings")
+      .select("id")
+      .eq("owner_id", ownerId)
+      .eq("booked_start", start)
+      .eq("booked_stop", end)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (selectError) {
+      throw selectError;
+    }
+
+    const bookingId = insertedBooking.id;
+
+    // Insert data into the 'pet_booking' table
+    const petBookingData = pets.map((pet) => ({
+      pet_id: pet.id, // Assuming each pet object in the pets array has an 'id' property
+      booking_id: bookingId,
+    }));
+
+    const { error: petBookingError } = await supabase
+      .from("pet_booking")
+      .insert(petBookingData);
+
+    if (petBookingError) {
+      throw petBookingError;
+    }
+
+    res.status(200).json({ bookingId: bookingId });
+  } catch (error) {
+    console.error("Error inserting data into bookings table:", error);
+    res.status(500).send("Internal Server Error");
   }
 });

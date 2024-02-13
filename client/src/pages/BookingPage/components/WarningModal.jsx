@@ -11,19 +11,43 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 function WarningModal() {
-  const { showWarningModal, setShowWarningModal, setSelectedPets } =
-    useBookingTools();
+  const {
+    showWarningModal,
+    setShowWarningModal,
+    setSelectedPets,
+    activeSteps,
+    setCompleteStep,
+    completeStep,
+    setActiveSteps,
+    setMessage,
+  } = useBookingTools();
   const navigate = useNavigate();
   const params = useParams();
+
+  const handleClose = () => {
+    console.log(activeSteps);
+    if (activeSteps === "yourPet") {
+      setSelectedPets([]);
+      navigate(`/detail/${params.id}`);
+    }
+
+    if (activeSteps === "information") {
+      setActiveSteps("yourPet");
+      setCompleteStep({
+        ...completeStep,
+        information: false,
+      });
+      setMessage("");
+    }
+    setShowWarningModal(false);
+  };
 
   return (
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       open={showWarningModal}
-      onClose={() => {
-        setShowWarningModal(false);
-      }}
+      onClose={handleClose}
       closeAfterTransition
     >
       <Fade in={showWarningModal}>
@@ -79,11 +103,7 @@ function WarningModal() {
             `}
           />
           <Button
-            onClick={() => {
-              setSelectedPets([]);
-              navigate(`/detail/${params.id}`);
-              setShowWarningModal(false);
-            }}
+            onClick={handleClose}
             css={css`
               margin-top: 10px;
             `}

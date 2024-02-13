@@ -4,20 +4,20 @@ import PetList from "../YourPetTaps/PetList";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import VerifyModal from "./VerifyModal";
+import VerifyModal from "../components/VerifyModal";
 import { useBookingTools } from "../../../contexts/BookingTools";
-import WarningModal from "./WarningModal";
+import WarningModal from "../components/WarningModal";
 
 function YourPetTaps() {
   const navigate = useNavigate();
   const params = useParams();
   const {
-    isSelect,
     setShowVerifyModal,
     setShowWarningModal,
     setActiveSteps,
     setCompleteStep,
     completeStep,
+    selectedPets,
   } = useBookingTools();
   return (
     <>
@@ -54,7 +54,7 @@ function YourPetTaps() {
               }
             `}
             onClick={() => {
-              if (isSelect) {
+              if (selectedPets.length > 0) {
                 setShowWarningModal(true);
               } else {
                 navigate(`/detail/${params.id}`);
@@ -82,12 +82,12 @@ function YourPetTaps() {
               }
             `}
             onClick={() => {
-              if (isSelect) {
+              if (selectedPets.length > 0) {
                 setActiveSteps("information");
-                setCompleteStep({
-                  ...completeStep,
+                setCompleteStep((prevCompleteStep) => ({
+                  ...prevCompleteStep,
                   yourPet: true,
-                });
+                }));
               } else {
                 setShowVerifyModal(true);
               }
