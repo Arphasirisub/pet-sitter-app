@@ -18,19 +18,65 @@ import {
 } from "./BookingResultPageStyle";
 import moment from "moment";
 import { useBookingTools } from "../../../contexts/BookingTools";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 
-function BookingResultPage(sitter_id) {
+function BookingResultPage() {
   const navigate = useNavigate();
+  const {
+    getBookingData,
+    bookingId,
+    setBookingId,
+    bookedTimeData,
+    setBookedTimeData,
+    totalPrice,
+    setTotalPrice,
+    selectedPets,
+    setSelectedPets,
+    sitterData,
+    setSitterData,
+    ownerData,
+  } = useBookingTools();
   const param = useParams();
-  const { getBookingData, bookingData, selectedTimeStart, selectedTimeEnd } =
-    useBookingTools();
+  const [durationHours, setDurationHours] = useState(0);
+
+  const calculateDurationInHours = (startTime, stopTime) => {
+    const start = moment(startTime);
+    const stop = moment(stopTime);
+    const duration = moment.duration(stop.diff(start));
+    const hours = duration.asHours();
+    return hours;
+  };
+  const handleBookingHistory = () => {
+    setBookedTimeData([]);
+    setTotalPrice(0);
+    setSelectedPets([]);
+    setBookingId(null);
+    navigate(`/owner/${ownerData.id}/bookingHistory`);
+  };
+
+  const handleBackToHome = () => {
+    setBookedTimeData([]);
+    setTotalPrice(0);
+    setSelectedPets([]);
+    setBookingId(null);
+    navigate(`/`);
+  };
 
   useEffect(() => {
-    getBookingData(sitter_id);
-    console.log(bookingData);
-  }, []);
+    getBookingData(param.id);
+
+    if (bookedTimeData.find((i) => i.id === bookingId)) {
+      const startTime = bookedTimeData.find(
+        (i) => i.id === bookingId
+      ).booked_start;
+      const stopTime = bookedTimeData.find(
+        (i) => i.id === bookingId
+      ).booked_stop;
+      const duration = calculateDurationInHours(startTime, stopTime);
+      setDurationHours(duration);
+    }
+  }, [bookedTimeData]);
 
   return (
     <Stack
@@ -50,7 +96,7 @@ function BookingResultPage(sitter_id) {
           width={"400px"}
         />
       </Stack>
-      {bookingData ? (
+      {bookedTimeData.find((i) => i.id === bookingId) ? (
         <Stack
           sx={{
             width: " 600px",
@@ -75,32 +121,45 @@ function BookingResultPage(sitter_id) {
             <Box className="resultBoxContent" css={resultBoxContent}>
               <Stack>
                 <Typography sx={bookingResultGreyText}>
-                  Transaction Date: Tue, 16 Oct 2022 {bookingData.created_at}
+                  Transaction Date:
+                  {moment(
+                    bookedTimeData.find((i) => i.id === bookingId).created_at
+                  ).format(" ddd, D MMM YYYY")}
                 </Typography>
                 <Typography sx={bookingResultGreyText}>
-                  Transaction No. : 122312 {bookingData.id}
+                  Transaction No. :
+                  {bookedTimeData.find((i) => i.id === bookingId).id}
                 </Typography>
               </Stack>
               <br />
               <Typography sx={bookingResultGreyText}>Pet Sitter:</Typography>
               <Typography sx={bookingResultBlackText}>
-                Happy House! By Jane Maison
+                {sitterData.trade_name} by {sitterData.full_name}
               </Typography>
               <br />
-              <Stack direction={"row"} spacing={10}>
+              <Stack direction={"row"} spacing="60px">
                 <Stack>
                   <Typography sx={bookingResultGreyText}>
                     Date & Time:
                   </Typography>
-                  <Stack direction={"row"} spacing={2}>
+                  <Stack direction={"row"} spacing={1}>
                     <Typography sx={bookingResultBlackText}>
-                      25 Aug, 2023
-                      {moment(selectedTimeStart).format("D MMM, YYYY")}
+                      {moment(
+                        bookedTimeData.find((i) => i.id === bookingId)
+                          .booked_start
+                      ).format("D MMM, YYYY")}
                     </Typography>
                     <Typography>|</Typography>
                     <Typography sx={bookingResultBlackText}>
-                      7 AM - 10 AM{moment(selectedTimeStart).format("h a")} -
-                      {moment(selectedTimeEnd).format("h a")}
+                      {moment(
+                        bookedTimeData.find((i) => i.id === bookingId)
+                          .booked_start
+                      ).format("h:mm a")}
+                      -
+                      {moment(
+                        bookedTimeData.find((i) => i.id === bookingId)
+                          .booked_stop
+                      ).format("h:mm a")}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -108,14 +167,20 @@ function BookingResultPage(sitter_id) {
                 <Stack>
                   <Typography sx={bookingResultGreyText}>Duration:</Typography>
                   <Typography sx={bookingResultBlackText}>
-                    3 hours
-                    {moment(selectedTimeStart - selectedTimeEnd).format("h ")}
+                    {durationHours} hours
                   </Typography>
                 </Stack>
               </Stack>
               <br />
               <Typography sx={bookingResultGreyText}>Pet:</Typography>
-              <Typography sx={bookingResultBlackText}>Bubba, Daisy</Typography>
+              <Stack direction={"row"}>
+                {selectedPets.map((pet, index) => (
+                  <Typography sx={bookingResultBlackText} key={index}>
+                    {pet.pet_name}
+                    {index !== selectedPets.length - 1 && ", "}
+                  </Typography>
+                ))}
+              </Stack>
               <br />
               <Stack
                 direction={"row"}
@@ -125,25 +190,23 @@ function BookingResultPage(sitter_id) {
                 borderColor={"#94959d"}
               >
                 <Typography sx={bookingResultBlackText}>Total</Typography>
-                <Typography sx={bookingResultBlackText}>900.00 THB</Typography>
+                <Typography sx={bookingResultBlackText}>
+                  {totalPrice} THB
+                </Typography>
               </Stack>
             </Box>
           </Box>
           <Stack className="button" direction={"row"} spacing={3} marginTop={5}>
             <Button
               className="booking-history"
-              onClick={() => {
-                navigate(`/owner/${sitter_id}/bookingHistory`);
-              }}
+              onClick={handleBookingHistory}
               sx={buttonBookingResult}
             >
               Booking Detail
             </Button>
             <Button
               className="booking-history"
-              onClick={() => {
-                navigate(`/`);
-              }}
+              onClick={handleBackToHome}
               sx={buttonBookingResult}
             >
               Back To Home

@@ -52,6 +52,7 @@ function BookingToolsProvider(props) {
           params: {
             booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
             booked_stop: selectedTimeEnd,
+            id: bookingId,
           },
         }
       );
