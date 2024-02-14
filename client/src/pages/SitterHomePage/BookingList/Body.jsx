@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import CustomizedTables from "./TableContent";
+import { useState } from "react";
 
 const bodyStyle = css`
   display: flex;
@@ -40,13 +41,22 @@ const topicInputStyle = css`
 `;
 
 const Body = () => {
+  const [booked, setbooked] = useState("");
+
+  // ส่ง booked ที่เป็น State เข้าไป ใน <CustomizedTables />
   return (
     <div className="container_body" css={bodyStyle}>
       <div className="section_topic" css={topicStyle}>
         <h3 css={fontStyle}>Booking List</h3>
 
         <div className="topic_input" css={topicInputStyle}>
-          <input type="text" placeholder="Search..." css={inputStyle} />
+          <input
+            type="text"
+            placeholder="Search..."
+            css={inputStyle}
+            onChange={(event) => setbooked(event.target.value)}
+            value={booked}
+          />
 
           <select className="dropdown" css={inputStyle}>
             <option value="">All status</option>
@@ -59,7 +69,7 @@ const Body = () => {
         </div>
       </div>
       <div className="section_table">
-        <CustomizedTables />
+        <CustomizedTables searchbooking={booked} />
       </div>
     </div>
   );
