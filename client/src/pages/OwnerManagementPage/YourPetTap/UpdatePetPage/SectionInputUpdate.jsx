@@ -43,6 +43,7 @@ function SectionInputUpdatePage() {
     deletePetById,
     getPetById,
     resetToPostData,
+    updateImageSrc,
   } = useMyPetsTools();
 
   const params = useParams();
@@ -56,7 +57,10 @@ function SectionInputUpdatePage() {
 
   const handleSubmit = async () => {
     try {
-      await axios.put(`http://localhost:4000/pets/${params.petId}`, inputData);
+      await axios.put(`http://localhost:4000/pets/${params.petId}`, {
+        ...inputData,
+        picture: updateImageSrc,
+      });
     } catch (error) {
       console.error("Error updating pet:", error.message);
     }

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./authentication";
+import imgimport from "../PublicPicture/imgimport.png";
 
 const myPetsToolsContext = createContext();
 const useMyPetsTools = () => useContext(myPetsToolsContext);
@@ -94,6 +95,28 @@ function MyPetsToolsProvider(props) {
     checkToken();
   }, []);
 
+  const [imageSrc, setImageSrc] = useState(imgimport);
+  const [updateImageSrc, setUpdateImageSrc] = useState(null);
+  const [importImage, setImportImage] = useState();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Get the selected file from the event
+    const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+    console.log(file);
+    if (file && file.size > maxFileSize) {
+      console.error("File size exceeds the limit (2MB)");
+      return; // Exit the function if file size exceeds the limit
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <myPetsToolsContext.Provider
       value={{
@@ -112,6 +135,13 @@ function MyPetsToolsProvider(props) {
         setAllPet,
         state,
         checkToken,
+        imageSrc,
+        setImageSrc,
+        handleFileChange,
+        importImage,
+        setImportImage,
+        updateImageSrc,
+        setUpdateImageSrc,
       }}
     >
       {props.children}

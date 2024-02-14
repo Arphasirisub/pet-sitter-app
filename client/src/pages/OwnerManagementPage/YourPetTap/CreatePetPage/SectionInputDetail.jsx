@@ -24,19 +24,38 @@ import {
 } from "./CreatePetStyle.jsx";
 
 function SectionInputDetail() {
-  const { handleCancel, inputData, handleStateChange } = useMyPetsTools();
+  const {
+    handleCancel,
+    inputData,
+    handleStateChange,
+    imageSrc,
+    setImageSrc,
+    handleFileChange,
+    importImage,
+  } = useMyPetsTools();
   const params = useParams();
   const { state, checkToken } = useAuth();
+
   useEffect(() => {
     checkToken();
   }, []);
+
   const handleSubmit = async () => {
     try {
-      await axios.post(`http://localhost:4000/pets/${params.id}`, inputData);
+      await axios.post(`http://localhost:4000/pets/${params.id}`, {
+        ...inputData,
+        picture: imageSrc,
+      });
       navigate(`/owner/${state.user.id}/yourPet/`);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleButtonClick = async () => {
+    setIsCreatePet(true);
+    // Call the uploadFile function when the button is clicked
+    await uploadFile();
   };
 
   return (
@@ -187,9 +206,7 @@ function SectionInputDetail() {
             id="fade-button"
             aria-controls={open ? "fade-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
-            onClick={() => {
-              setIsCreatePet(true);
-            }}
+            onClick={handleButtonClick}
             css={createPetInputButtonStyle}
           >
             Create Pet

@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { centerRightStyle } from "../CreatePetPage/CreatePetStyle";
 
 export const containerUpdatePetStyle = css`
   display: flex;
@@ -39,6 +38,7 @@ export const pictureById = css`
 `;
 
 export const importButtonStyle = css`
+  cursor: pointer;
   position: absolute;
   top: 185px;
   left: 217px;
