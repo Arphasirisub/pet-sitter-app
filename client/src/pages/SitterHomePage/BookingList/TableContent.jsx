@@ -57,25 +57,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function CustomizedTables() {
+function CustomizedTables({ searchbooking }) {
   const param = useParams();
+  const [fetchData, setFetchData] = useState([]);
   const [bookingHistory, setBookingHistory] = useState([]);
 
   const fetchBookingHistory = async () => {
     try {
       console.log(param.id);
+      // 2. fetch from db
       const result = await axios.get(
         `http://localhost:4000/bookings/sitter/${param.id}`
       );
-
+      setFetchData(result.data);
       setBookingHistory(result.data);
-
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const searching = () => {
+    if (searchbooking) {
+      const filterbooking = fetchData.filter((booking) => {
+        return booking.owners.full_name
+          .toLowerCase()
+          .includes(searchbooking.toLowerCase());
+      });
+      console.log(filterbooking);
+      setBookingHistory(filterbooking);
+    } else {
+      setBookingHistory(fetchData);
+    }
+  };
+
+  useEffect(() => {
+    searching();
+  }, [searchbooking]);
+
+  // 1. fetch
   useEffect(() => {
     fetchBookingHistory();
   }, []);
@@ -93,8 +112,8 @@ function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bookingHistory.map((row) => (
-            <StyledTableRow key={row.owners.full_name}>
+          {bookingHistory.map((row, index) => (
+            <StyledTableRow key={index}>
               <StyledTableCell component="th" scope="row">
                 {row.owners.full_name}
               </StyledTableCell>

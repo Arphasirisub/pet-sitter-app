@@ -37,22 +37,56 @@ ownersRouter.get("/", async (req, res) => {
 });
 
 ownersRouter.get("/:id", async (req, res) => {
-  const ownerId = req.params.id;
-
   try {
-    const owner = await supabase
+    const ownerId = req.params.id;
+    const { data, error } = await supabase
       .from("owners")
       .select("*")
       .eq("id", ownerId)
-      .single();
+      .single(); // Assuming you expect a single record based on the route
 
-    if (owner.length === 0) {
-      return res.status(404).json({ error: "Owner not found" });
+    if (error) {
+      return res.status(500).json({ error: error.message });
     }
 
-    res.json({ data: owner });
+    res.status(200).json({ data });
   } catch (error) {
-    console.error("Error fetching owner:", error.message);
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+ownersRouter.put("/:id", async (req, res) => {
+  try {
+    const ownerId = req.params.id;
+    const { full_name, email, phone } = req.body;
+
+    // Check if required fields are present
+    if (!full_name || !email || !phone) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    // Update owner information in the database
+    const { data, error } = await supabase
+      .from("owners")
+      .update({
+        full_name,
+        email,
+        phone,
+        created_at: new Date().toISOString(),
+      })
+      .eq("id", ownerId)
+      .single();
+
+    // Check for errors during the update
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    // Return the updated owner information
+    res.status(200).json({ data: "Data has been update !" });
+  } catch (error) {
+    console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
