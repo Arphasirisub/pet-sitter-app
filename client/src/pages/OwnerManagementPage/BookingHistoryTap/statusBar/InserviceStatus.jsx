@@ -4,7 +4,7 @@ import {
   statusBoxFont,
   inServiceContainer,
   phonestyle,
-} from "../component/bookingHistoryTapStyle";
+} from "../styleComponent/bookingHistoryTapStyle";
 import phone from "../../../../PublicPicture/phone.png";
 
 function InServiceStatus({ ownerBookings }) {

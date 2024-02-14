@@ -80,7 +80,7 @@ export const line = css`
   width: 100%;
   margin-top: 10px;
 `;
-export const totleContainer = css`
+export const totalContainer = css`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

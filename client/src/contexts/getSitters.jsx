@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 const getSittersContext = createContext();
 const useSitter = () => useContext(getSittersContext);
 
@@ -64,7 +65,7 @@ function SittersProvider(props) {
         searchResult,
         setSearchResult,
         getSitters,
-        searchInput, 
+        searchInput,
         setSearchInput,
         handleStateChange,
       }}

@@ -86,8 +86,6 @@ function AuthProvider(props) {
       }
 
       localStorage.setItem("token", token);
-
-      console.log(token);
     } catch (error) {
       setState((prevState) => ({
         ...prevState,

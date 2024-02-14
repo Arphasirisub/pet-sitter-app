@@ -10,6 +10,7 @@ import { SittersProvider } from "./contexts/getSitters.jsx";
 import { MyPetsToolsProvider } from "./contexts/myPetsTools.jsx";
 
 import { BookingToolsProvider } from "./contexts/BookingTools.jsx";
+import { MyHistoryToolsProvider } from "./contexts/myHistoryTools.jsx";
 import { FacebookProvider } from "./contexts/facebook.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,9 +20,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <MyPetsToolsProvider>
             <SittersProvider>
               <BookingToolsProvider>
-                <ThemeProvider theme={theme}>
-                  <App />
-                </ThemeProvider>
+                <MyHistoryToolsProvider>
+                  <ThemeProvider theme={theme}>
+                    <App />
+                  </ThemeProvider>
+                </MyHistoryToolsProvider>
               </BookingToolsProvider>
             </SittersProvider>
           </MyPetsToolsProvider>

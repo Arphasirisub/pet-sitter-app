@@ -65,10 +65,14 @@ function SearchBox() {
     <form css={sticky} onSubmit={handleSubmit}>
       <div>
         <div css={searchBox}>
-          <label css={text}>Search</label>
+          <label css={text} htmlFor="searchInput">
+            Search
+          </label>
           <div>
             <input
               type="text"
+              id="searchInput"
+              name="searchInput"
               css={searchInputStyle}
               value={searchInput.searchInput}
               onChange={(e) => {
@@ -81,48 +85,64 @@ function SearchBox() {
 
           <p css={text}>Pet Type:</p>
           <div css={checkBoxLaout}>
-            <Checkbox
-              {...label}
-              color="default"
-              checked={searchInput.dog}
-              onChange={(e) => {
-                handleStateChange("dog", e.target.checked);
-              }}
-              sx={checkboxStyles}
-            />
-            <label css={checkBoxText}>Dog</label>
-            <Checkbox
-              {...label}
-              color="default"
-              checked={searchInput.cat}
-              onChange={(e) => {
-                handleStateChange("cat", e.target.checked);
-              }}
-              sx={checkboxStyles}
-            />
-            <label css={checkBoxText}>Cat</label>
-            <Checkbox
-              {...label}
-              color="default"
-              checked={searchInput.bird}
-              onChange={(e) => {
-                handleStateChange("bird", e.target.checked);
-              }}
-              sx={checkboxStyles}
-            />
-            <label css={checkBoxText}>Bird</label>
-            <Checkbox
-              {...label}
-              color="default"
-              checked={searchInput.rabbit}
-              onChange={(e) => {
-                handleStateChange("rabbit", e.target.checked);
-              }}
-              sx={checkboxStyles}
-            />
-            <label css={checkBoxText}>Rabbit</label>
+          <label htmlFor="dog" css={checkBoxText}>
+          <Checkbox
+            id="dog"
+            name="petType"
+            {...label}
+            color="default"
+            checked={searchInput.dog}
+            onChange={(e) => {
+              handleStateChange("dog", e.target.checked);
+            }}
+            sx={checkboxStyles}
+          />
+          Dog
+        </label>
+            <label htmlFor="cat" css={checkBoxText}>
+          <Checkbox
+            id="cat"
+            name="petType"
+            {...label}
+            color="default"
+            checked={searchInput.cat}
+            onChange={(e) => {
+              handleStateChange("cat", e.target.checked);
+            }}
+            sx={checkboxStyles}
+          />
+          Cat
+        </label>
+        <label htmlFor="bird" css={checkBoxText}>
+          <Checkbox
+            id="bird"
+            name="petType"
+            {...label}
+            color="default"
+            checked={searchInput.bird}
+            onChange={(e) => {
+              handleStateChange("bird", e.target.checked);
+            }}
+            sx={checkboxStyles}
+          />
+          Bird
+        </label>
+        <label htmlFor="rabbit" css={checkBoxText}>
+          <Checkbox
+            id="rabbit"
+            name="petType"
+            {...label}
+            color="default"
+            checked={searchInput.rabbit}
+            onChange={(e) => {
+              handleStateChange("rabbit", e.target.checked);
+            }}
+            sx={checkboxStyles}
+          />
+          Rabbit
+        </label>
           </div>
-          <label css={text}>Rating:</label>
+          <div css={text}>Rating:</div>
           <div css={flexRowRating}>
             <div
               onClick={() => {

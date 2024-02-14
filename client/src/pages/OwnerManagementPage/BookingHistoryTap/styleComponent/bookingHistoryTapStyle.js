@@ -10,8 +10,9 @@ export const bookingContainer = css`
 `;
 export const titleSytle = css`
   display: flex;
-  font-weight: 600;
+  font-weight: 700;
   margin: 40px;
+  font-size: 24px;
 `;
 
 export const boxContainer = css`

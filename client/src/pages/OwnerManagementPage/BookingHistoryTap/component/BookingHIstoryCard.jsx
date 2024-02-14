@@ -18,16 +18,15 @@ import {
   detailFont,
   imgNameContainer,
   hourPetTypeContainer,
-} from "./bookingHistoryTapStyle.js";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+} from "../styleComponent/bookingHistoryTapStyle.js";
+import { useEffect } from "react";
+
 import WaitingConfirmStatus from "../statusBar/waitingConfirmStatus.jsx";
 import InServiceStatus from "../statusBar/InserviceStatus.jsx";
 import SuccessStatus from "../statusBar/sucessStatus.jsx";
 import WaitingServiceStatus from "../statusBar/WaitingService.jsx";
 import CancelStatus from "../statusBar/CancelStatus.jsx";
-
+import { useMyHistoryTools } from "../../../../contexts/myHistoryTools.jsx";
 const getColorByStatus = (status) => {
   switch (status) {
     case "In service":
@@ -45,51 +44,27 @@ const getColorByStatus = (status) => {
   }
 };
 
-function BookingHistoryCard({
-  handleOpen
-}) {
-  const [ownerBookings, setOwnerBookings] = useState([]);
-  const param = useParams();
-
-  const getHistory = async () => {
-    try {
-      const result = await axios(
-        `http://localhost:4000/bookings/owner/${param.id}`
-      );
-      console.log(result.data);
-      setOwnerBookings(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+function BookingHistoryCard({ handleOpen }) {
+  const { ownerBookings, getHistory, setSelectedBooking } = useMyHistoryTools();
   useEffect(() => {
     getHistory();
-  }, [param.id]);
+  }, []);
   return (
-    <>
+    <div>
       {ownerBookings.map((booking, index) => {
-        let statusComponent;
-        if (booking.status === "Waiting for confirm") {
-          statusComponent = <WaitingConfirmStatus ownerBookings={ownerBookings}/>;
-        } else if (booking.status === "In service") {
-          statusComponent = <InServiceStatus />;
-        } else if (booking.status === "Success") {
-          statusComponent = <SuccessStatus booking={booking} />;
-        } else if (booking.status === "Waiting for service") {
-          statusComponent = <WaitingServiceStatus />;
-        } else if (booking.status === "Canceled") {
-          statusComponent = <CancelStatus />;
-        } else {
-          statusComponent = null;
-        }
-
         return (
           <div
             className="card-container"
             css={boxContainer}
             key={index}
-            onClick={booking.status !== "Success" ? () => handleOpen(booking) : null}
+            onClick={() => {
+              if (booking.status !== "Success") {
+                handleOpen(booking);
+                setSelectedBooking(booking);
+              } else {
+                setSelectedBooking(booking);
+              }
+            }}
           >
             <div className="row-layout" css={rowLayout}>
               <div className="img-name-container" css={imgNameContainer}>
@@ -181,11 +156,29 @@ function BookingHistoryCard({
                 </div>
               </div>
             </div>
-            {statusComponent}
+            {(() => {
+              let statusComponent;
+              if (booking.status === "Waiting for confirm") {
+                statusComponent = (
+                  <WaitingConfirmStatus ownerBookings={ownerBookings} />
+                );
+              } else if (booking.status === "In service") {
+                statusComponent = <InServiceStatus />;
+              } else if (booking.status === "Success") {
+                statusComponent = <SuccessStatus booking={booking} />;
+              } else if (booking.status === "Waiting for service") {
+                statusComponent = <WaitingServiceStatus />;
+              } else if (booking.status === "Canceled") {
+                statusComponent = <CancelStatus />;
+              } else {
+                statusComponent = null;
+              }
+              return statusComponent;
+            })()}
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
 

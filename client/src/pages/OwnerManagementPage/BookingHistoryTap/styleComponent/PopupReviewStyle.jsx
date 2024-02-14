@@ -43,6 +43,8 @@ export const inputReviewBox = css`
   border: solid 1px #e8e9f3;
   border-radius: 10px;
   margin-bottom: 50px;
+  outline: none;
+  padding: 10px 0px 0px 10px;
 
   &::placeholder {
     position: absolute;

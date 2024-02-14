@@ -4,7 +4,7 @@ import {
   waitConfirmContainer,
   statusBoxFont,
   buttonReview,
-} from "../component/bookingHistoryTapStyle";
+} from "../styleComponent/bookingHistoryTapStyle";
 
 function WaitingConfirmStatus() {
   return (
@@ -12,7 +12,7 @@ function WaitingConfirmStatus() {
       <p className="status-info-card" css={statusBoxFont}>
         Waiting Pet Sitter for confirm booking
       </p>
-      <button css={buttonReview}>Cancel</button>
+      {/* <button css={buttonReview}>Cancel</button> */}
     </div>
   );
 }

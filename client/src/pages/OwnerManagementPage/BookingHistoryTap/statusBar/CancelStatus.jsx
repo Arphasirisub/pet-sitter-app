@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import {
   waitConfirmContainer,
   statusBoxFont,
-} from "../component/bookingHistoryTapStyle";
+} from "../styleComponent/bookingHistoryTapStyle";
 
 function CancelStatus() {
   return (

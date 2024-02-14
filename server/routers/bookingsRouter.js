@@ -70,9 +70,8 @@ bookingsRouter.get("/sitter/:id", async (req, res) => {
   }
 });
 
-bookingsRouter.get("/owner/:id", async (req, res) => {
-  const { id } = req.params;
-
+bookingsRouter.get("/mybookings", protect, async (req, res) => {
+  const id = req.userId;
   try {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")

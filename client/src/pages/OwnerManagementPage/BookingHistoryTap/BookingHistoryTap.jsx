@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import {
   bookingContainer,
   titleSytle,
-} from "./component/bookingHistoryTapStyle";
+} from "./styleComponent/bookingHistoryTapStyle"
 import Popup from "./component/BookingHistoryPopup"
 
 function BookingHistoryTap() {
@@ -18,4 +18,5 @@ function BookingHistoryTap() {
     </>
   );
 }
+
 export default BookingHistoryTap;

@@ -18,10 +18,10 @@ import {
   sitterNameData,
   dateTimeContainer,
   line,
-  totleContainer,
-} from "./PopupCardStyle";
+  totalContainer,
+} from "../styleComponent/PopupCardStyle";
 import { useState } from "react";
-
+import { useMyHistoryTools } from "../../../../contexts/myHistoryTools";
 function Popup() {
   const [open, setOpen] = useState(false);
   const handleOpen = (booking) => {
@@ -29,7 +29,7 @@ function Popup() {
     setSelectedBooking(booking);
   };
   const handleClose = () => setOpen(false);
-  const [selectedBooking, setSelectedBooking] = useState({});
+  const {selectedBooking, setSelectedBooking} = useMyHistoryTools();
 
   return (
     <div className="cardContainer" css={cardContainer}>
@@ -89,8 +89,10 @@ function Popup() {
             </div>
             <div className="date-time-container" css={dateTimeContainer}>
               <div>
-                <p css={sitterNameTitle}>Date & Time:</p>
-                <p css={sitterNameData}>
+                <p className="date-time-title" css={sitterNameTitle}>
+                  Date & Time:
+                </p>
+                <p className="date-time-font-style" css={sitterNameData}>
                   {selectedBooking.booked_date}
                   <span
                     css={css`
@@ -107,13 +109,19 @@ function Popup() {
                   flex-basis: 200px;
                 `}
               >
-                <p css={sitterNameTitle}>Duration</p>
-                <p css={sitterNameData}>{selectedBooking.duration}</p>
+                <p className="duration-font-style" css={sitterNameTitle}>
+                  Duration
+                </p>
+                <p className="hour-font-style" css={sitterNameData}>
+                  {selectedBooking.duration}
+                </p>
               </div>
             </div>
-            <div css={columnLayout}>
-              <p css={sitterNameTitle}>Pet:</p>
-              <p css={sitterNameData}>
+            <div className="column-layout" css={columnLayout}>
+              <p className="pet-name-title" css={sitterNameTitle}>
+                Pet:
+              </p>
+              <p className="pet-name-list" css={sitterNameData}>
                 {selectedBooking.pet_booking &&
                   selectedBooking.pet_booking.map((pet, index) => (
                     <span key={index}>
@@ -124,9 +132,13 @@ function Popup() {
               </p>
             </div>
             <hr className="line" css={line} />
-            <div css={totleContainer}>
-              <p css={sitterNameData}>Total:</p>
-              <p css={sitterNameData}>{selectedBooking.price}</p>
+            <div className="total-container" css={totalContainer}>
+              <p className="total-title" css={sitterNameData}>
+                Total:
+              </p>
+              <p className="price-font-style" css={sitterNameData}>
+                {selectedBooking.price}
+              </p>
             </div>
           </div>
         </Box>
