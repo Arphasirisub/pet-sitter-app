@@ -36,6 +36,9 @@ function BookingResultPage() {
     sitterData,
     setSitterData,
     ownerData,
+    setCompleteStep,
+    setActiveSteps,
+    setMessage,
   } = useBookingTools();
   const param = useParams();
   const [durationHours, setDurationHours] = useState(0);
@@ -52,6 +55,13 @@ function BookingResultPage() {
     setTotalPrice(0);
     setSelectedPets([]);
     setBookingId(null);
+    setCompleteStep({
+      yourPet: false,
+      information: false,
+      payment: false,
+    });
+    setMessage("");
+    setActiveSteps("yourPet");
     navigate(`/owner/${ownerData.id}/bookingHistory`);
   };
 
@@ -60,6 +70,13 @@ function BookingResultPage() {
     setTotalPrice(0);
     setSelectedPets([]);
     setBookingId(null);
+    setCompleteStep({
+      yourPet: false,
+      information: false,
+      payment: false,
+    });
+    setMessage("");
+    setActiveSteps("yourPet");
     navigate(`/`);
   };
 
