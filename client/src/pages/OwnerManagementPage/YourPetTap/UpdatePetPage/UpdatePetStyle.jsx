@@ -38,6 +38,7 @@ export const pictureById = css`
 `;
 
 export const importButtonStyle = css`
+  cursor: pointer;
   position: absolute;
   top: 185px;
   left: 217px;
@@ -124,6 +125,7 @@ export const buttonGroupStyle = css`
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
+  margin-top: 24px;
 `;
 
 export const cancleButtonStyle = css`
@@ -262,4 +264,19 @@ export const inputStyle = css`
 export const inputNoButtomStyle = css`
   ${inputStyle};
   margin-bottom: 0;
+`;
+
+export const sectionDeleteButton = css`
+  display: flex;
+  align-items: center;
+`;
+
+export const centerInRightStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const centerInLeftStyle = css`
+  display: flex;
+  flex-direction: column;
 `;

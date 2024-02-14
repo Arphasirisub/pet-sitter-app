@@ -1,66 +1,105 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import Button from "@mui/material/Button";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useAuth } from "../../../../contexts/authentication.jsx";
+import Button from "@mui/material/Button";
+import { RiDeleteBinLine } from "react-icons/ri";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 import {
-  centerRightStyle,
-  centerLeftStyle,
-  fromStyle,
-  inputTopStyle,
+  formStyle,
   labelStyle,
-  inputButtomStyle,
+  inputButtonStyle,
+  inputTopStyle,
   textAreaStyle,
-  buttonInputStyle,
+  deleteButtonStyle,
+  textDeleteButtonStyle,
+  deleteConfirmStyle,
+  deleteDetailStyle,
+  buttonGroupStyle,
   cancleButtonStyle,
-  createPetInputButtonStyle,
+  deleteButtonPopupStyle,
+  buttonGroupUpdateStyle,
+  cancleUpdeteButtonStyle,
+  updateButtonStyle,
   inputCenterStyle,
   selectCenterStyle,
-  inputStyle,
   inputNoButtomStyle,
-} from "./CreatePetStyle.jsx";
+  inputStyle,
+  sectionDeleteButton,
+  centerInRightStyle,
+  centerInLeftStyle,
+} from "./UpdatePetStyle.jsx";
 
-function SectionInputDetail() {
+function SectionInputUpdatePage() {
   const {
-    handleCancel,
     inputData,
     handleStateChange,
-    imageSrc,
-    setImageSrc,
-    handleFileChange,
-    importImage,
+    setInputData,
+    postById,
+    deletePetById,
+    getPetById,
+    resetToPostData,
+    updateImageSrc,
   } = useMyPetsTools();
-  const params = useParams();
-  const { state, checkToken } = useAuth();
 
-  useEffect(() => {
-    checkToken();
-  }, []);
+  const params = useParams();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = async () => {
     try {
-      await axios.post(`http://localhost:4000/pets/${params.id}`, {
+      await axios.put(`http://localhost:4000/pets/${params.petId}`, {
         ...inputData,
-        picture: imageSrc,
+        picture: updateImageSrc,
       });
-      navigate(`/owner/${state.user.id}/yourPet/`);
     } catch (error) {
-      console.log(error);
+      console.error("Error updating pet:", error.message);
     }
   };
 
-  const handleButtonClick = async () => {
-    setIsCreatePet(true);
-    // Call the uploadFile function when the button is clicked
-    await uploadFile();
-  };
+  useEffect(() => {
+    getPetById(params.petId);
+    return () => {
+      // Reset inputData state
+      setInputData({
+        pet_name: "",
+        pet_type: "",
+        breed: "",
+        sex: "",
+        age: "",
+        color: "",
+        weight: "",
+        about: "",
+      });
+    };
+  }, []);
+  useEffect(() => {
+    if (postById) {
+      setInputData({
+        pet_name: postById.pet_name || "",
+        pet_type: postById.pet_type || "",
+        breed: postById.breed || "",
+        sex: postById.sex || "",
+        age: postById.age || "",
+        color: postById.color || "",
+        weight: postById.weight || "",
+        about: postById.about || "",
+      });
+    }
+  }, [postById]);
 
   return (
     <div className="section_inputdetail">
-      <form onSubmit={handleSubmit} action="petdeail" css={fromStyle}>
+      <form onSubmit={handleSubmit} action="petdeail" css={formStyle}>
         <div className="input_top">
           <label htmlFor="petname" css={labelStyle}>
             Pet Name*
@@ -69,7 +108,7 @@ function SectionInputDetail() {
             id="username"
             type="text"
             css={inputTopStyle}
-            placeholder="Name of your pet"
+            placeholder=""
             value={inputData.pet_name}
             onChange={(e) => {
               handleStateChange("pet_name", e.target.value);
@@ -77,7 +116,7 @@ function SectionInputDetail() {
           />
         </div>
         <div className="input_center" css={inputCenterStyle}>
-          <div className="center_left" css={centerLeftStyle}>
+          <div className="center_left" css={centerInLeftStyle}>
             <label htmlFor="pettype" css={labelStyle}>
               Pet Type*
             </label>
@@ -93,10 +132,10 @@ function SectionInputDetail() {
               <option disabled value="">
                 Select your pet type
               </option>
-              <option value="Dog">Dog</option>
-              <option value="Cat">Cat</option>
-              <option value="Bird">Bird</option>
-              <option value="Rabbit">Rabbit</option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="bird">Bird</option>
+              <option value="rabbit">Rabbit</option>
             </select>
 
             <label htmlFor="sex" css={labelStyle}>
@@ -133,7 +172,7 @@ function SectionInputDetail() {
             />
           </div>
 
-          <div className="center_right" css={centerRightStyle}>
+          <div className="center_right" css={centerInRightStyle}>
             <label htmlFor="breed" css={labelStyle}>
               Breed*
             </label>
@@ -160,13 +199,7 @@ function SectionInputDetail() {
                 handleStateChange("age", e.target.value);
               }}
             />
-            <label
-              htmlFor="weight"
-              css={css`
-                ${labelStyle};
-                margin-bottom: 0;
-              `}
-            >
+            <label htmlFor="weight" css={labelStyle}>
               Weight (Kilogram)*
             </label>
             <input
@@ -182,23 +215,71 @@ function SectionInputDetail() {
           </div>
         </div>
 
-        <div className="input_buttom" css={inputButtomStyle}>
+        <div className="input_button" css={inputButtonStyle}>
           <label htmlFor="about" css={labelStyle}>
             About
           </label>
           <textarea
-            id="color"
+            id="about"
             type="text"
             css={textAreaStyle}
             placeholder="Describe color of your pet..."
             value={inputData.about}
-            // onChange={(e) => {
-            //   handleStateChange("about", e.target.value);
-            // }}
+            onChange={(e) => {
+              handleStateChange("about", e.target.value);
+            }}
           />
         </div>
-        <div className="buttoninput" css={buttonInputStyle}>
-          <button css={cancleButtonStyle} onClick={handleCancel}>
+
+        <div className="section_deletebutton" css={sectionDeleteButton}>
+          <Button
+            onClick={handleOpen}
+            css={css`
+              padding: 0;
+              color: rgba(0, 0, 0, 0.4);
+            `}
+          >
+            <RiDeleteBinLine css={deleteButtonStyle} />
+            <p css={textDeleteButtonStyle}>Delete Pet</p>
+          </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "400px",
+                height: "208px",
+                background: "white",
+                borderRadius: "16px",
+              }}
+            >
+              <h2 css={deleteConfirmStyle}>Delete Confirmation</h2>
+              <p css={deleteDetailStyle}>Are you sure to delete this pet?</p>
+              <div className="buttongroup" css={buttonGroupStyle}>
+                <Button css={cancleButtonStyle} onClick={handleClose}>
+                  Cancle
+                </Button>
+                <Button
+                  css={deleteButtonPopupStyle}
+                  onClick={() => deletePetById(params.petId)}
+                >
+                  Delete
+                </Button>
+              </div>
+            </Box>
+          </Modal>
+        </div>
+
+        <div className="buttongroup_update" css={buttonGroupUpdateStyle}>
+          <button css={cancleUpdeteButtonStyle} onClick={resetToPostData}>
             Cancel
           </button>
           <Button
@@ -206,15 +287,13 @@ function SectionInputDetail() {
             id="fade-button"
             aria-controls={open ? "fade-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
-            onClick={handleButtonClick}
-            css={createPetInputButtonStyle}
+            css={updateButtonStyle}
           >
-            Create Pet
+            Update Pet
           </Button>
         </div>
       </form>
     </div>
   );
 }
-
-export default SectionInputDetail;
+export default SectionInputUpdatePage;

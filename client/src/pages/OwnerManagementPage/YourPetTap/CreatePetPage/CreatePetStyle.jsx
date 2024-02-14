@@ -34,8 +34,9 @@ export const sectionImportIngStyle = css`
 
 export const importButtonImgStyle = css`
   position: absolute;
-  top: 185px;
-  left: 217px;
+  top: 184px;
+  left: 212px;
+  cursor: pointer;
 `;
 
 export const fromStyle = css`
@@ -209,4 +210,10 @@ export const inputStyle = css`
 export const inputNoButtomStyle = css`
   ${inputStyle};
   margin-bottom: 0;
+`;
+
+export const imgImportStyle = css`
+  width: 240px;
+  height: 240px;
+  border-radius: 999px;
 `;

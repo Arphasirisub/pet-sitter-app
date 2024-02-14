@@ -9,7 +9,7 @@ input,
 button,
 textarea,
 select {
-  appearance: none;
+  /* appearance: none; */
   border: none;
   background: none;
   font: inherit;
@@ -23,4 +23,17 @@ select:focus {
   outline: none;
   box-shadow: none;
   /* Add any other custom styles for focus state */
+}
+.MuiButtonBase-root,
+.MuiButton-root {
+  /* Reset default styles */
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  /* Add more styles as needed */
 }

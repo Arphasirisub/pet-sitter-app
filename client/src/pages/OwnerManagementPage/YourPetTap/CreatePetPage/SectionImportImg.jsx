@@ -2,13 +2,32 @@
 import { css } from "@emotion/react";
 import imgimport from "../../../../PublicPicture/imgimport.png";
 import importbutton from "../../../../PublicPicture/importbutton.png";
-import { importButtonImgStyle, sectionImportIngStyle } from "./CreatePetStyle";
+import {
+  imgImportStyle,
+  importButtonImgStyle,
+  sectionImportIngStyle,
+} from "./CreatePetStyle";
+import { useEffect, useState } from "react";
+import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 
 function SectionImportImg() {
+  const { imageSrc, setImageSrc, handleFileChange } = useMyPetsTools();
+
+  useEffect(() => {}, [imageSrc]);
+
   return (
     <div className="section_importimg" css={sectionImportIngStyle}>
-      <img src={imgimport} alt="imgimport" />
-      <img src={importbutton} alt="importbutton" css={importButtonImgStyle} />
+      <img src={imageSrc} alt="imgimport" css={imgImportStyle} />
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        onChange={(e) => handleFileChange(e)}
+        style={{ display: "none" }}
+      />
+      <label htmlFor="fileInput">
+        <img src={importbutton} alt="importbutton" css={importButtonImgStyle} />
+      </label>
     </div>
   );
 }
