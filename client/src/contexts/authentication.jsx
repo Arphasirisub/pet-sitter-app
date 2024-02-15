@@ -78,7 +78,7 @@ function AuthProvider(props) {
         isSignInError: false, // Reset isSignInError on successful login
         signIn: { ...prevState.signIn, isLoading: false }, // Update isLoading inside signIn
       }));
-
+      console.log(state);
       if (userDataFromToken.role === "pet_owner") {
         navigate("/");
       } else {
