@@ -51,7 +51,7 @@ function BookingHistoryCard({ handleOpen }) {
   const { ownerBookings, getHistory, setSelectedBooking } = useMyHistoryTools();
   useEffect(() => {
     getHistory();
-  }, []);
+  }, [ownerBookings]);
   return (
     <div>
       {ownerBookings.map((booking, index) => {
@@ -162,9 +162,7 @@ function BookingHistoryCard({ handleOpen }) {
             {(() => {
               let statusComponent;
               if (booking.status === "Waiting for confirm") {
-                statusComponent = (
-                  <WaitingConfirmStatus ownerBookings={ownerBookings} />
-                );
+                statusComponent = <WaitingConfirmStatus booking={booking} />;
               } else if (booking.status === "In service") {
                 statusComponent = <InServiceStatus />;
               } else if (
