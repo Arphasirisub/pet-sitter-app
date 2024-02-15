@@ -281,7 +281,7 @@ export const searchButton = css`
   }
 `;
 export const paginationContainer = css`
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   flex-direction: row;
   margin: 70px 0px 80px 0px;
