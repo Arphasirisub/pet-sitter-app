@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import locationLogo from "../../../PublicPicture/location.png";
 import React from "react";
 import { useSitter } from "../../../contexts/getSitters.jsx";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { paginationContainer } from "./Style";
+import { useState, useEffect } from "react";
 import {
   greenStar,
   rightbox,
@@ -31,6 +35,19 @@ import CircularProgress from "@mui/material/CircularProgress";
 function SearchResult() {
   const navigate = useNavigate();
   const { searchResult } = useSitter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = searchResult.result.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handleChangePage = (event, page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div css={rightbox}>
@@ -40,8 +57,7 @@ function SearchResult() {
             <CircularProgress size={50} color="warning" />
           </div>
         ) : (
-          searchResult.result &&
-          searchResult.result.map((item, index) => (
+          currentItems.map((item, index) => (
             <div
               key={index}
               css={sitterInfoBox}
@@ -129,6 +145,15 @@ function SearchResult() {
             </div>
           ))
         )}
+        <div css={paginationContainer}>
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(searchResult.result.length / itemsPerPage)}
+              page={currentPage}
+              onChange={handleChangePage}
+            />
+          </Stack>
+        </div>
       </div>
     </div>
   );

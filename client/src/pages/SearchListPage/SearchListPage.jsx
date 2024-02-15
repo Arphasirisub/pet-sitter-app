@@ -4,7 +4,7 @@ import Footer from "../../public-components/Footer";
 import Navbar from "../../public-components/Navbar";
 import SearchBox from "./components/SearchBox.jsx";
 import SearchResult from "./components/SearchResult.jsx";
-import PaginationBar from "./components/pagination.jsx";
+
 import {
   seachLishContainer,
   containerStyles,
@@ -27,9 +27,7 @@ function SearchListPage() {
             <SearchResult />
           </div>
         </div>
-        <PaginationBar />
       </div>
-
       <Footer />
     </>
   );
