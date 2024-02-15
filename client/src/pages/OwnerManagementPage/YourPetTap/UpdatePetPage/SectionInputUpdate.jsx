@@ -2,6 +2,8 @@
 import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
+import { RiErrorWarningFill } from "react-icons/ri";
 import axios from "axios";
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 import Button from "@mui/material/Button";
@@ -32,6 +34,12 @@ import {
   sectionDeleteButton,
   centerInRightStyle,
   centerInLeftStyle,
+  popUpWarningUpdateTopStyle,
+  createPetFailedUpdateStyle,
+  closeButtomUpdateStyle,
+  popUpWarningUpdateButtomStyle,
+  warningIconUpdateStyle,
+  textWarningUpdateStyle,
 } from "./UpdatePetStyle.jsx";
 
 function SectionInputUpdatePage() {
@@ -48,6 +56,8 @@ function SectionInputUpdatePage() {
 
   const params = useParams();
   const [open, setOpen] = React.useState(false);
+  const [warningOpen, setWarningOpen] = React.useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -55,11 +65,21 @@ function SectionInputUpdatePage() {
     setOpen(false);
   };
 
-  const handleSubmit = async () => {
+  const handleWarningClose = () => {
+    setWarningOpen(false);
+  };
+
+  const handleSubmit = async (event) => {
     try {
+      // if (!updateImageSrc) {
+      //   event.preventDefault();
+      //   setWarningOpen(true);
+      //   console.log("Missing required fields");
+      //   return;
+      // }
       await axios.put(`http://localhost:4000/pets/${params.petId}`, {
         ...inputData,
-        picture: updateImageSrc,
+        picture: updateImageSrc || postById.picture,
       });
     } catch (error) {
       console.error("Error updating pet:", error.message);
@@ -99,6 +119,56 @@ function SectionInputUpdatePage() {
 
   return (
     <div className="section_inputdetail">
+      <Modal
+        open={warningOpen}
+        onClose={handleWarningClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            width: "400px",
+            height: "208px",
+            background: "white",
+            borderRadius: "16px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            padding: "30px",
+          }}
+        >
+          <div
+            className="popupwarningupdate_top"
+            css={popUpWarningUpdateTopStyle}
+          >
+            <h2 css={createPetFailedUpdateStyle}>Update Pet Failed</h2>
+            <button
+              onClick={handleWarningClose}
+              css={css`
+                cursor: pointer;
+              `}
+            >
+              <IoClose css={closeButtomUpdateStyle} />
+            </button>
+          </div>
+
+          <div
+            className="popupwarningupdate_bottom"
+            css={popUpWarningUpdateButtomStyle}
+          >
+            <RiErrorWarningFill css={warningIconUpdateStyle} />
+            <h3 css={textWarningUpdateStyle}>
+              Can't create. Please provide all required information.
+            </h3>
+          </div>
+        </Box>
+      </Modal>
       <form onSubmit={handleSubmit} action="petdeail" css={formStyle}>
         <div className="input_top">
           <label htmlFor="petname" css={labelStyle}>
@@ -129,13 +199,16 @@ function SectionInputUpdatePage() {
                 handleStateChange("pet_type", e.target.value);
               }}
             >
+              {postById.pet_type && (
+                <option value={postById.pet_type}>{postById.pet_type}</option>
+              )}
               <option disabled value="">
                 Select your pet type
               </option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="bird">Bird</option>
-              <option value="rabbit">Rabbit</option>
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+              <option value="Bird">Bird</option>
+              <option value="Rabbit">Rabbit</option>
             </select>
 
             <label htmlFor="sex" css={labelStyle}>
@@ -150,6 +223,9 @@ function SectionInputUpdatePage() {
                 handleStateChange("sex", e.target.value);
               }}
             >
+              {postById.sex && (
+                <option value={postById.sex}>{postById.sex}</option>
+              )}
               <option disabled value="">
                 Select sex of your pet
               </option>

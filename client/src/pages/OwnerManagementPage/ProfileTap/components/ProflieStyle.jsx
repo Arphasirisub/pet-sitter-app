@@ -18,6 +18,7 @@ export const profilepicturebox = css`
   margin-left: 40px;
   margin-top: 20px;
   margin-bottom: 50px;
+  position: relative;
 `;
 
 export const inputContainer = css`

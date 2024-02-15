@@ -31,10 +31,11 @@ export const sectionImportImgStyle = css`
   position: relative;
 `;
 
-export const pictureById = css`
+export const pictureByIdStyle = css`
   width: 240px;
   height: 240px;
   border-radius: 999px;
+  object-fit: cover;
 `;
 
 export const importButtonStyle = css`
@@ -279,4 +280,49 @@ export const centerInRightStyle = css`
 export const centerInLeftStyle = css`
   display: flex;
   flex-direction: column;
+`;
+
+export const popUpWarningUpdateTopStyle = css`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(123, 126, 143, 1);
+`;
+
+export const createPetFailedUpdateStyle = css`
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0;
+`;
+
+export const closeButtomUpdateStyle = css`
+  width: 30px;
+  height: 30px;
+  color: rgba(123, 126, 143, 1);
+  margin-top: 5px;
+`;
+
+export const popUpWarningUpdateButtomStyle = css`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const warningIconUpdateStyle = css`
+  width: 50px;
+  height: 50px;
+  color: rgba(234, 16, 16, 1);
+  margin-bottom: 5px;
+`;
+
+export const textWarningUpdateStyle = css`
+  color: rgba(123, 126, 143, 1);
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;

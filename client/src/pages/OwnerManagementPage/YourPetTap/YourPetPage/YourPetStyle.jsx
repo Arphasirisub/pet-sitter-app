@@ -72,6 +72,9 @@ export const buttonCardStyle = css`
 `;
 
 export const cardImgStyle = css`
+  width: 104px;
+  height: 104px;
+  object-fit: cover;
   border-radius: 100%;
 `;
 
