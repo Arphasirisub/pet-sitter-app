@@ -48,17 +48,22 @@ const getColorByStatus = (status) => {
 };
 
 function BookingHistoryCard({ handleOpen }) {
-  const { ownerBookings, getHistory, setSelectedBooking } = useMyHistoryTools();
+  const { ownerBookings, getHistory, setSelectedBooking, selectedBooking } =
+    useMyHistoryTools();
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentItems, setCurrentItems] = useState([]);
+
+  const itemsPerPage = 5;
 
   useEffect(() => {
     getHistory();
-  }, [ownerBookings]);
-  //  ^
-  const itemsPerPage = 5;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = ownerBookings.slice(indexOfFirstItem, indexOfLastItem);
+  }, []);
+
+  useEffect(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    setCurrentItems(ownerBookings.slice(indexOfFirstItem, indexOfLastItem));
+  }, [ownerBookings, currentPage]);
 
   return (
     <div>

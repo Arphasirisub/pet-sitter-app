@@ -41,19 +41,19 @@ function ReviewPopup() {
   const handleClose = () => setOpen(false);
   const [rating, setRating] = useState(5);
   const [content, setContent] = useState("");
-  const { postReview, selectedBooking, setSelectedBooking } =
+  const { postReview, selectedBooking, setSelectedBooking, getHistory } =
     useMyHistoryTools();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async () => {
     try {
-      // e.preventDefault();
-      postReview(
+      await postReview(
         selectedBooking.sitter_id,
         content,
         rating,
         selectedBooking.id
       );
       setOpen(false);
+      await getHistory();
     } catch (error) {
       alert("error");
     }
