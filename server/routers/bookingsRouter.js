@@ -97,6 +97,8 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
       const stopDateTime = new Date(booking.booked_stop);
       const durationInMilliseconds = stopDateTime - startDateTime;
       const durationInHours = durationInMilliseconds / (1000 * 60 * 60);
+      const durationInMinutes = (durationInHours % 1) * 60; // Extract minutes
+      const fractionalHours = (durationInMinutes / 60).toFixed(1); // Convert minutes to fraction of an hour
 
       // Format start and stop dates
       const startDate = startDateTime.toLocaleString("en-US", {
@@ -121,7 +123,7 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
       });
 
       // Combine formatted start and stop dates with times
-      const bookedDate = `${startDate} -${stopDate}`;
+      const bookedDate = `${startDate} - ${stopDate}`;
       const bookedTime = `${startTime} - ${stopTime}`;
 
       // Format transaction date
@@ -137,7 +139,9 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
 
       return {
         ...booking,
-        duration: `${durationInHours.toFixed(0)} hours`,
+        duration: `${Math.floor(durationInHours)}.${
+          fractionalHours.split(".")[1]
+        } hours`,
         transaction_date: transactionDate,
         booked_time: bookedTime,
         booked_date: bookedDate,
