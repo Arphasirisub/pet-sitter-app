@@ -20,8 +20,7 @@ import {
   imgNameContainer,
   hourPetTypeContainer,
 } from "../styleComponent/bookingHistoryTapStyle.js";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import WaitingConfirmStatus from "../statusBar/waitingConfirmStatus.jsx";
 import InServiceStatus from "../statusBar/InserviceStatus.jsx";
 import SuccessStatus from "../statusBar/sucessStatus.jsx";
@@ -29,6 +28,7 @@ import WaitingServiceStatus from "../statusBar/WaitingService.jsx";
 import CancelStatus from "../statusBar/CancelStatus.jsx";
 import { useMyHistoryTools } from "../../../../contexts/myHistoryTools.jsx";
 import GetReviewRating from "../statusBar/yourReviewRating.jsx";
+import Pagination from "@mui/material/Pagination";
 
 const getColorByStatus = (status) => {
   switch (status) {
@@ -49,12 +49,20 @@ const getColorByStatus = (status) => {
 
 function BookingHistoryCard({ handleOpen }) {
   const { ownerBookings, getHistory, setSelectedBooking } = useMyHistoryTools();
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     getHistory();
   }, [ownerBookings]);
+  //  ^
+  const itemsPerPage = 5;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = ownerBookings.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div>
-      {ownerBookings.map((booking, index) => {
+      {currentItems.map((booking, index) => {
         return (
           <div
             className="card-container"
@@ -187,6 +195,19 @@ function BookingHistoryCard({ handleOpen }) {
           </div>
         );
       })}
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        `}
+      >
+        <Pagination
+          count={Math.ceil(ownerBookings.length / itemsPerPage)}
+          onChange={(event, value) => setCurrentPage(value)}
+        />
+      </div>
     </div>
   );
 }

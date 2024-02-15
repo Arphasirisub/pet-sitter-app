@@ -11,8 +11,12 @@ function MyHistoryToolsProvider(props) {
   const getHistory = async () => {
     try {
       const result = await axios(`http://localhost:4000/bookings/mybookings`);
-      console.log(result.data);
-      setOwnerBookings(result.data);
+      const sortedData = result.data.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+      console.log(sortedData);
+      setOwnerBookings(sortedData);
     } catch (error) {
       console.log(error);
     }

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import { buttonReview, line } from "../styleComponent/bookingHistoryTapStyle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { closeButton } from "../styleComponent/PopupCardStyle";
 import {
   popupReview,
@@ -46,8 +46,13 @@ function ReviewPopup() {
 
   const handleSubmit = (e) => {
     try {
-      e.preventDefault();
-      postReview(selectedBooking.sitter_id, content, rating, selectedBooking.id);
+      // e.preventDefault();
+      postReview(
+        selectedBooking.sitter_id,
+        content,
+        rating,
+        selectedBooking.id
+      );
       setOpen(false);
     } catch (error) {
       alert("error");

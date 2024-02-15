@@ -60,7 +60,7 @@ authenticationRouter.post("/login", async (req, res) => {
         profile_img: userData.profile_img,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "900000" }
+      { expiresIn: "90000000000" }
     );
 
     // Include the user data and role in the response
