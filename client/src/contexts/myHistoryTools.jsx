@@ -18,11 +18,12 @@ function MyHistoryToolsProvider(props) {
     }
   };
 
-  const postReview = async (sitterId, content, rating) => {
+  const postReview = async (sitterId, content, rating, booking_id) => {
     try {
       await axios.post(`http://localhost:4000/comments/myPost/${sitterId}`, {
         content: content,
         rating: rating,
+        booking_id: booking_id,
       });
     } catch (error) {
       console.log(error);

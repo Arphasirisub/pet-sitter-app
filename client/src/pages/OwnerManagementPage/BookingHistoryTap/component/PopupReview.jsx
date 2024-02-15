@@ -47,7 +47,7 @@ function ReviewPopup() {
   const handleSubmit = (e) => {
     try {
       e.preventDefault();
-      postReview(selectedBooking.sitter_id, content, rating);
+      postReview(selectedBooking.sitter_id, content, rating, selectedBooking.id);
       setOpen(false);
     } catch (error) {
       alert("error");

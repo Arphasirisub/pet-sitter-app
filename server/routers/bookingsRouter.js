@@ -76,7 +76,7 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
       .select(
-        "*, sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
+        "*,owners(full_name,profile_img), sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
       )
       .eq("owner_id", id)
       .order("booked_start", { ascending: false });

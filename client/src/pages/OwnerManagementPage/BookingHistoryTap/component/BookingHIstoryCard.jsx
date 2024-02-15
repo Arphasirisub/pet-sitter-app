@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ReadYourReview from "./PopupYourReview.jsx";
 import {
   boxContainer,
   rowLayout,
@@ -27,6 +28,8 @@ import SuccessStatus from "../statusBar/sucessStatus.jsx";
 import WaitingServiceStatus from "../statusBar/WaitingService.jsx";
 import CancelStatus from "../statusBar/CancelStatus.jsx";
 import { useMyHistoryTools } from "../../../../contexts/myHistoryTools.jsx";
+import GetReviewRating from "../statusBar/yourReviewRating.jsx";
+
 const getColorByStatus = (status) => {
   switch (status) {
     case "In service":
@@ -164,10 +167,18 @@ function BookingHistoryCard({ handleOpen }) {
                 );
               } else if (booking.status === "In service") {
                 statusComponent = <InServiceStatus />;
-              } else if (booking.status === "Success") {
+              } else if (
+                booking.status === "Success" &&
+                booking.review === false
+              ) {
                 statusComponent = <SuccessStatus booking={booking} />;
               } else if (booking.status === "Waiting for service") {
                 statusComponent = <WaitingServiceStatus />;
+              } else if (
+                booking.status === "Success" &&
+                booking.review === true
+              ) {
+                statusComponent = <GetReviewRating booking={booking} />;
               } else if (booking.status === "Canceled") {
                 statusComponent = <CancelStatus />;
               } else {
