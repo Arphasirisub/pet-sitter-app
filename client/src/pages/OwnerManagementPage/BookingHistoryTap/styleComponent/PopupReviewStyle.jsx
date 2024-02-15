@@ -89,3 +89,16 @@ export const reviewButton = css`
   font-size: 15px;
   cursor: pointer;
 `;
+
+export const yourReviewButton = css`
+  font-size: 11px;
+  width: 110px;
+  margin: 16px;
+  height: 30px;
+  background-color: #fff1ec;
+  color: #ff7038;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+`;

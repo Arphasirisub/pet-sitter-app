@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ReadYourReview from "./PopupYourReview.jsx";
 import {
   boxContainer,
   rowLayout,
@@ -19,14 +20,16 @@ import {
   imgNameContainer,
   hourPetTypeContainer,
 } from "../styleComponent/bookingHistoryTapStyle.js";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import WaitingConfirmStatus from "../statusBar/waitingConfirmStatus.jsx";
 import InServiceStatus from "../statusBar/InserviceStatus.jsx";
 import SuccessStatus from "../statusBar/sucessStatus.jsx";
 import WaitingServiceStatus from "../statusBar/WaitingService.jsx";
 import CancelStatus from "../statusBar/CancelStatus.jsx";
 import { useMyHistoryTools } from "../../../../contexts/myHistoryTools.jsx";
+import GetReviewRating from "../statusBar/yourReviewRating.jsx";
+import Pagination from "@mui/material/Pagination";
+
 const getColorByStatus = (status) => {
   switch (status) {
     case "In service":
@@ -45,13 +48,26 @@ const getColorByStatus = (status) => {
 };
 
 function BookingHistoryCard({ handleOpen }) {
-  const { ownerBookings, getHistory, setSelectedBooking } = useMyHistoryTools();
+  const { ownerBookings, getHistory, setSelectedBooking, selectedBooking } =
+    useMyHistoryTools();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentItems, setCurrentItems] = useState([]);
+
+  const itemsPerPage = 5;
+
   useEffect(() => {
     getHistory();
   }, []);
+
+  useEffect(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    setCurrentItems(ownerBookings.slice(indexOfFirstItem, indexOfLastItem));
+  }, [ownerBookings, currentPage]);
+
   return (
     <div>
-      {ownerBookings.map((booking, index) => {
+      {currentItems.map((booking, index) => {
         return (
           <div
             className="card-container"
@@ -159,15 +175,21 @@ function BookingHistoryCard({ handleOpen }) {
             {(() => {
               let statusComponent;
               if (booking.status === "Waiting for confirm") {
-                statusComponent = (
-                  <WaitingConfirmStatus ownerBookings={ownerBookings} />
-                );
+                statusComponent = <WaitingConfirmStatus booking={booking} />;
               } else if (booking.status === "In service") {
                 statusComponent = <InServiceStatus />;
-              } else if (booking.status === "Success") {
+              } else if (
+                booking.status === "Success" &&
+                booking.review === false
+              ) {
                 statusComponent = <SuccessStatus booking={booking} />;
               } else if (booking.status === "Waiting for service") {
                 statusComponent = <WaitingServiceStatus />;
+              } else if (
+                booking.status === "Success" &&
+                booking.review === true
+              ) {
+                statusComponent = <GetReviewRating booking={booking} />;
               } else if (booking.status === "Canceled") {
                 statusComponent = <CancelStatus />;
               } else {
@@ -178,6 +200,19 @@ function BookingHistoryCard({ handleOpen }) {
           </div>
         );
       })}
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+        `}
+      >
+        <Pagination
+          count={Math.ceil(ownerBookings.length / itemsPerPage)}
+          onChange={(event, value) => setCurrentPage(value)}
+        />
+      </div>
     </div>
   );
 }

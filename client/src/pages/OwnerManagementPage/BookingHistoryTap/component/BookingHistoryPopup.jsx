@@ -22,6 +22,7 @@ import {
 } from "../styleComponent/PopupCardStyle";
 import { useState } from "react";
 import { useMyHistoryTools } from "../../../../contexts/myHistoryTools";
+import axios from "axios";
 function Popup() {
   const [open, setOpen] = useState(false);
   const handleOpen = (booking) => {
@@ -29,7 +30,15 @@ function Popup() {
     setSelectedBooking(booking);
   };
   const handleClose = () => setOpen(false);
-  const {selectedBooking, setSelectedBooking} = useMyHistoryTools();
+  const { selectedBooking, setSelectedBooking, getHistory } =
+    useMyHistoryTools();
+  const handleCancleBooking = async () => {
+    await axios.put(
+      `http://localhost:4000/bookings/cancel/${selectedBooking.id}`
+    );
+    setOpen(false);
+    getHistory();
+  };
 
   return (
     <div className="cardContainer" css={cardContainer}>
@@ -141,6 +150,31 @@ function Popup() {
               </p>
             </div>
           </div>
+          {selectedBooking.status === "Waiting for confirm" && (
+            <div
+              css={css`
+                display: flex;
+                justify-content: center;
+              `}
+            >
+              <div
+                css={css`
+                  display: flex;
+                  justify-content: center;
+                  cursor: pointer;
+                  background-color: rgb(255, 112, 55);
+                  padding: 10px;
+                  border-radius: 15px;
+                  &:hover {
+                  }
+                  color: white;
+                `}
+                onClick={handleCancleBooking}
+              >
+                Cancel
+              </div>
+            </div>
+          )}
         </Box>
       </Modal>
     </div>

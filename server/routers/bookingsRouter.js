@@ -76,7 +76,7 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
       .select(
-        "*, sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
+        "*,owners(full_name,profile_img), sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
       )
       .eq("owner_id", id)
       .order("booked_start", { ascending: false });
@@ -217,5 +217,59 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
   } catch (error) {
     console.error("Error inserting data into bookings table:", error);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+// bookingsRouter.delete("/:id", async (req, res) => {
+//   const bookingId = Number(req.params.id);
+//   console.log(bookingId);
+//   try {
+//     // Delete related records from 'pet_booking' table
+//     const { data: petBookingData, error: petBookingError } = await supabase
+//       .from("pet_booking")
+//       .delete()
+//       .eq("booking_id", bookingId);
+
+//     if (petBookingError) {
+//       throw new Error(petBookingError.message);
+//     }
+//     // Delete booking from 'bookings' table
+//     const { data: bookingData, error: bookingError } = await supabase
+//       .from("bookings")
+//       .delete()
+//       .eq("id", bookingId);
+
+//     if (bookingError) {
+//       throw new Error(bookingError.message);
+//     }
+
+//     // Respond with success message
+//     res
+//       .status(200)
+//       .json({ message: "Booking and related records deleted successfully" });
+//   } catch (err) {
+//     console.error("Error deleting booking:", err);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+bookingsRouter.put("/cancel/:id", async (req, res) => {
+  const bookingId = Number(req.params.id);
+  console.log(bookingId);
+
+  try {
+    const { data, error } = await supabase
+      .from("bookings")
+      .update({ status: "Canceled" })
+      .eq("id", bookingId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return res.status(200).json({ message: "Booking canceled successfully" });
+  } catch (err) {
+    console.error("Error canceling booking:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
