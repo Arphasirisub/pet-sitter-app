@@ -24,6 +24,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import dayjs from "dayjs";
+import { TextField } from "@mui/material";
 
 function EditProfileTab() {
   const [profileData, setprofileData] = useState({});
@@ -31,10 +33,10 @@ function EditProfileTab() {
   const [phoneData, setphoneData] = useState("");
   const [emailData, setemailData] = useState("");
   const [pictureData, setPictureData] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [dateData, setDateData] = useState(null);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange = (e) => {
+    setDateData(e);
   };
 
   const handleFileChange = (e) => {
@@ -62,6 +64,7 @@ function EditProfileTab() {
       phone: phoneData,
       email: emailData,
       profile_img: pictureData,
+      birthday: dateData,
     });
   };
 
@@ -79,11 +82,14 @@ function EditProfileTab() {
       profileData &&
       profileData.full_name &&
       profileData.phone &&
-      profileData.email
+      profileData.email &&
+      profileData.birthday
     ) {
       setnameData(profileData.full_name);
       setphoneData(profileData.phone);
       setemailData(profileData.email);
+      setPictureData(profileData.profile_img);
+      setDateData(profileData.birthday);
     }
   }, [profileData]);
 
@@ -93,7 +99,7 @@ function EditProfileTab() {
 
       <div css={profilepicturebox}>
         <img
-          src={profileData.profile_img}
+          src={pictureData}
           alt="petimage"
           css={css`
             width: 240px;
@@ -168,10 +174,10 @@ function EditProfileTab() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Select Date"
-              value={selectedDate}
-              disablePast={true}
+              value={dayjs(dateData)}
+              disablePast={false}
               css={datePickerStyle}
-              onChange={(newDate) => handleDateChange(newDate)}
+              onChange={(e) => handleDateChange(e)}
               textField={(params) => (
                 <TextField {...params} variant="standard" />
               )}

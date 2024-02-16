@@ -59,10 +59,10 @@ ownersRouter.get("/:id", async (req, res) => {
 ownersRouter.put("/:id", async (req, res) => {
   try {
     const ownerId = req.params.id;
-    const { full_name, email, phone, profile_img } = req.body;
-
+    const { full_name, email, phone, profile_img, birthday } = req.body;
+    console.log(profile_img, birthday);
     // Check if required fields are present
-    if (!full_name || !email || !phone || !profile_img) {
+    if (!full_name || !email || !phone || !profile_img || !birthday) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -75,6 +75,7 @@ ownersRouter.put("/:id", async (req, res) => {
         phone,
         profile_img,
         created_at: new Date().toISOString(),
+        birthday,
       })
       .eq("id", ownerId)
       .single();
