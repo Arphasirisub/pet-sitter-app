@@ -4,26 +4,6 @@ import { protect } from "../middlewares/protect.js";
 
 export const petsRouter = Router();
 
-petsRouter.get("/", async (req, res) => {
-  try {
-    const { data, error } = await supabase
-      .from("pets") // Selecting data from the "pets" table
-      .select("*");
-
-    if (error) {
-      throw error; // Throw an error to be caught by the catch block
-    }
-
-    // Send the fetched data back to the client
-    res.json({ data });
-  } catch (error) {
-    // Handle errors
-    console.error("Error fetching data from 'pets' table:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// petsRouter.get("/ownerPet",protect, async (req, res) => {
 //   try {
 //     const ownerId = req.userId
 //     const { data, error } = await supabase
@@ -117,7 +97,7 @@ petsRouter.delete("/:id", async (req, res) => {
     // Delete data from 'pets' table
     const { data, error } = await supabase
       .from("pets")
-      .delete()
+      .update({ isDeleted: true })
       .eq("id", petId);
 
     if (error) {
@@ -134,10 +114,12 @@ petsRouter.delete("/:id", async (req, res) => {
 petsRouter.get("/myPets", protect, async (req, res) => {
   try {
     const ownerId = req.userId;
+    console.log(ownerId);
     const { data, error } = await supabase
       .from("pets")
       .select("*")
       .eq("owner_id", ownerId)
+      .eq("isDeleted", false)
       .order("created_at", { ascending: false }); // Sort by createdAt in descending order
 
     if (error) {

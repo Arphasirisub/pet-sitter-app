@@ -41,16 +41,16 @@ function SectionContentYourPet({ setIsUpdatePet }) {
               <img
                 src={pet.picture}
                 alt={
-                  pet.pet_type === "Bird"
-                    ? "Bird"
-                    : pet.pet_type === "Dog"
-                    ? "Dog"
-                    : pet.pet_type === "Cat"
-                    ? "Cat"
+                  pet.pet_type === "bird"
+                    ? "bird"
+                    : pet.pet_type === "dog"
+                    ? "dog"
+                    : pet.pet_type === "cat"
+                    ? "cat"
+                    : pet.pet_type === "rabbit"
+                    ? "rabbit"
                     : "transparent"
                 }
-                width="104px"
-                height="104px"
                 css={cardImgStyle}
               />
               <div className="card_detail" css={cardDetailStyle}>
@@ -65,32 +65,28 @@ function SectionContentYourPet({ setIsUpdatePet }) {
                     align-items: center;
                     margin: 0;
                     border-radius: 99px;
-                    ${
-                      pet.pet_type === "Bird"
-                        ? "rgba(118, 208, 252, 1)"
-                        : pet.pet_type === "Dog"
-                        ? "rgba(28, 205, 131, 1)"
-                        : pet.pet_type === "Cat"
-                        ? "rgba(250, 138, 192, 1)"
-                        : "transparent" // Default to transparent if type is unknown
-                    };
+
                     color: ${
-                      pet.pet_type === "Bird"
+                      pet.pet_type.toLowerCase() === "bird"
                         ? "rgba(118, 208, 252, 1)"
-                        : pet.pet_type === "Dog"
+                        : pet.pet_type.toLowerCase() === "dog"
                         ? "rgba(28, 205, 131, 1)"
-                        : pet.pet_type === "Cat"
+                        : pet.pet_type.toLowerCase() === "cat"
                         ? "rgba(250, 138, 192, 1)"
+                        : pet.pet_type.toLowerCase() === "rabbit"
+                        ? "rgba(255, 152, 111, 1)"
                         : "transparent" // Default to transparent if type is unknown
                     };
 
                     background-color: ${
-                      pet.pet_type === "Bird"
+                      pet.pet_type.toLowerCase() === "bird"
                         ? "rgba(236, 251, 255, 1)"
-                        : pet.pet_type === "Dog"
+                        : pet.pet_type.toLowerCase() === "dog"
                         ? "rgba(231, 253, 244, 1)"
-                        : pet.pet_type === "Cat"
+                        : pet.pet_type.toLowerCase() === "cat"
                         ? "rgba(255, 240, 241, 1)"
+                        : pet.pet_type.toLowerCase() === "rabbit"
+                        ? "rgba(255, 245, 236, 1)"
                         : "transparent" // Default to transparent if type is unknown
                     };
                   `}

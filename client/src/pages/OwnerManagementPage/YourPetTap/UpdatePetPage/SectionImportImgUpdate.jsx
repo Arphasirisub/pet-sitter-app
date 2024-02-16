@@ -4,14 +4,13 @@ import importbutton from "../../../../PublicPicture/importbutton.png";
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 import {
   importButtonStyle,
-  pictureById,
+  pictureByIdStyle,
   sectionImportImgStyle,
 } from "./UpdatePetStyle.jsx";
 import { useEffect, useState } from "react";
 
 function SectionImportImgUpdatePage() {
-  const { postById, setPostById, updateImageSrc, setUpdateImageSrc } =
-    useMyPetsTools();
+  const { postById, setPostById, setUpdateImageSrc } = useMyPetsTools();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file from the event
@@ -31,10 +30,11 @@ function SectionImportImgUpdatePage() {
       reader.readAsDataURL(file);
     }
   };
+
   useEffect(() => {}, [postById]);
   return (
     <div className="section_importimg" css={sectionImportImgStyle}>
-      <img src={postById.picture} alt="petimage" css={pictureById} />
+      <img src={postById.picture} alt="petimage" css={pictureByIdStyle} />
       <input
         id="fileInput"
         type="file"

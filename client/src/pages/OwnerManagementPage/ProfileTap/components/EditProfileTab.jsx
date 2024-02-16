@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import importbutton from "../../../../PublicPicture/importbutton.png";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -28,9 +29,29 @@ function EditProfileTab() {
   const [nameData, setnameData] = useState("");
   const [phoneData, setphoneData] = useState("");
   const [emailData, setemailData] = useState("");
+  const [pictureData, setPictureData] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Get the selected file from the event
+    const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+
+    if (file && file.size > maxFileSize) {
+      console.error("File size exceeds the limit (2MB)");
+      return; // Exit the function if file size exceeds the limit
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPictureData(reader.result);
+        setprofileData({ ...profileData, profile_img: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async () => {
@@ -38,8 +59,10 @@ function EditProfileTab() {
       full_name: nameData,
       phone: phoneData,
       email: emailData,
+      profile_img: pictureData,
     });
   };
+
   const params = useParams();
   const getDataProfile = async () => {
     const result = await axios.get(`http://localhost:4000/owners/${params.id}`);
@@ -69,14 +92,36 @@ function EditProfileTab() {
 
       <div css={profilepicturebox}>
         <img
-          src="\src\PublicPicture\mogupforprofilepicture.png"
-          alt="profilepicture"
-          css={{
-            width: 180,
-            height: 180,
-          }}
+          src={profileData.profile_img}
+          alt="petimage"
+          css={css`
+            width: 240px;
+            height: 240px;
+            border-radius: 999px;
+            object-fit: cover;
+          `}
         />
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleFileChange(e)}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="fileInput">
+          <img
+            src={importbutton}
+            alt="importbutton"
+            css={css`
+              cursor: pointer;
+              position: absolute;
+              top: 185px;
+              left: 180px;
+            `}
+          />
+        </label>
       </div>
+
       <p css={yourNameTitle}>Your Name*</p>
       <div css={inputContainer}>
         <input
