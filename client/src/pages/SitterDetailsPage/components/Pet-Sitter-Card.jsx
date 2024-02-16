@@ -34,7 +34,7 @@ const PetSitterCard = () => {
       );
       const average = totalRating / sitterData.comments.length;
       const fractionalPart = average % 1;
-      return fractionalPart > 0.5 ? Math.ceil(average) : Math.floor(average);
+      return fractionalPart >= 0.5 ? Math.ceil(average) : Math.floor(average);
     }
     return 0;
   };
