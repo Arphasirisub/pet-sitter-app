@@ -56,7 +56,7 @@ function Popup() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box classname="popup-container" css={popupStyle}>
+        <Box className="popup-container" css={popupStyle}>
           <div className="head-bar" css={headBar}>
             <p className="title-Style" css={titleStyle}>
               Booking Detail
