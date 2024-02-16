@@ -85,7 +85,7 @@ ownersRouter.put("/:id", async (req, res) => {
     }
 
     // Return the updated owner information
-    res.status(200).json({ data: "Data has been update !" });
+    res.status(200).json({ message: "Data has been update !" });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });

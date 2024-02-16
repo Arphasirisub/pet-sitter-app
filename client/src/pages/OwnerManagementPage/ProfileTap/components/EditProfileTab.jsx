@@ -13,6 +13,7 @@ import {
   emailPhoneContainer,
   columnContainer,
   input,
+  input2,
   fontStyle,
   buttonContainer,
   updateButton,
@@ -30,6 +31,7 @@ function EditProfileTab() {
   const [phoneData, setphoneData] = useState("");
   const [emailData, setemailData] = useState("");
   const [pictureData, setPictureData] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -85,7 +87,6 @@ function EditProfileTab() {
     }
   }, [profileData]);
 
-  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <form onSubmit={handleSubmit}>
       <div css={textprofilebox}>Profie</div>
@@ -148,7 +149,7 @@ function EditProfileTab() {
         <div css={columnContainer}>
           <p css={fontStyle}>Phone*</p>
           <input
-            css={input}
+            css={input2}
             type="text"
             value={phoneData}
             onChange={(e) => {
