@@ -8,15 +8,26 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import { useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { logout, state, checkToken } = useAuth();
+  const { logout, state } = useAuth();
+  const [ownerData, setOwnerData] = useState({});
+
+  const getOwnerData = async () => {
+    try {
+      const result = await axios.get(`http://localhost:4000/owners/myProfile`);
+      console.log(result);
+      setOwnerData(result.data.data.data);
+    } catch (error) {
+      console.error("Error while fetching available pet types:", error);
+    }
+  };
 
   useEffect(() => {
-    checkToken();
+    getOwnerData();
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -67,9 +78,9 @@ function Navbar() {
       >
         {state.isAuthenticated && state.user ? (
           <>
-            <div>{state.user.name}</div>
+            <div>{ownerData.full_name}</div>
             <img
-              src={state.user.profile_img}
+              src={ownerData.profile_img}
               alt="Profile"
               css={css`
                 width: 40px;

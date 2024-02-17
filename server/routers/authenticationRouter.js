@@ -57,7 +57,6 @@ authenticationRouter.post("/login", async (req, res) => {
         email: data.user.email,
         role: userData.role,
         name: userData.full_name,
-        profile_img: userData.profile_img,
       },
       process.env.SECRET_KEY,
       { expiresIn: "90000000000" }
