@@ -60,6 +60,19 @@ export const input = css`
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 30px;
+  background-color: #d3d3d3;
+  color: #a0a0a0;
+  cursor: not-allowed;
+`;
+
+export const input2 = css`
+  height: 18px;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 30px;
 `;
 
 export const fontStyle = css`
