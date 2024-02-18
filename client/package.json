@@ -19,6 +19,8 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.14",
     "@mui/system": "^5.15.7",
     "@mui/x-date-pickers": "^6.19.3",
+    "@stripe/react-stripe-js": "^2.5.0",
+    "@stripe/stripe-js": "^3.0.3",
     "@supabase/supabase-js": "^2.39.3",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",

@@ -21,7 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "nodemon": "^3.0.3",
-    "stripe": "^14.16.0",
+    "stripe": "^14.17.0",
     "supabase": "^1.136.3"
   }
 }
