@@ -36,29 +36,29 @@ ownersRouter.get("/", async (req, res) => {
   }
 });
 
-ownersRouter.get("/:id", async (req, res) => {
+// ownersRouter.get("/:id", async (req, res) => {
+//   try {
+//     const ownerId = req.params.id;
+//     const { data, error } = await supabase
+//       .from("owners")
+//       .select("*")
+//       .eq("id", ownerId)
+//       .single(); // Assuming you expect a single record based on the route
+
+//     if (error) {
+//       return res.status(500).json({ error: error.message });
+//     }
+
+//     res.status(200).json({ data });
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+ownersRouter.put("/myProfile", protect, async (req, res) => {
   try {
-    const ownerId = req.params.id;
-    const { data, error } = await supabase
-      .from("owners")
-      .select("*")
-      .eq("id", ownerId)
-      .single(); // Assuming you expect a single record based on the route
-
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-
-    res.status(200).json({ data });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-ownersRouter.put("/:id", async (req, res) => {
-  try {
-    const ownerId = req.params.id;
+    const ownerId = req.userId;
     const { full_name, email, phone, profile_img, birthday } = req.body;
     console.log(profile_img, birthday);
     // Check if required fields are present

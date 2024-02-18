@@ -59,7 +59,7 @@ function EditProfileTab() {
   };
 
   const handleSubmit = async () => {
-    await axios.put(`http://localhost:4000/owners/${params.id}`, {
+    await axios.put(`http://localhost:4000/owners/myProfile`, {
       full_name: nameData,
       phone: phoneData,
       email: emailData,
@@ -68,10 +68,9 @@ function EditProfileTab() {
     });
   };
 
-  const params = useParams();
   const getDataProfile = async () => {
-    const result = await axios.get(`http://localhost:4000/owners/${params.id}`);
-    setprofileData(result.data.data);
+    const result = await axios.get(`http://localhost:4000/owners/myProfile`);
+    setprofileData(result.data.data.data);
   };
 
   useEffect(() => {
