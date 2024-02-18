@@ -35,7 +35,7 @@ export default function Card() {
     );
 
     const response = await axios.post(
-      "http://localhost:4000/api/create-checkout-session",
+      "http://localhost:4000/payments/api/create-checkout-session",
       {
         amount: parseFloat(totalPrice) * 100,
       }
