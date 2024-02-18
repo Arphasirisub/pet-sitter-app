@@ -93,7 +93,7 @@ export const textAreaStyle = css`
   text-indent: 5px;
 
   &:focus {
-    border-color: rgba(255, 112, 55, 1) !important;
+    border-color: rgba(255, 112, 55, 1);
   }
 `;
 export const deleteButtonStyle = css`
@@ -235,7 +235,6 @@ export const selectCenterStyle = css`
   font-weight: 400;
   font-size: 16px;
   border-radius: 8px;
-  color: rgba(123, 126, 143, 1);
   background-color: rgb(255, 255, 255);
   border: 1px solid rgba(220, 223, 237, 1);
   font-family: "Satoshi", sans-serif;
@@ -251,7 +250,6 @@ export const inputStyle = css`
   font-weight: 400;
   font-size: 16px;
   border-radius: 8px;
-  color: rgba(123, 126, 143, 1);
   background-color: rgb(255, 255, 255);
   border: 1px solid rgba(220, 223, 237, 1);
   font-family: "Satoshi", sans-serif;
@@ -282,47 +280,6 @@ export const centerInLeftStyle = css`
   flex-direction: column;
 `;
 
-export const popUpWarningUpdateTopStyle = css`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(123, 126, 143, 1);
-`;
-
-export const createPetFailedUpdateStyle = css`
-  font-weight: 700;
-  font-size: 30px;
-  margin: 0;
-`;
-
-export const closeButtomUpdateStyle = css`
-  width: 30px;
-  height: 30px;
-  color: rgba(123, 126, 143, 1);
-  margin-top: 5px;
-`;
-
-export const popUpWarningUpdateButtomStyle = css`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const warningIconUpdateStyle = css`
-  width: 50px;
-  height: 50px;
-  color: rgba(234, 16, 16, 1);
-  margin-bottom: 5px;
-`;
-
-export const textWarningUpdateStyle = css`
-  color: rgba(123, 126, 143, 1);
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+export const optionInputDataNone = css`
+  display: none;
 `;

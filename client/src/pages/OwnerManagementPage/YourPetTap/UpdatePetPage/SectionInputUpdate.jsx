@@ -2,8 +2,6 @@
 import { css } from "@emotion/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { IoClose } from "react-icons/io5";
-import { RiErrorWarningFill } from "react-icons/ri";
 import axios from "axios";
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 import Button from "@mui/material/Button";
@@ -34,12 +32,7 @@ import {
   sectionDeleteButton,
   centerInRightStyle,
   centerInLeftStyle,
-  popUpWarningUpdateTopStyle,
-  createPetFailedUpdateStyle,
-  closeButtomUpdateStyle,
-  popUpWarningUpdateButtomStyle,
-  warningIconUpdateStyle,
-  textWarningUpdateStyle,
+  optionInputDataNone,
 } from "./UpdatePetStyle.jsx";
 
 function SectionInputUpdatePage() {
@@ -65,18 +58,8 @@ function SectionInputUpdatePage() {
     setOpen(false);
   };
 
-  const handleWarningClose = () => {
-    setWarningOpen(false);
-  };
-
   const handleSubmit = async (event) => {
     try {
-      // if (!updateImageSrc) {
-      //   event.preventDefault();
-      //   setWarningOpen(true);
-      //   console.log("Missing required fields");
-      //   return;
-      // }
       await axios.put(`http://localhost:4000/pets/${params.petId}`, {
         ...inputData,
         picture: updateImageSrc || postById.picture,
@@ -119,56 +102,6 @@ function SectionInputUpdatePage() {
 
   return (
     <div className="section_inputdetail">
-      <Modal
-        open={warningOpen}
-        onClose={handleWarningClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            width: "400px",
-            height: "208px",
-            background: "white",
-            borderRadius: "16px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            padding: "30px",
-          }}
-        >
-          <div
-            className="popupwarningupdate_top"
-            css={popUpWarningUpdateTopStyle}
-          >
-            <h2 css={createPetFailedUpdateStyle}>Update Pet Failed</h2>
-            <button
-              onClick={handleWarningClose}
-              css={css`
-                cursor: pointer;
-              `}
-            >
-              <IoClose css={closeButtomUpdateStyle} />
-            </button>
-          </div>
-
-          <div
-            className="popupwarningupdate_bottom"
-            css={popUpWarningUpdateButtomStyle}
-          >
-            <RiErrorWarningFill css={warningIconUpdateStyle} />
-            <h3 css={textWarningUpdateStyle}>
-              Can't create. Please provide all required information.
-            </h3>
-          </div>
-        </Box>
-      </Modal>
       <form onSubmit={handleSubmit} action="petdeail" css={formStyle}>
         <div className="input_top">
           <label htmlFor="petname" css={labelStyle}>
@@ -200,7 +133,9 @@ function SectionInputUpdatePage() {
               }}
             >
               {postById.pet_type && (
-                <option value={postById.pet_type}>{postById.pet_type}</option>
+                <option value={postById.pet_type} css={optionInputDataNone}>
+                  {postById.pet_type}
+                </option>
               )}
               <option disabled value="">
                 Select your pet type
@@ -224,7 +159,9 @@ function SectionInputUpdatePage() {
               }}
             >
               {postById.sex && (
-                <option value={postById.sex}>{postById.sex}</option>
+                <option value={postById.sex} css={optionInputDataNone}>
+                  {postById.sex}
+                </option>
               )}
               <option disabled value="">
                 Select sex of your pet

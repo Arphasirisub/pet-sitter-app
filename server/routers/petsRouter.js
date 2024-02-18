@@ -4,6 +4,7 @@ import { protect } from "../middlewares/protect.js";
 
 export const petsRouter = Router();
 
+// petsRouter.get("/ownerPet",protect, async (req, res) => {
 //   try {
 //     const ownerId = req.userId
 //     const { data, error } = await supabase
@@ -114,7 +115,6 @@ petsRouter.delete("/:id", async (req, res) => {
 petsRouter.get("/myPets", protect, async (req, res) => {
   try {
     const ownerId = req.userId;
-    console.log(ownerId);
     const { data, error } = await supabase
       .from("pets")
       .select("*")

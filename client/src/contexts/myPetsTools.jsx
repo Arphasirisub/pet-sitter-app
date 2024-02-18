@@ -17,6 +17,7 @@ function MyPetsToolsProvider(props) {
     age: "",
     color: "",
     weight: "",
+    about: "",
   });
 
   const handleSubmit = async () => {
@@ -38,6 +39,7 @@ function MyPetsToolsProvider(props) {
       age: "",
       color: "",
       weight: "",
+      about: "",
     });
   };
   const handleStateChange = (fieldName, value) => {
