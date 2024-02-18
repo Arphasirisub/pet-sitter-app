@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import { RxPerson } from "react-icons/rx";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../contexts/authentication";
+import { GoCreditCard } from "react-icons/go";
+import { IoList } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
 import {
   containerSidebarStyle,
@@ -16,6 +18,13 @@ import {
 
 const Sidebar = ({ activeTap, setActiveTap }) => {
   const { logout } = useAuth();
+
+  const getSidebarItemStyle = (isActive) => css`
+    ${sidebarStyle};
+    background-color: ${isActive ? "rgba(255, 241, 236, 1)" : "transparent"};
+    color: ${isActive ? "rgba(255, 112, 55, 1)" : "rgba(91, 93, 111, 1)"};
+  `;
+
   return (
     <div className="container_sidebar" css={containerSidebarStyle}>
       <div className="section__logo" css={sectionLogoStyle}>
@@ -25,83 +34,39 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
       <div className="section__sidebar-button">
         <div
           className="sidebar"
-          css={css`
-            ${sidebarStyle};
-            background-color: ${activeTap === "pet-sitter-profile"
-              ? "rgba(255, 241, 236, 1)"
-              : "transparent"};
-            color: ${activeTap === "pet-sitter-profile"
-              ? "rgba(255, 112, 55, 1)"
-              : "rgba(91, 93, 111, 1)"};
-          `}
+          css={getSidebarItemStyle(activeTap === "pet-sitter-profile")}
           onClick={() => {
             setActiveTap("pet-sitter-profile");
           }}
         >
-          <BsFillPersonFill
-            fontSize="24px"
-            color={
-              activeTap === "pet-sitter-profile"
-                ? "rgba(255, 112, 55, 1)"
-                : "rgba(174, 177, 195, 1)"
-            }
-          />
+          <BsFillPersonFill fontSize="24px" />
           <p css={fontSidebarStyle}>Pet Sitter Profile</p>
         </div>
 
         <div
           className="sidebar"
-          css={css`
-            ${sidebarStyle};
-            background-color: ${activeTap === "booking-list"
-              ? "rgba(255, 241, 236, 1)"
-              : "transparent"};
-            color: ${activeTap === "booking-list"
-              ? "rgba(255, 112, 55, 1)"
-              : "rgba(91, 93, 111, 1)"};
-          `}
+          css={getSidebarItemStyle(activeTap === "booking-list")}
           onClick={() => {
             setActiveTap("booking-list");
           }}
         >
-          <img
-            src={
-              activeTap === "booking-list"
-                ? "/src/PublicPicture/bookingiconorange.png"
-                : "/src/PublicPicture/bookingicon.png"
-            }
-            alt="booking"
-            width="24px"
-            height="24px"
-          />
+          <IoList fontSize="24px" />
 
           <p css={fontSidebarStyle}>Booking List</p>
         </div>
 
         <div
           className="sidebar"
-          css={css`
-            ${sidebarStyle};
-            background-color: ${activeTap === "payout-option"
-              ? "rgba(255, 241, 236, 1)"
-              : "transparent"};
-            color: ${activeTap === "payout-option"
-              ? "rgba(255, 112, 55, 1)"
-              : "rgba(91, 93, 111, 1)"};
-          `}
+          css={getSidebarItemStyle(activeTap === "payout-option")}
           onClick={() => {
             setActiveTap("payout-option");
           }}
         >
-          <img
-            src={
-              activeTap === "payout-option"
-                ? "/src/PublicPicture/payouticonorange.png"
-                : "/src/PublicPicture/payouticon.png"
-            }
-            alt="payout"
-            width="24px"
-            height="24px"
+          <GoCreditCard
+            fontSize="22px"
+            css={css`
+              margin-left: 1px;
+            `}
           />
           <p css={fontSidebarStyle}>Payout Option</p>
         </div>

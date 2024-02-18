@@ -29,7 +29,7 @@ function init() {
   app.use("/sitters", sittersRouter);
   app.use("/pets", petsRouter);
   app.use("/facebook", facebookRouter);
-  app.use("/comments", commentsRouter)
+  app.use("/comments", commentsRouter);
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

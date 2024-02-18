@@ -236,6 +236,7 @@ export const inputStyles = css`
   border: solid 1px #dcdfed;
   border-radius: 8px;
   cursor: pointer;
+  color: rgba(123, 126, 143, 1);
 
   :focus {
     outline: none;
@@ -419,3 +420,7 @@ export const checkboxStyles = {
     },
   },
 };
+
+export const optionDisable = css`
+  color: rgba(123, 126, 143, 1);
+`;

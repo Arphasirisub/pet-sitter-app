@@ -27,7 +27,7 @@ export const fontSidebarStyle = css`
   width: 152px;
 `;
 
-export const sidebarStyle = (theme) => css`
+export const sidebarStyle = css`
   background-color: #fafafb;
   border: none;
   cursor: pointer;
@@ -38,11 +38,11 @@ export const sidebarStyle = (theme) => css`
   width: 240px;
   height: 56px;
   transition: background-color 0.3s;
-
   &:hover {
     color: rgba(255, 112, 55, 1);
   }
 `;
+
 export const logoutStyle = css`
   display: flex;
   align-items: center;

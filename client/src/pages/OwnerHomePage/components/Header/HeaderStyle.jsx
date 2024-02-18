@@ -104,110 +104,12 @@ export const flexRowRating = css`
   gap: 5px;
   margin-top: 10px;
 `;
+
 export const numberRating = css`
   margin-left: 7px;
   color: #7b7e8f;
   margin-right: 7px;
   font-size: 14px;
-`;
-export const fiveRatingbox = css`
-  display: flex;
-  flex-direction: row;
-  border: solid 1px rgba(226, 226, 226, 0.5);
-  background-color: white;
-  width: 140px;
-  height: 30px;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  &:focus {
-    border: 1px solid rgba(255, 112, 55, 1);
-    p {
-      color: rgba(255, 112, 55, 1);
-    }
-  }
-`;
-
-export const fourRatingBox = css`
-  display: flex;
-  flex-direction: row;
-  border: solid 1px rgba(226, 226, 226, 0.5);
-  background-color: white;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 120px;
-  height: 30px;
-
-  &:focus {
-    border: 1px solid rgba(255, 112, 55, 1);
-    p {
-      color: rgba(255, 112, 55, 1);
-    }
-  }
-`;
-
-export const threeRatingBox = css`
-  display: flex;
-  flex-direction: row;
-  border: solid 1px rgba(226, 226, 226, 0.5);
-  background-color: white;
-  width: 95px;
-  height: 30px;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  &:focus {
-    border: 1px solid rgba(255, 112, 55, 1);
-    p {
-      color: rgba(255, 112, 55, 1);
-    }
-  }
-`;
-
-export const twoRatingBox = css`
-  display: flex;
-  flex-direction: row;
-  border: solid 1px rgba(226, 226, 226, 0.5);
-  background-color: white;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 70px;
-  height: 30px;
-
-  &:focus {
-    border: 1px solid rgba(255, 112, 55, 1);
-    p {
-      color: rgba(255, 112, 55, 1);
-    }
-  }
-`;
-
-export const oneRatingBox = css`
-  display: flex;
-  flex-direction: row;
-  border: solid 1px rgba(226, 226, 226, 0.5);
-  background-color: white;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 50px;
-  height: 30px;
-
-  &:focus {
-    border: 1px solid rgba(255, 112, 55, 1);
-    p {
-      color: rgba(255, 112, 55, 1);
-    }
-  }
 `;
 
 export const starLayout = css`
@@ -223,6 +125,7 @@ export const inputStyles = css`
   border: solid 1px #dcdfed;
   border-radius: 8px;
   cursor: pointer;
+  color: rgba(123, 126, 143, 1);
 
   :focus {
     outline: none;
@@ -296,7 +199,7 @@ export const ratingStyle = css`
   text-align: left;
   display: flex;
   justify-content: flex-start;
-  width: 72px;
+  width: 1064px;
   gap: 24px;
 `;
 
@@ -398,3 +301,27 @@ export const checkboxStyles = {
     },
   },
 };
+
+export const serchButtonStyle = css`
+  background-color: #ff7037;
+  font-family: "Satoshi", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  color: white;
+  font-size: 15px;
+  padding: 12px 24px; /* Adjust padding for responsiveness */
+  border-radius: 99px; /* Adjust border-radius for responsiveness */
+  text-transform: none;
+  transition: background-color 0.3s ease;
+  width: 127px;
+  height: 48px;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+  gap: 8px;
+
+  &:hover {
+    color: black;
+  }
+`;

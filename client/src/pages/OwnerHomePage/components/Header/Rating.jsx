@@ -4,8 +4,9 @@ import {
   text,
   flexRowRating,
   inputStyles,
-  searchButton,
   ratingStyle,
+  fiveRatingFocusbox,
+  serchButtonStyle,
 } from "./HeaderStyle.jsx";
 import { useSitter } from "../../../../contexts/getSitters";
 import {
@@ -16,16 +17,19 @@ import {
   OneStar,
 } from "./StarIcon.jsx";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Button from "@mui/material/Button";
 
 function RatingDropdown() {
   const { searchInput, handleStateChange, getSitters } = useSitter();
+  const [changeColor, setChangeColor] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     getSitters();
   };
-
+  console.log(changeColor);
   return (
     <div className="bargroup_rating" css={ratingStyle}>
       <span css={text}>Rating:</span>
@@ -33,9 +37,10 @@ function RatingDropdown() {
         <div
           onClick={() => {
             handleStateChange("rating", 5);
+            setChangeColor(true);
           }}
         >
-          <FiveStar />
+          <FiveStar css={[changeColor && fiveRatingFocusbox]} />
         </div>
         <div
           onClick={() => {
@@ -44,8 +49,6 @@ function RatingDropdown() {
         >
           <FourStar />
         </div>
-      </div>
-      <div css={flexRowRating}>
         <div
           onClick={() => {
             handleStateChange("rating", 3);
@@ -78,21 +81,33 @@ function RatingDropdown() {
           handleStateChange("experience", e.target.value);
         }}
       >
-        <option value="">see all</option>
+        <option
+          value=""
+          disabled
+          css={css`
+            color: rgba(123, 126, 143, 1);
+          `}
+        >
+          see all
+        </option>
         <option value="0-2">0-2 Years</option>
         <option value="3-5">3-5 Years</option>
         <option value="5-9">5+ Years</option>
       </select>
 
-      <button
-        css={searchButton}
+      <Button
+        id="fade-button"
+        aria-controls={open ? "fade-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
         onClick={() => {
           handleSubmit();
           navigate("/list");
         }}
+        css={serchButtonStyle}
       >
-        search
-      </button>
+        Search
+      </Button>
     </div>
   );
 }

@@ -14,7 +14,9 @@ select {
   background: none;
   font: inherit;
 }
-input:focus {
+input,
+textarea:focus {
+  color: none;
   outline: none; /* Remove default outline */
   box-shadow: none; /* Remove default box shadow */
   /* Add any other custom styles for focus state */
@@ -36,4 +38,8 @@ select:focus {
   cursor: pointer;
   outline: none;
   /* Add more styles as needed */
+}
+
+option {
+  color: black;
 }

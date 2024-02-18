@@ -25,6 +25,7 @@ import {
   searchButton,
   sticky,
   checkboxStyles,
+  optionDisable,
 } from "./Style.jsx";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -85,62 +86,62 @@ function SearchBox() {
 
           <p css={text}>Pet Type:</p>
           <div css={checkBoxLaout}>
-          <label htmlFor="dog" css={checkBoxText}>
-          <Checkbox
-            id="dog"
-            name="petType"
-            {...label}
-            color="default"
-            checked={searchInput.dog}
-            onChange={(e) => {
-              handleStateChange("dog", e.target.checked);
-            }}
-            sx={checkboxStyles}
-          />
-          Dog
-        </label>
+            <label htmlFor="dog" css={checkBoxText}>
+              <Checkbox
+                id="dog"
+                name="petType"
+                {...label}
+                color="default"
+                checked={searchInput.dog}
+                onChange={(e) => {
+                  handleStateChange("dog", e.target.checked);
+                }}
+                sx={checkboxStyles}
+              />
+              Dog
+            </label>
             <label htmlFor="cat" css={checkBoxText}>
-          <Checkbox
-            id="cat"
-            name="petType"
-            {...label}
-            color="default"
-            checked={searchInput.cat}
-            onChange={(e) => {
-              handleStateChange("cat", e.target.checked);
-            }}
-            sx={checkboxStyles}
-          />
-          Cat
-        </label>
-        <label htmlFor="bird" css={checkBoxText}>
-          <Checkbox
-            id="bird"
-            name="petType"
-            {...label}
-            color="default"
-            checked={searchInput.bird}
-            onChange={(e) => {
-              handleStateChange("bird", e.target.checked);
-            }}
-            sx={checkboxStyles}
-          />
-          Bird
-        </label>
-        <label htmlFor="rabbit" css={checkBoxText}>
-          <Checkbox
-            id="rabbit"
-            name="petType"
-            {...label}
-            color="default"
-            checked={searchInput.rabbit}
-            onChange={(e) => {
-              handleStateChange("rabbit", e.target.checked);
-            }}
-            sx={checkboxStyles}
-          />
-          Rabbit
-        </label>
+              <Checkbox
+                id="cat"
+                name="petType"
+                {...label}
+                color="default"
+                checked={searchInput.cat}
+                onChange={(e) => {
+                  handleStateChange("cat", e.target.checked);
+                }}
+                sx={checkboxStyles}
+              />
+              Cat
+            </label>
+            <label htmlFor="bird" css={checkBoxText}>
+              <Checkbox
+                id="bird"
+                name="petType"
+                {...label}
+                color="default"
+                checked={searchInput.bird}
+                onChange={(e) => {
+                  handleStateChange("bird", e.target.checked);
+                }}
+                sx={checkboxStyles}
+              />
+              Bird
+            </label>
+            <label htmlFor="rabbit" css={checkBoxText}>
+              <Checkbox
+                id="rabbit"
+                name="petType"
+                {...label}
+                color="default"
+                checked={searchInput.rabbit}
+                onChange={(e) => {
+                  handleStateChange("rabbit", e.target.checked);
+                }}
+                sx={checkboxStyles}
+              />
+              Rabbit
+            </label>
           </div>
           <div css={text}>Rating:</div>
           <div css={flexRowRating}>
@@ -194,7 +195,9 @@ function SearchBox() {
               handleStateChange("experience", e.target.value);
             }}
           >
-            <option value="">see all</option>
+            <option value="" disabled css={optionDisable}>
+              see all
+            </option>
             <option value="0-2">0-2 Years</option>
             <option value="3-5">3-5 Years</option>
             <option value="5-9">5+ Years</option>

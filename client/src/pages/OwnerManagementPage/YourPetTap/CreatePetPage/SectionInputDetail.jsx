@@ -42,20 +42,14 @@ import {
   warningIconInputBreedStyle,
   warningIconInputAgeStyle,
   warningIconInputWeightStyle,
+  optionSelectInput,
 } from "./CreatePetStyle.jsx";
 
 function SectionInputDetail() {
-  const {
-    handleCancel,
-    inputData,
-    handleStateChange,
-    imageSrc,
-    setImageSrc,
-    handleFileChange,
-    importImage,
-  } = useMyPetsTools();
+  const { handleCancel, inputData, handleStateChange, imageSrc } =
+    useMyPetsTools();
   const params = useParams();
-  const { state, checkToken } = useAuth();
+  const { checkToken } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [formSubmitted, setFormSubmitted] = React.useState(false);
 
@@ -181,11 +175,12 @@ function SectionInputDetail() {
                 formSubmitted && !inputData.pet_type && inputErrorStyle,
               ]}
               value={inputData.pet_type}
+              defaultValue={"Select your pet type"}
               onChange={(e) => {
                 handleStateChange("pet_type", e.target.value);
               }}
             >
-              <option disabled value="">
+              <option disabled value="" css={optionSelectInput}>
                 Select your pet type
               </option>
               <option value="Dog">Dog</option>
@@ -214,7 +209,7 @@ function SectionInputDetail() {
                 handleStateChange("sex", e.target.value);
               }}
             >
-              <option disabled value="">
+              <option disabled value="" css={optionSelectInput}>
                 Select sex of your pet
               </option>
               <option value="Male">Male</option>
