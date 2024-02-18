@@ -1,6 +1,9 @@
 import { Router } from "express";
 import supabase from "../utills/supabase.js";
 import { protect } from "../middlewares/protect.js";
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SEND_GRID_KEY);
 
 export const bookingsRouter = Router();
 
@@ -161,7 +164,6 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
   const sitterId = req.params.id;
   const ownerId = req.userId;
   const { start, end, pets, price, message, payment } = req.body;
-  console.log(req.body);
 
   try {
     // Insert data into the 'bookings' table
@@ -183,8 +185,6 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
     if (bookingError) {
       throw bookingError;
     }
-
-    console.log(bookingData);
 
     // Retrieve the ID of the inserted booking
     const { data: insertedBooking, error: selectError } = await supabase
@@ -216,6 +216,46 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
     if (petBookingError) {
       throw petBookingError;
     }
+
+    // Fetch the sitter's email, latitude, and longitude from the Supabase table
+    const { data: sitterData, error: sitterError } = await supabase
+      .from("sitters")
+      .select("email, latitude, longitude")
+      .eq("id", sitterId)
+      .single();
+
+    if (sitterError) {
+      throw sitterError;
+    }
+
+    const { email, latitude, longitude } = sitterData;
+
+    // Construct link to add event to Google Calendar
+    const startDate = new Date(start); // Assuming `start` is a date object
+    const endDate = new Date(end);
+
+    const options = { timeZone: "Asia/Bangkok" }; // Set Thailand time zone
+    const formattedStartDate = startDate.toLocaleString("en-US", options);
+    const formattedEndDate = endDate.toLocaleString("en-US", options);
+
+    const googleCalendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pet%20Sitting&dates=${formattedStartDate}/${formattedEndDate}&details=${message}&location=${longitude},${latitude}`;
+
+    // Send an email invitation to the sitter
+    const msg = {
+      to: email,
+      from: "peerawet1996@gmail.com",
+      subject: "New Booking Alert",
+      html: `<p>Hello,</p><p>You have a new booking request. Please log in to your account to review and confirm.</p>
+       <p><strong>Booking Details:</strong></p>
+       <ul>
+           <li>Date & Time: ${start} to ${end}</li>
+           <li>Price: ${price}</li>
+           <li>Message: ${message}</li>
+       </ul>
+       <p>To accept the booking and add it to your Google Calendar, please <a href="${googleCalendarLink}">click here</a>.</p>`,
+    };
+
+    await sgMail.send(msg);
 
     res.status(200).json({ bookingId: bookingId });
   } catch (error) {
