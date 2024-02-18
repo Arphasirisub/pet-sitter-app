@@ -9,6 +9,7 @@ import { sittersRouter } from "./routers/sittersRouter.js";
 import { petsRouter } from "./routers/petsRouter.js";
 import { facebookRouter } from "./routers/facebookRouter.js";
 import { commentsRouter } from "./routers/commentsRouter.js";
+import { googleRouter } from "./routers/googleRouter.js";
 
 function init() {
   dotenv.config();
@@ -29,7 +30,8 @@ function init() {
   app.use("/sitters", sittersRouter);
   app.use("/pets", petsRouter);
   app.use("/facebook", facebookRouter);
-  app.use("/comments", commentsRouter)
+  app.use("/comments", commentsRouter);
+  app.use("/google", googleRouter);
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
