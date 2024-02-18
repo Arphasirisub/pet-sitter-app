@@ -5,7 +5,7 @@ import {
   flexRowRating,
   inputStyles,
   ratingStyle,
-  fiveRatingFocusbox,
+  // fiveRatingFocusbox,
   serchButtonStyle,
 } from "./HeaderStyle.jsx";
 import { useSitter } from "../../../../contexts/getSitters";
@@ -40,7 +40,7 @@ function RatingDropdown() {
             setChangeColor(true);
           }}
         >
-          <FiveStar css={[changeColor && fiveRatingFocusbox]} />
+          <FiveStar css={[changeColor]} />
         </div>
         <div
           onClick={() => {
