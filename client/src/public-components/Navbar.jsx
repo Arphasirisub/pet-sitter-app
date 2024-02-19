@@ -27,7 +27,10 @@ function Navbar() {
   };
 
   useEffect(() => {
-    getOwnerData();
+    const token = localStorage.getItem("token");
+    if (token) {
+      getOwnerData();
+    }
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);

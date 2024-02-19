@@ -66,6 +66,7 @@ facebookRouter.post("/facebookToken/:token", async (req, res) => {
     // Check if neither sitterData nor ownerData contains data
     if (!userData) {
       // If user data is not found in either table, indicate that user is new and needs to select a role
+
       return res.status(200).json({
         newUser: {
           id: decodedPayload.sub,
@@ -84,7 +85,6 @@ facebookRouter.post("/facebookToken/:token", async (req, res) => {
       email: userData.email,
       role: userData.role,
       name: userData.full_name,
-      profile_img: userData.profile_img,
     };
 
     const newToken = jwt.sign(newTokenPayload, secretKey, {
@@ -127,7 +127,7 @@ facebookRouter.put("/updateUser", async (req, res) => {
       email: req.body.email,
       role: req.body.role,
       name: req.body.full_name,
-      profile_img: req.body.picture,
+      // profile_img: req.body.picture,
     };
 
     const secretKey = process.env.SECRET_KEY;

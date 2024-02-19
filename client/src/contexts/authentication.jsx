@@ -74,7 +74,6 @@ function AuthProvider(props) {
         ...prevState,
         user: { ...userDataFromToken },
         isAuthenticated: true,
-        isLoading: false,
         isSignInError: false, // Reset isSignInError on successful login
         signIn: { ...prevState.signIn, isLoading: false }, // Update isLoading inside signIn
       }));
