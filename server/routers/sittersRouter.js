@@ -4,8 +4,8 @@ import { protect } from "../middlewares/protect.js";
 
 export const sittersRouter = Router();
 
-sittersRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
+sittersRouter.get("/sitterProflie", protect, async (req, res) => {
+  const id = req.userId;
 
   try {
     const { data, error } = await supabase
@@ -35,7 +35,7 @@ sittersRouter.get("/:id", async (req, res) => {
 sittersRouter.get("/", async (req, res) => {
   const experienceRange = req.query.experience;
   const fullName = req.query.full_name;
-  const district = req.query.district
+  // const district = req.query.full_name;
   const rating = Number(req.query.rating);
   const dog = req.query.dog === "true";
   const cat = req.query.cat === "true";
@@ -43,7 +43,12 @@ sittersRouter.get("/", async (req, res) => {
   const rabbit = req.query.rabbit === "true";
 
   try {
-    let query = supabase.from("sitters").select("*").eq("is_active", true);
+    let query = supabase
+      .from("sitters")
+      .select("*")
+      .eq("is_active", true)
+      // .ilike("full_name", `%${fullName}%`)
+      // .ilike("district", `%${district}%`);
 
     if (experienceRange) {
       let [minExp, maxExp] = experienceRange.split("-");
@@ -61,19 +66,12 @@ sittersRouter.get("/", async (req, res) => {
       query = query.gte("experience", minExp).lte("experience", maxExp);
     }
 
-    if (fullName && district) {
-      // Add filter for both full_name and district using ilike and eq
-      query = query
-        .ilike("full_name", `%${fullName}%`)
-        .eq("district", `%${district}%`);
-    } else if (fullName) {
-      // Add filter for full_name using ilike
+    if (fullName) {
       query = query.ilike("full_name", `%${fullName}%`);
-    } else if (district) {
-      // Add filter for district using eq
-      query = query.eq("district", `%${district}%`);
     }
-
+    // else if(district) {
+    //   query = query.ilike("district", `%${district}%`);
+    // }
 
     if (!isNaN(rating) && rating >= 1 && rating <= 5) {
       // Add filter for rating if it's a valid number between 1 and 5

@@ -3,7 +3,6 @@ import React from "react";
 import { css } from "@emotion/react";
 import marieimg from "../../../PublicPicture/marieimg.png";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -31,12 +30,10 @@ const TopBar = () => {
   `;
 
   const [img, setImg] = useState("");
-  const param = useParams();
   const getImg = async () => {
     try {
-      console.log(param.id);
       const result = await axios.get(
-        `http://localhost:4000/sitters/${param.id}`
+        `http://localhost:4000/sitters/sitterProflie`
       );
 
       setImg(result.data);
@@ -48,7 +45,7 @@ const TopBar = () => {
 
   useEffect(() => {
     getImg();
-  }, [param.id]);
+  }, []);
 
   return (
     <div className="container_headnav" css={containerHeadNavStyle}>
