@@ -58,16 +58,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function CustomizedTables({ searchbooking }) {
-  const param = useParams();
   const [fetchData, setFetchData] = useState([]);
   const [bookingHistory, setBookingHistory] = useState([]);
 
   const fetchBookingHistory = async () => {
     try {
-      console.log(param.id);
-      // 2. fetch from db
       const result = await axios.get(
-        `http://localhost:4000/bookings/sitter/${param.id}`
+        `http://localhost:4000/bookings/sitterHomepage`
       );
       setFetchData(result.data);
       setBookingHistory(result.data);
