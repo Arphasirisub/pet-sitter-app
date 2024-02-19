@@ -41,7 +41,7 @@ function BookingResultPage() {
     setMessage,
   } = useBookingTools();
   const param = useParams();
-  const [durationHours, setDurationHours] = useState(0);
+  const [durationHours, setDurationHours] = useState();
 
   const calculateDurationInHours = (startTime, stopTime) => {
     const start = moment(startTime);
@@ -82,7 +82,6 @@ function BookingResultPage() {
 
   useEffect(() => {
     getBookingData(param.id);
-
     if (bookedTimeData.find((i) => i.id === bookingId)) {
       const startTime = bookedTimeData.find(
         (i) => i.id === bookingId
@@ -93,7 +92,7 @@ function BookingResultPage() {
       const duration = calculateDurationInHours(startTime, stopTime);
       setDurationHours(duration);
     }
-  }, [bookedTimeData]);
+  }, [getBookingData, durationHours]);
 
   return (
     <Stack

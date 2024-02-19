@@ -11,7 +11,7 @@ const stripeInstance = stripe(
 
 paymentRouter.post("/api/create-checkout-session", async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { amount, start, end, id, bookingId } = req.body;
     const session = await stripeInstance.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -27,9 +27,10 @@ paymentRouter.post("/api/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5173/result`,
-      cancel_url: "http://localhost:5173/cancel",
+      success_url: `http://localhost:5173/booking/result/${bookingId}/${id}`,
+      cancel_url: "http://localhost:5173/booking/cancel",
     });
+    console.log(bookingId);
     console.log(session);
     res.json({ id: session.id });
   } catch (error) {

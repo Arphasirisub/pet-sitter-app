@@ -10,7 +10,9 @@ bookingsRouter.get("/sitter/:id", async (req, res) => {
     // Fetch bookings data with an additional column "pets" for the count
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select("*,owners(full_name), pet_bookings:pet_booking(booking_id) ")
+      .select(
+        "*,sitter_id(id,full_name,trade_name),owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(pet_name)) "
+      )
       .eq("sitter_id", id);
 
     if (bookingsError) {

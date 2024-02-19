@@ -9,7 +9,7 @@ import SitterDetailsPage from "./pages/SitterDetailsPage/SitterDetailsPage";
 import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage/ForgetPasswordPage.Jsx";
-import BookingResultPage from "./pages/BookingPage/BookingResult/BookingResultPage.jsx";
+import BookingResultPageByCard from "./pages/BookingPage/BookingResult/BookingResultPageByCard.jsx";
 
 function OwnerApp() {
   return (
@@ -30,7 +30,10 @@ function OwnerApp() {
         element={<OwnerMangementPage />}
       />
       <Route path="/booking/:start/:end/:id" element={<BookingPage />} />
-      <Route path="/booking/result" element={<BookingResultPage />} />
+      <Route
+        path="/booking/result/:bookingId/:id"
+        element={<BookingResultPageByCard />}
+      />
     </Routes>
   );
 }
