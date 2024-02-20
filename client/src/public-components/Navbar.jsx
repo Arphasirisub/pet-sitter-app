@@ -15,21 +15,38 @@ function Navbar() {
   const navigate = useNavigate();
   const { logout, state } = useAuth();
   const [ownerData, setOwnerData] = useState({});
+  const [sitterData, setSitterDatta] = useState({});
 
   const getOwnerData = async () => {
     try {
       const result = await axios.get(`http://localhost:4000/owners/myProfile`);
-      console.log(result);
+      // console.log(result);
       setOwnerData(result.data.data.data);
     } catch (error) {
       console.error("Error while fetching available pet types:", error);
     }
   };
 
+  const getSitterData = async () => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/sitters/sitterProflie`
+      );
+      // console.log(result.data);
+      setSitterDatta(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      getOwnerData();
+      if (state.user.role === "pet_owner") {
+        getOwnerData();
+      } else if (state.user.role === "pet_sitter") {
+        getSitterData();
+      }
     }
   }, []);
 
@@ -81,9 +98,16 @@ function Navbar() {
       >
         {state.isAuthenticated && state.user ? (
           <>
-            <div>{ownerData.full_name}</div>
+            <div>
+              {ownerData ||
+                (sitterData && (ownerData.full_name || sitterData.full_name))}
+            </div>
             <img
-              src={ownerData.profile_img}
+              src={
+                ownerData ||
+                (sitterData &&
+                  (ownerData.profile_img || sitterData.profile_img))
+              }
               alt="Profile"
               css={css`
                 width: 40px;
