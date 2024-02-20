@@ -11,6 +11,11 @@ import Fade from "@mui/material/Fade";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { BsFillPersonFill } from "react-icons/bs";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+import { MdOutlinePets } from "react-icons/md";
+import { MdHistory } from "react-icons/md";
+
 function Navbar() {
   const navigate = useNavigate();
   const { logout, state, checkToken } = useAuth();
@@ -63,12 +68,6 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // const handleImageClick = () => {
-  //   if (state.isAuthenticated) {
-  //     handleClick();
-  //   }
-  // };
 
   return (
     <div
@@ -131,24 +130,15 @@ function Navbar() {
                 open={open}
                 onClose={handleClose}
                 TransitionComponent={Fade}
-                // PaperProps={{
-                //   component: "div", // Use a div container for the Paper
-                //   style: {
-                //     width: "186px",
-                //     height: "148px",
-                //     overflow: "hidden", // Prevent scrolling
-                //   },
-                // }}
-                // MenuProps={{
-                //   disableScrollLock: true, // Disable the Scroll Lock
-                // }}
               >
                 <MenuItem
                   onClick={() => {
                     navigate(`/owner/${state.user.id}/profile`);
                     handleClose();
                   }}
+                  css={menuItemStyle}
                 >
+                  <BsFillPersonFill />
                   Profile
                 </MenuItem>
                 <MenuItem
@@ -156,7 +146,9 @@ function Navbar() {
                     navigate(`/owner/${state.user.id}/yourPet`);
                     handleClose();
                   }}
+                  css={menuItemStyle}
                 >
+                  <MdOutlinePets />
                   Your Pet
                 </MenuItem>
                 <MenuItem
@@ -164,15 +156,20 @@ function Navbar() {
                     navigate(`/owner/${state.user.id}/bookingHistory`);
                     handleClose();
                   }}
+                  css={menuItemStyle}
                 >
+                  <MdHistory />
                   History
                 </MenuItem>
+                <hr></hr>
                 <MenuItem
                   onClick={() => {
                     handleClose();
                     logout();
                   }}
+                  css={menuItemStyle}
                 >
+                  <RiLogoutBoxRLine />
                   Log out
                 </MenuItem>
               </Menu>
@@ -188,7 +185,7 @@ function Navbar() {
                 navigate("/login");
               }}
             >
-              Login
+              <div>Login</div>
             </div>
           )}
 
@@ -233,5 +230,17 @@ function Navbar() {
     </div>
   );
 }
+
+const menuItemStyle = css`
+  display: flex;
+  gap: 10px;
+  width: 186px;
+  padding-left: 30px;
+  font-size: 18px;
+
+  &:hover {
+    color: rgb(255, 112, 55);
+  }
+`;
 
 export default Navbar;

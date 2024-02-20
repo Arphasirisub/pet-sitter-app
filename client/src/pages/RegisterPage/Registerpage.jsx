@@ -57,31 +57,38 @@ function RegisterPage() {
   return (
     <>
       {/* page */}
-      <div css={pageLayout}>
-        <Header />
-        <div css={inutLayout}>
-          {state.signUp.isLoading === false && (
-            <>
-              <SelectRole role={role} setRole={setRole} />
-              {role && (
-                <InputBox
-                  formData={formData}
-                  handleSubmit={handleSubmit}
-                  handleInputChange={handleInputChange}
-                  formErrors={formErrors}
-                />
-              )}
-            </>
-          )}
-          {state.signUp.isLoading && (
-            <CircularProgress size={50} color="primary" />
-          )}
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+        `}
+      >
+        <div css={pageLayout}>
+          <Header />
+          <div css={inutLayout}>
+            {state.signUp.isLoading === false && (
+              <>
+                <SelectRole role={role} setRole={setRole} />
+                {role && (
+                  <InputBox
+                    formData={formData}
+                    handleSubmit={handleSubmit}
+                    handleInputChange={handleInputChange}
+                    formErrors={formErrors}
+                  />
+                )}
+              </>
+            )}
+            {state.signUp.isLoading && (
+              <CircularProgress size={50} color="primary" />
+            )}
+          </div>
+
+          <AlternativeLogin />
+
+          <LoginLink navigate={navigate} />
+          <AuthBackground />
         </div>
-
-        <AlternativeLogin />
-
-        <LoginLink navigate={navigate} />
-        <AuthBackground />
       </div>
       {/* error modal */}
       <ErrorModal />
@@ -99,7 +106,7 @@ const pageLayout = css`
   height: 100vh;
   position: relative;
   gap: 1rem;
-  width: 100vw;
+  width: 1440px;
 `;
 const inutLayout = css`
   width: 100%;
