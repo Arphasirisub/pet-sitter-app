@@ -32,6 +32,34 @@ sittersRouter.get("/sitterProflie", protect, async (req, res) => {
   }
 });
 
+sittersRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("sitters")
+      .select("*,comments(*,owner_id(full_name,profile_img))")
+      .eq("id", id)
+      .eq("is_active", true);
+
+    if (error) {
+      console.error("Error fetching data:", error.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: "Sitter not found" });
+    }
+
+    const singleObject = data[0]; // Extract the first object from the array
+
+    res.json(singleObject);
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 sittersRouter.get("/", async (req, res) => {
   const experienceRange = req.query.experience;
   const fullName = req.query.full_name;
@@ -43,12 +71,9 @@ sittersRouter.get("/", async (req, res) => {
   const rabbit = req.query.rabbit === "true";
 
   try {
-    let query = supabase
-      .from("sitters")
-      .select("*")
-      .eq("is_active", true)
-      // .ilike("full_name", `%${fullName}%`)
-      // .ilike("district", `%${district}%`);
+    let query = supabase.from("sitters").select("*").eq("is_active", true);
+    // .ilike("full_name", `%${fullName}%`)
+    // .ilike("district", `%${district}%`);
 
     if (experienceRange) {
       let [minExp, maxExp] = experienceRange.split("-");
