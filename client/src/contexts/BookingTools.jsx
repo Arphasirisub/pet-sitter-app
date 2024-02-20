@@ -63,6 +63,18 @@ function BookingToolsProvider(props) {
     }
   };
 
+  const getBookingResult = async (booking_id) => {
+    try {
+      const results = await axios.get(
+        `http://localhost:4000/bookings/myBookingResult/${booking_id}`
+      );
+      setBookingResult(results.data);
+      console.log(results);
+    } catch (error) {
+      console.error("Error fetching booking details:", error);
+    }
+  };
+
   //global state
   const [selectedPets, setSelectedPets] = useState([]);
   const [petsResults, setPetsResults] = useState({
@@ -87,6 +99,7 @@ function BookingToolsProvider(props) {
   const [message, setMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [bookingId, setBookingId] = useState(null);
+  const [bookingResult, setBookingResult] = useState([]);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -131,6 +144,9 @@ function BookingToolsProvider(props) {
         setTotalPrice,
         bookingId,
         setBookingId,
+        getBookingResult,
+        bookingResult,
+        setBookingResult,
       }}
     >
       {props.children}

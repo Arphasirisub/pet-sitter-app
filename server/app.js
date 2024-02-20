@@ -10,6 +10,7 @@ import { petsRouter } from "./routers/petsRouter.js";
 import { facebookRouter } from "./routers/facebookRouter.js";
 import { commentsRouter } from "./routers/commentsRouter.js";
 import { googleRouter } from "./routers/googleRouter.js";
+import { paymentRouter } from "./routers/paymentRouter.js";
 
 function init() {
   dotenv.config();
@@ -17,12 +18,12 @@ function init() {
   const app = express();
   const port = 4000;
 
+  app.use(cors());
+  app.use(bodyParser.json());
+
   app.get("/", (req, res) => {
     res.send("Hello supabase");
   });
-
-  app.use(cors());
-  app.use(bodyParser.json());
 
   app.use("/owners", ownersRouter);
   app.use("/authentication", authenticationRouter);
@@ -32,6 +33,7 @@ function init() {
   app.use("/facebook", facebookRouter);
   app.use("/comments", commentsRouter);
   app.use("/google", googleRouter);
+  app.use("/payments", paymentRouter);
 
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

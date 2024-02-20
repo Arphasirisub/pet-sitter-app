@@ -26,6 +26,21 @@ const PetSitterCard = () => {
   const param = useParams();
   const { getSitterData, sitterData } = useBookingTools();
 
+  const calculateAverageRating = () => {
+    if (sitterData && sitterData?.comments && sitterData?.comments.length > 0) {
+      const totalRating = sitterData.comments.reduce(
+        (acc, comment) => acc + comment.rating,
+        0
+      );
+      const average = totalRating / sitterData.comments.length;
+      const fractionalPart = average % 1;
+      return fractionalPart >= 0.5 ? Math.ceil(average) : Math.floor(average);
+    }
+    return 0;
+  };
+
+  const averageRating = calculateAverageRating();
+
   useEffect(() => {
     getSitterData(param.id);
   }, []);
@@ -33,7 +48,10 @@ const PetSitterCard = () => {
   return (
     <>
       <Stack>
-        {sitterData && sitterData?.rating ? (
+        {sitterData &&
+        sitterData?.rating &&
+        sitterData?.comments &&
+        sitterData?.comments.length ? (
           <div>
             <Card
               sx={{
@@ -103,13 +121,16 @@ const PetSitterCard = () => {
                     {sitterData.experience} Year Exp.
                   </Typography>
                 </Stack>
+
                 <Rating
                   name="read-only"
-                  value={sitterData.rating}
-                  max={sitterData.rating}
+                  value={averageRating}
+                  max={averageRating}
+                  precision={0.5}
                   readOnly
                   sx={{ color: "#1CCD83" }}
                 />
+
                 <Stack
                   className="pet-sitter-location-content"
                   sx={{

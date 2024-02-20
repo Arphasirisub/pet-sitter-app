@@ -1,0 +1,219 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { Stack } from "@mui/system";
+import Box from "@mui/material/Box";
+import { Typography, Button } from "@mui/material";
+import bookingResultRight from "../../../PublicPicture/bookingResultRight.svg";
+import bookingResultLeft from "../../../PublicPicture/bookingResultLeft.svg";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  bookingResultBlackText,
+  bookingResultContainer,
+  bookingResultGreyText,
+  bookingResultHeaderText,
+  buttonBookingResult,
+  resultBoxContent,
+  resultBoxMain,
+  resultHeader,
+} from "./BookingResultPageStyle";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import axios from "axios";
+import { useBookingTools } from "../../../contexts/BookingTools";
+
+function BookingResultPageByCard() {
+  const navigate = useNavigate();
+  const param = useParams();
+  const [durationHours, setDurationHours] = useState(0);
+  // const [bookingResult, setBookingResult] = useState([]);
+  const { getBookingResult, bookingResult, setBookingResult } =
+    useBookingTools();
+
+  // const getBookingDataAfterSuccess = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:4000/bookings/myBookingResult/${param.bookingId}`
+  //     );
+
+  //     setbookingResult(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching sitter details:", error);
+  //   }
+  // };
+
+  const calculateDurationInHours = (startTime, stopTime) => {
+    const start = moment(startTime);
+    const stop = moment(stopTime);
+    const duration = moment.duration(stop.diff(start));
+    const hours = duration.asHours();
+    return hours;
+  };
+
+  const handleBookingHistory = () => {
+    setDurationHours(0);
+    navigate(`/owner/${bookingResult[0].owner_id}/bookingHistory`);
+  };
+
+  const handleBackToHome = () => {
+    setDurationHours(0);
+    navigate(`/`);
+  };
+
+  useEffect(() => {
+    // getBookingDataAfterSuccess();
+    getBookingResult(param.bookingId);
+    if (bookingResult.length > 0) {
+      const startTime = bookingResult[0].booked_start;
+      const stopTime = bookingResult[0].booked_stop;
+      const duration = calculateDurationInHours(startTime, stopTime);
+      setDurationHours(duration);
+    }
+  }, [bookingResult, durationHours]);
+  return (
+    <Stack
+      className="bookingResult-container"
+      direction={"row"}
+      sx={bookingResultContainer}
+    >
+      <Stack
+        className="pic-left"
+        justifyContent={"flex-start"}
+        alignItems={"flex-start"}
+      >
+        <img
+          src={bookingResultLeft}
+          alt="Booking Result Left"
+          height={"480px"}
+          width={"400px"}
+        />
+      </Stack>
+      <Stack
+        sx={{
+          width: " 600px",
+          height: "auto",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box className="result-header" css={resultHeader}>
+          <Box className="resultBoxMain" css={resultBoxMain}>
+            <Typography
+              className="bookingResultHeadText"
+              sx={bookingResultHeaderText}
+            >
+              Thank You For Booking
+            </Typography>
+            <Typography sx={bookingResultGreyText}>
+              We will send your booking information to Pet Sitter.
+            </Typography>
+          </Box>
+          <br />
+          <Box className="resultBoxContent" css={resultBoxContent}>
+            <Stack>
+              <Typography sx={bookingResultGreyText}>
+                Transaction Date:{" "}
+                {moment(
+                  bookingResult.length > 0 && bookingResult[0].created_at
+                ).format(" ddd, D MMM YYYY")}
+              </Typography>
+              <Typography sx={bookingResultGreyText}>
+                Transaction No.:{" "}
+                {bookingResult.length > 0 && bookingResult[0].id}
+              </Typography>
+            </Stack>
+            <br />
+            <Typography sx={bookingResultGreyText}>Pet Sitter:</Typography>
+            <Typography sx={bookingResultBlackText}>
+              {bookingResult.length > 0 &&
+                `${bookingResult[0].sitter_id.trade_name} by ${bookingResult[0].sitter_id.full_name}`}
+            </Typography>
+            <br />
+            <Stack direction={"row"} spacing="60px">
+              <Stack>
+                <Typography sx={bookingResultGreyText}>Date & Time:</Typography>
+                <Stack direction={"row"} spacing={1}>
+                  <Typography sx={bookingResultBlackText}>
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_start
+                    ).format("D MMM, YYYY")}
+                  </Typography>
+                  <Typography>|</Typography>
+                  <Typography sx={bookingResultBlackText}>
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_start
+                    ).format("h:mm a")}
+                    -
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_stop
+                    ).format("h:mm a")}
+                  </Typography>
+                </Stack>
+              </Stack>
+              <br />
+              <Stack>
+                <Typography sx={bookingResultGreyText}>Duration:</Typography>
+                <Typography sx={bookingResultBlackText}>
+                  {durationHours} hours
+                </Typography>
+              </Stack>
+            </Stack>
+            <br />
+            <Typography sx={bookingResultGreyText}>Pet:</Typography>
+            <Stack direction={"row"}>
+              {bookingResult.length > 0 &&
+                bookingResult[0].pet_bookings.map((booking, index) => (
+                  <Typography key={index} sx={bookingResultBlackText}>
+                    {booking.pet_id.pet_name}
+                    {index !== bookingResult[0].pet_bookings.length - 1 && ", "}
+                  </Typography>
+                ))}
+            </Stack>
+            <br />
+            <Stack
+              direction={"row"}
+              justifyContent={"space-between"}
+              paddingTop={2}
+              borderTop={2}
+              borderColor={"#94959d"}
+            >
+              <Typography sx={bookingResultBlackText}>Total</Typography>
+              <Typography sx={bookingResultBlackText}>
+                {bookingResult.length > 0 && `${bookingResult[0].price}`} THB
+              </Typography>
+            </Stack>
+          </Box>
+        </Box>
+        <Stack className="button" direction={"row"} spacing={3} marginTop={5}>
+          <Button
+            className="booking-history"
+            onClick={handleBookingHistory}
+            sx={buttonBookingResult}
+          >
+            Booking Detail
+          </Button>
+          <Button
+            className="booking-history"
+            onClick={handleBackToHome}
+            sx={buttonBookingResult}
+          >
+            Back To Home
+          </Button>
+        </Stack>
+      </Stack>
+      <Stack
+        className="pic-right"
+        justifyContent={"flex-end"}
+        alignItems={"flex-end"}
+      >
+        <img
+          src={bookingResultRight}
+          alt="Booking Result Right"
+          height={"480px"}
+          width={"400px"}
+        />
+      </Stack>
+    </Stack>
+  );
+}
+export default BookingResultPageByCard;

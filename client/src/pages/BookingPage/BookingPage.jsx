@@ -6,6 +6,7 @@ import Detail from "./components/Detail";
 import DynamicContents from "./components/DynamicContents";
 import { useBookingTools } from "../../contexts/BookingTools";
 import BookingResultPage from "./BookingResult/BookingResultPage";
+import BookingResultPageByCard from "./BookingResult/BookingResultPageByCard";
 
 function BookingPage() {
   const { bookingId } = useBookingTools();
@@ -36,7 +37,7 @@ function BookingPage() {
         </div>
       )}
 
-      {bookingId && <BookingResultPage />}
+      {/* {bookingId && <BookingResultPage />} */}
     </>
   );
 }

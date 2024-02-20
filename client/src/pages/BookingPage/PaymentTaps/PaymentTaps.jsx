@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import SelectPaymentMethods from "./SelectPaymentMethods";
 import { useBookingTools } from "../../../contexts/BookingTools";
-import Card from "./Promtpay";
+import Card from "./Card";
 import Cash from "./Cash";
 import axios from "axios";
 import { useParams } from "react-router-dom";
