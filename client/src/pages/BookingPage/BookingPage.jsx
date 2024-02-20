@@ -37,7 +37,7 @@ function BookingPage() {
         </div>
       )}
 
-      {bookingId && <BookingResultPage />}
+      {/* {bookingId && <BookingResultPage />} */}
     </>
   );
 }

@@ -25,7 +25,7 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
     setBookingId,
     bookingId,
   } = useBookingTools();
-
+  const navigate = useNavigate();
   // payment integration
   const makePayment = async (bookingId) => {
     const stripe = await loadStripe(
@@ -78,6 +78,7 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
         );
         console.log(response);
         setBookingId(response.data.bookingId);
+        navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
         console.log(response.data.bookingId);
       }
       if (paymentMethods === "card") {

@@ -20,27 +20,27 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import { useBookingTools } from "../../../contexts/BookingTools";
 
 function BookingResultPageByCard() {
   const navigate = useNavigate();
   const param = useParams();
   const [durationHours, setDurationHours] = useState(0);
-  const [successData, setSuccessData] = useState();
+  // const [bookingResult, setBookingResult] = useState([]);
+  const { getBookingResult, bookingResult, setBookingResult } =
+    useBookingTools();
 
-  const getBookingDataAfterSuccess = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/bookings/sitter/${param.id}`
-      );
+  // const getBookingDataAfterSuccess = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:4000/bookings/myBookingResult/${param.bookingId}`
+  //     );
 
-      setSuccessData(response.data);
-      console.log(response);
-      console.log(response.data);
-      console.log(param.bookingId);
-    } catch (error) {
-      console.error("Error fetching sitter details:", error);
-    }
-  };
+  //     setbookingResult(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching sitter details:", error);
+  //   }
+  // };
 
   const calculateDurationInHours = (startTime, stopTime) => {
     const start = moment(startTime);
@@ -52,7 +52,7 @@ function BookingResultPageByCard() {
 
   const handleBookingHistory = () => {
     setDurationHours(0);
-    navigate(`/owner/${successData.owner_id}/bookingHistory`);
+    navigate(`/owner/${bookingResult[0].owner_id}/bookingHistory`);
   };
 
   const handleBackToHome = () => {
@@ -61,21 +61,15 @@ function BookingResultPageByCard() {
   };
 
   useEffect(() => {
-    console.log(successData);
-    getBookingDataAfterSuccess(param.id);
-    console.log(durationHours);
-    if (successData.find((i) => i.id === param.bookingId)) {
-      const startTime = successData.find(
-        (i) => i.id === param.bookingId
-      ).booked_start;
-      const stopTime = successData.find(
-        (i) => i.id === param.bookingId
-      ).booked_stop;
+    // getBookingDataAfterSuccess();
+    getBookingResult(param.bookingId);
+    if (bookingResult.length > 0) {
+      const startTime = bookingResult[0].booked_start;
+      const stopTime = bookingResult[0].booked_stop;
       const duration = calculateDurationInHours(startTime, stopTime);
       setDurationHours(duration);
-      console.log(duration);
     }
-  }, []);
+  }, [bookingResult, durationHours]);
   return (
     <Stack
       className="bookingResult-container"
@@ -94,7 +88,6 @@ function BookingResultPageByCard() {
           width={"400px"}
         />
       </Stack>
-
       <Stack
         sx={{
           width: " 600px",
@@ -119,26 +112,41 @@ function BookingResultPageByCard() {
           <Box className="resultBoxContent" css={resultBoxContent}>
             <Stack>
               <Typography sx={bookingResultGreyText}>
-                Transaction Date:
+                Transaction Date:{" "}
+                {moment(
+                  bookingResult.length > 0 && bookingResult[0].created_at
+                ).format(" ddd, D MMM YYYY")}
               </Typography>
               <Typography sx={bookingResultGreyText}>
-                Transaction No. :
+                Transaction No.:{" "}
+                {bookingResult.length > 0 && bookingResult[0].id}
               </Typography>
             </Stack>
             <br />
             <Typography sx={bookingResultGreyText}>Pet Sitter:</Typography>
-            <Typography sx={bookingResultBlackText}>by</Typography>
+            <Typography sx={bookingResultBlackText}>
+              {bookingResult.length > 0 &&
+                `${bookingResult[0].sitter_id.trade_name} by ${bookingResult[0].sitter_id.full_name}`}
+            </Typography>
             <br />
             <Stack direction={"row"} spacing="60px">
               <Stack>
                 <Typography sx={bookingResultGreyText}>Date & Time:</Typography>
                 <Stack direction={"row"} spacing={1}>
                   <Typography sx={bookingResultBlackText}>
-                    book start
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_start
+                    ).format("D MMM, YYYY")}
                   </Typography>
                   <Typography>|</Typography>
                   <Typography sx={bookingResultBlackText}>
-                    time start - time end
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_start
+                    ).format("h:mm a")}
+                    -
+                    {moment(
+                      bookingResult.length > 0 && bookingResult[0].booked_stop
+                    ).format("h:mm a")}
                   </Typography>
                 </Stack>
               </Stack>
@@ -153,9 +161,13 @@ function BookingResultPageByCard() {
             <br />
             <Typography sx={bookingResultGreyText}>Pet:</Typography>
             <Stack direction={"row"}>
-              <Typography sx={bookingResultBlackText}>
-                pet name, pet name
-              </Typography>
+              {bookingResult.length > 0 &&
+                bookingResult[0].pet_bookings.map((booking, index) => (
+                  <Typography key={index} sx={bookingResultBlackText}>
+                    {booking.pet_id.pet_name}
+                    {index !== bookingResult[0].pet_bookings.length - 1 && ", "}
+                  </Typography>
+                ))}
             </Stack>
             <br />
             <Stack
@@ -167,7 +179,7 @@ function BookingResultPageByCard() {
             >
               <Typography sx={bookingResultBlackText}>Total</Typography>
               <Typography sx={bookingResultBlackText}>
-                totalPrice THB
+                {bookingResult.length > 0 && `${bookingResult[0].price}`} THB
               </Typography>
             </Stack>
           </Box>
@@ -189,7 +201,6 @@ function BookingResultPageByCard() {
           </Button>
         </Stack>
       </Stack>
-
       <Stack
         className="pic-right"
         justifyContent={"flex-end"}
