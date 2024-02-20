@@ -56,8 +56,9 @@ function BookingToolsProvider(props) {
           },
         }
       );
-      setBookedTimeData(response2.data);
+
       // console.log(response2);
+      setBookedTimeData(response2.data);
     } catch (error) {
       console.error("Error fetching sitter details:", error);
     }
