@@ -219,6 +219,7 @@ function PetList() {
               flex-direction: column;
               gap: 10px;
             `}
+            onClick={() => navigate(`/owner/${state.user.id}/yourPet`)}
           >
             <BsPlusCircle
               css={css`

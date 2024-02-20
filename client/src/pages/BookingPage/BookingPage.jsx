@@ -13,13 +13,20 @@ function BookingPage() {
   return (
     <>
       <Navbar />
-
-      {!bookingId && (
+      <div
+        css={css`
+          display: flex;
+          width: 100vw;
+          justify-content: center;
+        `}
+      >
         <div
           css={css`
             padding: 2rem;
             display: flex;
             justify-content: space-around;
+            max-width: 1440px;
+            width: 100%;
           `}
         >
           <div
@@ -35,9 +42,7 @@ function BookingPage() {
           </div>
           <Detail />
         </div>
-      )}
-
-      {/* {bookingId && <BookingResultPage />} */}
+      </div>
     </>
   );
 }
