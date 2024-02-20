@@ -119,10 +119,12 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
 
       const startTime = startDateTime.toLocaleString("en-US", {
         hour: "numeric",
+        minute: "numeric",
         hour12: true,
       });
       const stopTime = stopDateTime.toLocaleString("en-US", {
         hour: "numeric",
+        minute: "numeric",
         hour12: true,
       });
 

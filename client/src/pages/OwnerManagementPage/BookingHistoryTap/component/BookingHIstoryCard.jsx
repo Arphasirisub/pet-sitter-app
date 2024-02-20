@@ -115,7 +115,7 @@ function BookingHistoryCard({ handleOpen }) {
                     color: getColorByStatus(booking.status),
                   }}
                 >
-                  ⏺ {booking.status}
+                  {booking.status}
                 </p>
               </div>
             </div>
