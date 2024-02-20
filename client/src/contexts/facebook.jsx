@@ -48,7 +48,8 @@ function FacebookProvider(props) {
           user: { ...userDataFromToken },
           isAuthenticated: true,
         }));
-        localStorage.setItem("token", token);
+        console.log(existUser.token);
+        localStorage.setItem("token", existUser.token);
         navigate("/");
       } else if (newUser) {
         setIsNewUser(true);
