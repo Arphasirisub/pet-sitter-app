@@ -156,8 +156,14 @@ export const searchButton = css`
   gap: 8px;
 `;
 
+export const modifyContainerHeaderStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const containerHeaderStyle = css`
-  width: 100%;
+  width: 1440px;
   height: 820px;
   display: flex;
   flex-direction: column;

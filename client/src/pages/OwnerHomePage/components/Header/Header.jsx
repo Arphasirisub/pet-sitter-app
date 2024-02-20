@@ -15,6 +15,7 @@ import {
   dogCircleStyle,
   grayCirclrStyle,
   halfGreenCircleStyle,
+  modifyContainerHeaderStyle,
 } from "./HeaderStyle.jsx";
 import dogcircle from "../../../../PublicPicture/dogcircle.png";
 import graycircle from "../../../../PublicPicture/graycircle.png";
@@ -34,36 +35,38 @@ function Header() {
     getSitters();
   };
   return (
-    <div className="container_header" css={containerHeaderStyle}>
-      <div className="section__logogroup" css={sectionLogoStyle}>
-        <div className="logogroup_left" css={logoScale}>
-          <img css={catFootStyle} src={catfoot} alt="catfoot" />
-          <img css={pieceCircleStyle} src={piececircle} alt="pricecircle" />
-          <img css={messageImgStyle} src={messageimg} alt="messageimg" />
-          <img css={catCircleStyle} src={catcircle} alt="catcircle" />
+    <div className="modify_container_header" css={modifyContainerHeaderStyle}>
+      <div className="container_header" css={containerHeaderStyle}>
+        <div className="section__logogroup" css={sectionLogoStyle}>
+          <div className="logogroup_left" css={logoScale}>
+            <img css={catFootStyle} src={catfoot} alt="catfoot" />
+            <img css={pieceCircleStyle} src={piececircle} alt="pricecircle" />
+            <img css={messageImgStyle} src={messageimg} alt="messageimg" />
+            <img css={catCircleStyle} src={catcircle} alt="catcircle" />
+          </div>
+
+          <LogoGruopDetail />
+
+          <div className="logogroup_right" css={logoScale}>
+            <img
+              css={largeOrangeStarStyle}
+              src={largeorangestar}
+              alt="largeoranhestar"
+            />
+            <img css={dogCircleStyle} src={dogcircle} alt="dogcircle" />
+            <img css={grayCirclrStyle} src={graycircle} alt="graycircle" />
+            <img
+              css={halfGreenCircleStyle}
+              src={halfgreencircle}
+              alt="halfgreencircle"
+            />
+          </div>
         </div>
 
-        <LogoGruopDetail />
-
-        <div className="logogroup_right" css={logoScale}>
-          <img
-            css={largeOrangeStarStyle}
-            src={largeorangestar}
-            alt="largeoranhestar"
-          />
-          <img css={dogCircleStyle} src={dogcircle} alt="dogcircle" />
-          <img css={grayCirclrStyle} src={graycircle} alt="graycircle" />
-          <img
-            css={halfGreenCircleStyle}
-            src={halfgreencircle}
-            alt="halfgreencircle"
-          />
+        <div className="section__bargroup" css={sectionBarGroupStyle}>
+          <BargroupCheckbox />
+          <RatingDropdown />
         </div>
-      </div>
-
-      <div className="section__bargroup" css={sectionBarGroupStyle}>
-        <BargroupCheckbox />
-        <RatingDropdown />
       </div>
     </div>
   );

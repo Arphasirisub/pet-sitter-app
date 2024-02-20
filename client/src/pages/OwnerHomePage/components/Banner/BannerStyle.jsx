@@ -1,8 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+export const modifyContainerBannerStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const containerBannerStyle = css`
-  width: 100%;
+  width: 1440px;
   height: 608px;
   display: flex;
   justify-content: center;

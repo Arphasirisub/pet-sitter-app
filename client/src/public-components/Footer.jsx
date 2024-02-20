@@ -6,20 +6,21 @@ function Footer() {
   return (
     <div
       css={css`
-        width: 100vw;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
       `}
     >
       <div
         className="footer"
         css={css`
           background: #000000;
-          max-width: 1440px;
-          width: 100%;
+          /* max-width: 1440px; */
+          width: 1440px;
           height: 280px;
           text-align: center;
-          margin-top: 20px;
+
+          /* margin-top: 20px; */
         `}
       >
         <div className="footer__logo">
@@ -27,18 +28,24 @@ function Footer() {
             src={sitterlogowhite}
             alt="sitterlogo"
             css={css`
-              padding: 80px 0px 0px 0px;
+              padding: 100px 0px 14px 0px;
+              width: 169px;
+              height: 50px;
             `}
           />
         </div>
         <div className="footer__text">
-          <span
+          <h3
             css={css`
               color: white;
+              font-size: 24px;
+              text-align: center;
+              font-weight: 700;
+              margin: 0;
             `}
           >
             Find your perfect pet sitter with us.
-          </span>
+          </h3>
         </div>
       </div>
     </div>

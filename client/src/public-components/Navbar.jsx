@@ -73,19 +73,17 @@ function Navbar() {
   return (
     <div
       css={css`
-        width: 100vw;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
       `}
     >
       <div
         css={css`
           display: flex;
           justify-content: space-between;
-          padding: 15px 80px;
-          width: 100%;
-          max-width: 1440px;
-          align-items: center;
+          padding: 15px 0px;
+          width: 1140px;
         `}
       >
         <div

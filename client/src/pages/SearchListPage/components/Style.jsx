@@ -19,17 +19,25 @@ export const greenStar = (
 export const containerStyles = css`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const headingContainer = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 1440px;
 `;
 
 export const headingStyles = css`
   display: flex;
-  margin: 40px 0px 80px 90px;
-  text-align: center;
+  margin: 40px 0px 80px 100px;
+  text-align: start;
   font-weight: 700;
   font-size: 22px;
   color: #3a3b46;
+  width: 1440px;
 `;
 
 export const seachLishContainer = css`
@@ -39,6 +47,7 @@ export const seachLishContainer = css`
   flex-wrap: wrap;
   top: 30px;
   width: 100vw;
+  width: 1440px;
 `;
 
 export const sticky = css`
@@ -178,8 +187,8 @@ export const searchButton = css`
   cursor: pointer;
 
   &:hover {
-    background-color: #ff9100; /* สีส้ม */
-    border: 2px solid #ff9100; /* สีส้ม */
+    background-color: #ff9100;
+    border: 2px solid #ff9100;
   }
 `;
 export const paginationContainer = css`
@@ -308,16 +317,16 @@ export const imageGalleryStyle = css`
 `;
 
 export const checkboxStyles = {
-  color: "#c8ccdb", // สีเทาเมื่อไม่ถูกเลือก
+  color: "#c8ccdb",
   "&.Mui-checked": {
-    color: "#ff7038", // สีส้มเมื่อถูกเลือก
+    color: "#ff7038",
   },
   "&:hover": {
-    color: "#ffb899", // สีส้มเข้มเมื่อ hover
+    color: "#ffb899",
   },
   "&.Mui-focusVisible": {
     "&.Mui-checked": {
-      color: "#ff7038", // ไม่เปลี่ยนสีเมื่อ checkbox ถูกเลือกและมีการ focus
+      color: "#ff7038",
     },
   },
 };

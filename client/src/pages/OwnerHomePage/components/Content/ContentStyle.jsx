@@ -33,12 +33,18 @@ export const cardContentText = css`
   text-align: center;
 `;
 
+export const modifyContainerContentStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const containerContentStyle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 80px;
-  width: 100%;
+  width: 1440px;
 `;
 
 export const sectionCardStyle = css`
