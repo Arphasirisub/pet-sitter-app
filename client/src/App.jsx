@@ -4,10 +4,14 @@ import { useAuth } from "./contexts/authentication.jsx";
 import OwnerApp from "./OwnerApp.jsx";
 import GuestApp from "./GuestApp.jsx";
 import SitterApp from "./SitterApp.jsx";
+import { useEffect } from "react";
 
 function App() {
   jwtInterceptor();
-  const { state } = useAuth();
+  const { state, checkToken } = useAuth();
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>

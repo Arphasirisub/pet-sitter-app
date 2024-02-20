@@ -15,6 +15,7 @@ import {
   fontLogoutStyle,
   sectionLogoutStyle,
 } from "./SidebarStyle";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ activeTap, setActiveTap }) => {
   const { logout } = useAuth();
@@ -24,11 +25,18 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
     background-color: ${isActive ? "rgba(255, 241, 236, 1)" : "transparent"};
     color: ${isActive ? "rgba(255, 112, 55, 1)" : "rgba(91, 93, 111, 1)"};
   `;
-
+  const navigate = useNavigate();
   return (
     <div className="container_sidebar" css={containerSidebarStyle}>
       <div className="section__logo" css={sectionLogoStyle}>
-        <img src="/src/PublicPicture/logositter.png" alt="Logo" width="140" />
+        <img
+          src="/src/PublicPicture/logositter.png"
+          alt="Logo"
+          width="140"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
       </div>
 
       <div className="section__sidebar-button">

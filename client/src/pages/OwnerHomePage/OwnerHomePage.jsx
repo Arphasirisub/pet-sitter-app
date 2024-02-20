@@ -17,6 +17,7 @@ function OwnerHomePage() {
   const navigate = useNavigate();
   const { facebookToken, isNewUser, setIsNewUser, userData, setUserData } =
     useFacebook();
+  const { checkToken, state } = useAuth();
 
   useEffect(() => {
     const url = window.location.href;

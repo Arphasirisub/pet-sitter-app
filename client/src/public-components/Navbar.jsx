@@ -13,25 +13,45 @@ import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { logout, state } = useAuth();
+  const { logout, state, checkToken } = useAuth();
   const [ownerData, setOwnerData] = useState({});
+  const [sitterData, setSitterDatta] = useState({});
 
   const getOwnerData = async () => {
     try {
       const result = await axios.get(`http://localhost:4000/owners/myProfile`);
-      console.log(result);
+      // console.log(result);
       setOwnerData(result.data.data.data);
     } catch (error) {
       console.error("Error while fetching available pet types:", error);
     }
   };
 
+  const getSitterData = async () => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/sitters/sitterProflie`
+      );
+      // console.log(result.data);
+      setSitterDatta(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    checkToken();
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      getOwnerData();
+      if (state.user?.role === "pet_owner") {
+        getOwnerData();
+      } else if (state.user?.role === "pet_sitter") {
+        getSitterData();
+      }
     }
-  }, []);
+  }, [state]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -44,11 +64,11 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleImageClick = () => {
-    if (state.isAuthenticated) {
-      handleClick();
-    }
-  };
+  // const handleImageClick = () => {
+  //   if (state.isAuthenticated) {
+  //     handleClick();
+  //   }
+  // };
 
   return (
     <div
@@ -79,11 +99,11 @@ function Navbar() {
           align-items: center;
         `}
       >
-        {state.isAuthenticated && state.user ? (
+        {state.isAuthenticated ? (
           <>
-            <div>{ownerData.full_name}</div>
+            <div>{ownerData.full_name || sitterData.full_name}</div>
             <img
-              src={ownerData.profile_img}
+              src={ownerData.profile_img || sitterData.profile_img}
               alt="Profile"
               css={css`
                 width: 40px;

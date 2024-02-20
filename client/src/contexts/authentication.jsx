@@ -180,33 +180,31 @@ function AuthProvider(props) {
       const storedToken = localStorage.getItem("token");
 
       if (!storedToken) {
-        setState({
-          ...state,
+        setState((prevState) => ({
+          ...prevState,
           isAuthenticated: false,
-          isLoading: false,
-          isError: false,
-        });
+          user: null, // Clear user data when token is not available
+        }));
         return;
       }
 
+      // Decode token to extract user data
       const userDataFromToken = jwtDecode(storedToken);
+      console.log(userDataFromToken);
 
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         user: userDataFromToken,
         isAuthenticated: true,
-        isLoading: false,
-        isError: false,
-      });
+      }));
     } catch (error) {
       console.error("Error decoding token:", error);
 
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         isAuthenticated: false,
-        isLoading: false,
-        isError: true,
-      });
+        user: null, // Clear user data in case of error
+      }));
     }
   };
 

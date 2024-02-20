@@ -10,13 +10,15 @@ import OwnerMangementPage from "./pages/OwnerManagementPage/OwnerMangementPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage/ForgetPasswordPage.Jsx";
 import BookingResultPage from "./pages/BookingPage/BookingResult/BookingResultPage.jsx";
+import { useAuth } from "./contexts/authentication.jsx";
 
 function OwnerApp() {
+  const { state } = useAuth();
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<OwnerHomePage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+
       <Route path="/" element={<OwnerHomePage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
