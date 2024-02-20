@@ -14,8 +14,6 @@ import {
 } from "./components/Style.jsx";
 
 function SearchListPage() {
-
-
   return (
     <>
       <Navbar />
