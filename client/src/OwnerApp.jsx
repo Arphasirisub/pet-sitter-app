@@ -36,6 +36,7 @@ function OwnerApp() {
         path="/booking/result/:bookingId/:id"
         element={<BookingResultPageByCard />}
       />
+      <Route path="/sitter/:id" element={<OwnerHomePage />} />
     </Routes>
   );
 }

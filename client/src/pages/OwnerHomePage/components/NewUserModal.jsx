@@ -8,17 +8,17 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 
-import { useFacebook } from "../../../contexts/facebook";
 import { useAuth } from "../../../contexts/authentication";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAlternativeLogin } from "../../../contexts/alternativeLogin";
 
 function NewUserModal() {
   const navigate = useNavigate();
   const [forgetEmail, setForgetEmail] = useState("");
   const { state, setState } = useAuth();
   const { isNewUser, setIsNewUser, userData, setUserData, updateUser } =
-    useFacebook();
+    useAlternativeLogin();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

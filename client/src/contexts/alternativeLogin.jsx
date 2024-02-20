@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "./authentication";
 
-const FacebookContext = createContext();
-const useFacebook = () => useContext(FacebookContext);
+const AlternativeLoginContext = createContext();
+const useAlternativeLogin = () => useContext(AlternativeLoginContext);
 
-function FacebookProvider(props) {
+function AlternativeLoginProvider(props) {
   const navigate = useNavigate();
   const [isNewUser, setIsNewUser] = useState(false);
   const [userData, setUserData] = useState({
@@ -32,10 +32,24 @@ function FacebookProvider(props) {
     }
   };
 
-  const facebookToken = async (accessToken) => {
+  const googleLogin = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/facebook/facebookToken/${accessToken}`
+        "http://localhost:4000/google/googleLogin"
+      );
+      console.log(response);
+      const url = response.data.data.url;
+
+      window.location.href = url; //this url for check facebook login if pass, will go to my homepage webside and we can get token at url
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const alternativeLoginToken = async (accessToken) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/authentication/alternativeLogin/accessToken/${accessToken}`
       );
 
       const { existUser, newUser } = response.data;
@@ -71,7 +85,7 @@ function FacebookProvider(props) {
 
   const updateUser = async (data) => {
     const response = await axios.put(
-      "http://localhost:4000/facebook/updateUser",
+      "http://localhost:4000/authentication/alternativeLogin/updateUser",
       data
     );
     const token = response.data.token;
@@ -85,21 +99,23 @@ function FacebookProvider(props) {
     localStorage.setItem("token", token);
     navigate("/");
   };
+
   return (
-    <FacebookContext.Provider
+    <AlternativeLoginContext.Provider
       value={{
         facebookLogin,
-        facebookToken,
+        alternativeLoginToken,
         isNewUser,
         setIsNewUser,
         userData,
         setUserData,
         updateUser,
+        googleLogin,
       }}
     >
       {props.children}
-    </FacebookContext.Provider>
+    </AlternativeLoginContext.Provider>
   );
 }
 
-export { FacebookProvider, useFacebook };
+export { AlternativeLoginProvider, useAlternativeLogin };

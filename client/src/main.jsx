@@ -11,12 +11,12 @@ import { MyPetsToolsProvider } from "./contexts/myPetsTools.jsx";
 
 import { BookingToolsProvider } from "./contexts/BookingTools.jsx";
 import { MyHistoryToolsProvider } from "./contexts/myHistoryTools.jsx";
-import { FacebookProvider } from "./contexts/facebook.jsx";
+import { AlternativeLoginProvider } from "./contexts/alternativeLogin.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <FacebookProvider>
+        <AlternativeLoginProvider>
           <MyPetsToolsProvider>
             <SittersProvider>
               <BookingToolsProvider>
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </BookingToolsProvider>
             </SittersProvider>
           </MyPetsToolsProvider>
-        </FacebookProvider>
+        </AlternativeLoginProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

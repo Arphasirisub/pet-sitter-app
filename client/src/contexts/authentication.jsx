@@ -78,11 +78,7 @@ function AuthProvider(props) {
         signIn: { ...prevState.signIn, isLoading: false }, // Update isLoading inside signIn
       }));
       console.log(state);
-      if (userDataFromToken.role === "pet_owner") {
-        navigate("/");
-      } else {
-        navigate(`/sitter/${userDataFromToken.id}`);
-      }
+      navigate("/");
 
       localStorage.setItem("token", token);
     } catch (error) {
