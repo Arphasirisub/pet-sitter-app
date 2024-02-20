@@ -69,7 +69,7 @@ function BookingToolsProvider(props) {
         `http://localhost:4000/bookings/myBookingResult/${booking_id}`
       );
       setBookingResult(results.data);
-      console.log(results);
+      // console.log(results);
     } catch (error) {
       console.error("Error fetching booking details:", error);
     }

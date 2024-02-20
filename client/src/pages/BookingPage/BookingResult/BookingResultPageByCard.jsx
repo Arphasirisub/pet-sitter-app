@@ -26,21 +26,18 @@ function BookingResultPageByCard() {
   const navigate = useNavigate();
   const param = useParams();
   const [durationHours, setDurationHours] = useState(0);
-  // const [bookingResult, setBookingResult] = useState([]);
-  const { getBookingResult, bookingResult, setBookingResult } =
-    useBookingTools();
-
-  // const getBookingDataAfterSuccess = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:4000/bookings/myBookingResult/${param.bookingId}`
-  //     );
-
-  //     setbookingResult(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching sitter details:", error);
-  //   }
-  // };
+  const {
+    getBookingResult,
+    setMessage,
+    setActiveSteps,
+    bookingResult,
+    setBookingResult,
+    setBookedTimeData,
+    setTotalPrice,
+    setSelectedPets,
+    setBookingId,
+    setCompleteStep,
+  } = useBookingTools();
 
   const calculateDurationInHours = (startTime, stopTime) => {
     const start = moment(startTime);
@@ -51,17 +48,38 @@ function BookingResultPageByCard() {
   };
 
   const handleBookingHistory = () => {
+    setBookedTimeData([]);
+    setTotalPrice(0);
+    setSelectedPets([]);
+    setBookingId(null);
+    setCompleteStep({
+      yourPet: false,
+      information: false,
+      payment: false,
+    });
+    setMessage("");
+    setActiveSteps("yourPet");
     setDurationHours(0);
     navigate(`/owner/${bookingResult[0].owner_id}/bookingHistory`);
   };
 
   const handleBackToHome = () => {
+    setBookedTimeData([]);
+    setTotalPrice(0);
+    setSelectedPets([]);
+    setBookingId(null);
+    setCompleteStep({
+      yourPet: false,
+      information: false,
+      payment: false,
+    });
+    setMessage("");
+    setActiveSteps("yourPet");
     setDurationHours(0);
     navigate(`/`);
   };
 
   useEffect(() => {
-    // getBookingDataAfterSuccess();
     getBookingResult(param.bookingId);
     if (bookingResult.length > 0) {
       const startTime = bookingResult[0].booked_start;
@@ -112,13 +130,13 @@ function BookingResultPageByCard() {
           <Box className="resultBoxContent" css={resultBoxContent}>
             <Stack>
               <Typography sx={bookingResultGreyText}>
-                Transaction Date:{" "}
+                Transaction Date:
                 {moment(
                   bookingResult.length > 0 && bookingResult[0].created_at
                 ).format(" ddd, D MMM YYYY")}
               </Typography>
               <Typography sx={bookingResultGreyText}>
-                Transaction No.:{" "}
+                Transaction No.:
                 {bookingResult.length > 0 && bookingResult[0].id}
               </Typography>
             </Stack>
