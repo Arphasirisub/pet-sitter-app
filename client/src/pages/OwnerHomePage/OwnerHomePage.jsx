@@ -30,10 +30,6 @@ function OwnerHomePage() {
       facebookToken(accessToken);
     }
   }, []);
-  useEffect(() => {
-    checkToken();
-    console.log(state);
-  }, [state]);
 
   return (
     <div

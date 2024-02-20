@@ -12,9 +12,8 @@ function SitterApp() {
   return (
     <Routes>
       <Route path="/sitter/:id" element={<SitterHomepage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<SitterHomepage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
       <Route path="/" element={<OwnerHomePage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />

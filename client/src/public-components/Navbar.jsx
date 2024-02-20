@@ -13,7 +13,7 @@ import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { logout, state } = useAuth();
+  const { logout, state, checkToken } = useAuth();
   const [ownerData, setOwnerData] = useState({});
   const [sitterData, setSitterDatta] = useState({});
 
@@ -38,17 +38,20 @@ function Navbar() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      if (state.user.role === "pet_owner") {
+      if (state.user?.role === "pet_owner") {
         getOwnerData();
-      } else if (state.user.role === "pet_sitter") {
+      } else if (state.user?.role === "pet_sitter") {
         getSitterData();
       }
     }
-  }, []);
+  }, [state]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -61,11 +64,11 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleImageClick = () => {
-    if (state.isAuthenticated) {
-      handleClick();
-    }
-  };
+  // const handleImageClick = () => {
+  //   if (state.isAuthenticated) {
+  //     handleClick();
+  //   }
+  // };
 
   return (
     <div
@@ -96,18 +99,11 @@ function Navbar() {
           align-items: center;
         `}
       >
-        {state.isAuthenticated && state.user ? (
+        {state.isAuthenticated ? (
           <>
-            <div>
-              {ownerData ||
-                (sitterData && (ownerData.full_name || sitterData.full_name))}
-            </div>
+            <div>{ownerData.full_name || sitterData.full_name}</div>
             <img
-              src={
-                ownerData ||
-                (sitterData &&
-                  (ownerData.profile_img || sitterData.profile_img))
-              }
+              src={ownerData.profile_img || sitterData.profile_img}
               alt="Profile"
               css={css`
                 width: 40px;
