@@ -49,6 +49,7 @@ export const imageProflie = css`
 export const sitterNameContainer = css`
   display: flex;
   flex-direction: column;
+
   /* margin: 4px 0px 0px -500px; */
   flex-basis: 500px;
 `;
@@ -61,6 +62,7 @@ export const tradeNameStyle = css`
 export const fontsStyle = css`
   font-size: 13px;
   margin-top: 4px;
+  width: 300px;
 `;
 
 export const flexColumn = css`

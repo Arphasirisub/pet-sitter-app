@@ -7,16 +7,15 @@ sgMail.setApiKey(process.env.SEND_GRID_KEY);
 
 export const bookingsRouter = Router();
 
-bookingsRouter.get("/sitter/:id", async (req, res) => {
-  const { id } = req.params;
+bookingsRouter.get("/sitterHomepage", protect, async (req, res) => {
+  const id = req.userId;
   try {
     // Fetch bookings data with an additional column "pets" for the count
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select(
-        "*,sitter_id(id,full_name,trade_name),owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(pet_name)) "
-      )
-      .eq("sitter_id", id);
+      .select("*,owners(full_name), pet_bookings:pet_booking(booking_id) ")
+      .eq("sitter_id", id)
+      .order("created_at", { ascending: false });
 
     if (bookingsError) {
       console.error("Error fetching bookings data:", bookingsError.message);
@@ -84,7 +83,7 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
         "*,owners(full_name,profile_img), sitters(profile_img,full_name,trade_name,phone), pet_booking(pet_id(pet_name))"
       )
       .eq("owner_id", id)
-      .order("booked_start", { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (bookingsError) {
       console.error("Error fetching bookings data:", bookingsError.message);
@@ -301,7 +300,7 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
 
 bookingsRouter.put("/cancel/:id", async (req, res) => {
   const bookingId = Number(req.params.id);
-  console.log(bookingId);
+  // console.log(bookingId);
 
   try {
     const { data, error } = await supabase

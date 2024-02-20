@@ -31,7 +31,6 @@ import {
 } from "./Style.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 
-//<CircularProgress size={50} color="primary" />
 function SearchResult() {
   const navigate = useNavigate();
   const { searchResult } = useSitter();
@@ -44,7 +43,6 @@ function SearchResult() {
     indexOfFirstItem,
     indexOfLastItem
   );
-
   const handleChangePage = (event, page) => {
     setCurrentPage(page);
   };
@@ -120,26 +118,32 @@ function SearchResult() {
                 </div>
 
                 <div css={petTypeContainer}>
-                  {item.pet_type &&
-                    item.pet_type.map((typelist, index) => (
-                      <div
-                        key={index}
-                        css={[
-                          petTypeIcon,
-                          typelist === "Dog"
-                            ? dogIconStyle
-                            : typelist === "Bird"
-                            ? birdIconStyle
-                            : typelist === "Rabbit"
-                            ? rabbitIconStyle
-                            : typelist === "Cat"
-                            ? catIconStyle
-                            : null,
-                        ]}
-                      >
-                        {typelist || null}
-                      </div>
-                    ))}
+                  {item.dog === true ? (
+                    <div className="dog" css={[petTypeIcon, dogIconStyle]}>
+                      Dog
+                    </div>
+                  ) : null}
+
+                  {item.cat === true ? (
+                    <div className="cat" css={[petTypeIcon, catIconStyle]}>
+                      Cat
+                    </div>
+                  ) : null}
+
+                  {item.bird === true ? (
+                    <div className="bird" css={[petTypeIcon, birdIconStyle]}>
+                      Bird
+                    </div>
+                  ) : null}
+
+                  {item.rabbit === true ? (
+                    <div
+                      className="rabbit"
+                      css={[petTypeIcon, rabbitIconStyle]}
+                    >
+                      Rabbit
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
