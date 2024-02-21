@@ -5,11 +5,13 @@ import { useState } from "react";
 
 const bodyStyle = css`
   display: flex;
-  height: 100vh;
-  padding: 40px 40px 80px 40px;
+  height: 952px;
+  width: 100%;
+  padding: 40px 0px 80px 0px;
   flex-direction: column;
   align-items: center;
   background: var(--gray-100, #f6f6f9);
+  gap: 24px;
 `;
 
 const topicStyle = css`
@@ -25,14 +27,15 @@ const inputStyle = css`
   border-radius: 10px;
   width: 170px;
   color: rgba(123, 126, 143, 1);
+  background-color: rgba(255, 255, 255, 1);
 `;
 
 const fontStyle = css`
-  color: var(--gray-900, #2a2e3f);
-  font-family: Satoshi;
+  color: rgba(42, 46, 63, 1);
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
+  margin: 0;
 `;
 
 const topicInputStyle = css`
@@ -40,7 +43,7 @@ const topicInputStyle = css`
   gap: 15px;
 `;
 
-const Body = () => {
+const Body = ({ setIsProfilePage }) => {
   const [booked, setbooked] = useState("");
 
   // ส่ง booked ที่เป็น State เข้าไป ใน <CustomizedTables />
@@ -68,8 +71,18 @@ const Body = () => {
           </select>
         </div>
       </div>
-      <div className="section_table">
-        <CustomizedTables searchbooking={booked} />
+      <div
+        className="section_table"
+        css={css`
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        `}
+      >
+        <CustomizedTables
+          searchbooking={booked}
+          setIsProfilePage={setIsProfilePage}
+        />
       </div>
     </div>
   );

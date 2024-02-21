@@ -9,8 +9,9 @@ import { useEffect } from "react";
 const TopBar = () => {
   const containerHeadNavStyle = css`
     background-color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
     height: 72px;
+
     padding: 0px 60px;
     display: flex;
     align-items: center;
@@ -37,7 +38,6 @@ const TopBar = () => {
       );
 
       setImg(result.data);
-      console.log(result);
     } catch (error) {
       console.log(error);
     }

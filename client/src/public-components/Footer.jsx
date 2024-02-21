@@ -16,7 +16,8 @@ function Footer() {
         css={css`
           background: #000000;
           /* max-width: 1440px; */
-          width: 1440px;
+          width: 100%;
+          /* width: 1440px; */
           height: 280px;
           text-align: center;
 

@@ -1,13 +1,10 @@
 import Body from "./Body";
 
-
-function BookingList() {
+function BookingList({ setIsProfilePage }) {
   return (
-
-      <div>
-        <Body />
-      </div>
-
+    <>
+      <Body setIsProfilePage={setIsProfilePage} />
+    </>
   );
 }
 export default BookingList;

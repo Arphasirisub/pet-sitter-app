@@ -2,15 +2,9 @@
 import { css } from "@emotion/react";
 import Sidebar from "./components/Sidebar";
 import TopBar from "./components/HeadNav";
-import Body from "./BookingList/Body";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import DynamicCompenents from "./components/DynamicComonents";
-
-const appStyle = css`
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-`;
 
 const contentStyle = css`
   display: flex;
@@ -19,19 +13,47 @@ const contentStyle = css`
 const contentContainerStyle = css`
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
 `;
 
 function SisterHomepage() {
-  const [activeTap, setActiveTap] = useState("pet-sitter-profile");
+  const params = useParams();
+  const [isProfilePage, setIsProfilePage] = useState(false);
+  // const [isUpdatePet, setIsUpdatePet] = useState(false);
+  const [activeTaps, setActiveTaps] = useState(params.activeTaps);
+  useEffect(() => {
+    setActiveTaps(params.activeTaps);
+  }, [params.activeTaps]);
 
   return (
-    <div css={appStyle}>
-      <div css={contentStyle}>
-        <Sidebar activeTap={activeTap} setActiveTap={setActiveTap} />
-        <div css={contentContainerStyle}>
+    <div
+      css={css`
+        display: flex;
+        justify-content: center;
+      `}
+    >
+      <div
+        css={css`
+          display: flex;
+          width: 100%;
+          max-width: 1600px;
+        `}
+      >
+        <Sidebar activeTaps={activeTaps} setActiveTaps={setActiveTaps} />
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+          `}
+        >
           <TopBar />
-          <DynamicCompenents activeTap={activeTap} />
+          <DynamicCompenents
+            setActiveTaps={setActiveTaps}
+            activeTaps={activeTaps}
+            isProfilePage={isProfilePage}
+            setIsProfilePage={setIsProfilePage}
+          />
         </div>
       </div>
     </div>

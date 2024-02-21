@@ -14,18 +14,29 @@ import {
   logoutStyle,
   fontLogoutStyle,
   sectionLogoutStyle,
+  iconPaymentStyle,
 } from "./SidebarStyle";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ activeTap, setActiveTap }) => {
+const Sidebar = ({ activeTaps, setActiveTaps }) => {
   const { logout } = useAuth();
+  const { state, checkToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const handleClick = (key) => {
+    navigate(`/sitter/${state.user.id}/${key}`);
+    setActiveTaps(key);
+  };
 
   const getSidebarItemStyle = (isActive) => css`
     ${sidebarStyle};
     background-color: ${isActive ? "rgba(255, 241, 236, 1)" : "transparent"};
     color: ${isActive ? "rgba(255, 112, 55, 1)" : "rgba(91, 93, 111, 1)"};
   `;
-  const navigate = useNavigate();
+
   return (
     <div className="container_sidebar" css={containerSidebarStyle}>
       <div className="section__logo" css={sectionLogoStyle}>
@@ -41,10 +52,10 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
 
       <div className="section__sidebar-button">
         <div
-          className="sidebar"
-          css={getSidebarItemStyle(activeTap === "pet-sitter-profile")}
+          className="sidebar_petsitter"
+          css={getSidebarItemStyle(activeTaps === "pet-sitter-profile")}
           onClick={() => {
-            setActiveTap("pet-sitter-profile");
+            handleClick("pet-sitter-profile");
           }}
         >
           <BsFillPersonFill fontSize="24px" />
@@ -52,30 +63,24 @@ const Sidebar = ({ activeTap, setActiveTap }) => {
         </div>
 
         <div
-          className="sidebar"
-          css={getSidebarItemStyle(activeTap === "booking-list")}
+          className="sidebar_booking"
+          css={getSidebarItemStyle(activeTaps === "booking-list")}
           onClick={() => {
-            setActiveTap("booking-list");
+            handleClick("booking-list");
           }}
         >
           <IoList fontSize="24px" />
-
           <p css={fontSidebarStyle}>Booking List</p>
         </div>
 
         <div
-          className="sidebar"
-          css={getSidebarItemStyle(activeTap === "payout-option")}
+          className="sidebar_payout"
+          css={getSidebarItemStyle(activeTaps === "payout-option")}
           onClick={() => {
-            setActiveTap("payout-option");
+            handleClick("payout-option");
           }}
         >
-          <GoCreditCard
-            fontSize="22px"
-            css={css`
-              margin-left: 1px;
-            `}
-          />
+          <GoCreditCard fontSize="22px" css={iconPaymentStyle} />
           <p css={fontSidebarStyle}>Payout Option</p>
         </div>
       </div>

@@ -1,13 +1,19 @@
 import PetSitterProfile from "../PetSitterProfile/PetSitterProfile";
 import PayoutOption from "../PayOutOption/PayoutOption";
 import BookingList from "../BookingList/BookingList";
+import ProfilePage from "../BookingList/component/ProfilePage";
 
-function DynamicComponents({ activeTap }) {
+function DynamicComponents({ activeTaps, isProfilePage, setIsProfilePage }) {
   return (
     <>
-      {activeTap === "pet-sitter-profile" && <PetSitterProfile />}
-      {activeTap === "booking-list" && <BookingList />}
-      {activeTap === "payout-option" && <PayoutOption />}
+      {activeTaps === "pet-sitter-profile" && <PetSitterProfile />}
+      {activeTaps === "booking-list" && !isProfilePage && (
+        <BookingList setIsProfilePage={setIsProfilePage} />
+      )}
+      {activeTaps === "booking-list" && isProfilePage && (
+        <ProfilePage setIsProfilePage={setIsProfilePage} />
+      )}
+      {activeTaps === "payout-option" && <PayoutOption />}
     </>
   );
 }

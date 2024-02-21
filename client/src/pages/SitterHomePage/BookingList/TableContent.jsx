@@ -1,4 +1,7 @@
 import * as React from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { LuDot } from "react-icons/lu";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +13,8 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
@@ -41,25 +46,28 @@ const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
     textAlign: "start",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: "16px",
     color: getColorByStatus(status),
-    padding: 30,
+    padding: "20px 16px",
     textAlign: "start",
+    fontWeight: "500",
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+const StyledTableRow = styled(TableRow)(() => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function CustomizedTables({ searchbooking }) {
+function CustomizedTables({ searchbooking, setIsProfilePage }) {
   const [fetchData, setFetchData] = useState([]);
   const [bookingHistory, setBookingHistory] = useState([]);
+  const { state, checkToken } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const fetchBookingHistory = async () => {
     try {
@@ -96,6 +104,8 @@ function CustomizedTables({ searchbooking }) {
     fetchBookingHistory();
   }, []);
 
+  console.log(fetchData);
+
   return (
     <RoundedTableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -110,17 +120,68 @@ function CustomizedTables({ searchbooking }) {
         </TableHead>
         <TableBody>
           {bookingHistory.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell component="th" scope="row">
+            <StyledTableRow
+              key={index}
+              css={css`
+                cursor: pointer;
+              `}
+              onClick={() => {
+                setIsProfilePage(true);
+                navigate(
+                  `/sitter/${state.user.id}/booking-list/profilePage/${fetchData[index].owners.id}`
+                );
+              }}
+            >
+              <StyledTableCell
+                component="th"
+                scope="row"
+                css={css`
+                  width: 240px;
+                `}
+              >
                 {row.owners.full_name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.pets}</StyledTableCell>
-              <StyledTableCell align="right">
+              <StyledTableCell
+                align="right"
+                css={css`
+                  width: 120px;
+                `}
+              >
+                {row.pets}
+              </StyledTableCell>
+              <StyledTableCell
+                align="right"
+                css={css`
+                  width: 120px;
+                `}
+              >
                 {row.duration} hours
               </StyledTableCell>
-              <StyledTableCell align="right">{row.booked_date}</StyledTableCell>
-              <StyledTableCell align="right" status={row.status}>
-                ● {row.status}
+              <StyledTableCell
+                align="right"
+                css={css`
+                  width: 420px;
+                `}
+              >
+                {row.booked_date}
+              </StyledTableCell>
+              <StyledTableCell
+                align="right"
+                status={row.status}
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-end;
+                  width: 220px;
+                `}
+              >
+                {row.status}
+                <LuDot
+                  css={css`
+                    width: 40px;
+                    height: 40px;
+                  `}
+                />
               </StyledTableCell>
             </StyledTableRow>
           ))}

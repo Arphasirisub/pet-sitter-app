@@ -64,3 +64,7 @@ export const sectionLogoutStyle = css`
   margin-top: auto;
   border-top: 1px solid rgba(220, 223, 237, 1);
 `;
+
+export const iconPaymentStyle = css`
+  margin-left: 1px;
+`;
