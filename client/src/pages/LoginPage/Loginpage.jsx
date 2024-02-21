@@ -51,25 +51,31 @@ function LoginPage() {
   return (
     <>
       {/* page */}
+      <div
+        css={css`
+          display: flex;
+          justify-content: center;
+        `}
+      >
+        <div css={pageLayout}>
+          <Header />
+          {state.signIn.isLoading ? (
+            <CircularProgress size={50} color="primary" />
+          ) : (
+            <>
+              <form css={formLayout} onSubmit={handleSubmit}>
+                <InputBox
+                  formData={formData}
+                  handleInputChange={handleInputChange}
+                />
+              </form>
+              <AlternativeLogin />
+            </>
+          )}
 
-      <div css={pageLayout}>
-        <Header />
-        {state.signIn.isLoading ? (
-          <CircularProgress size={50} color="primary" />
-        ) : (
-          <>
-            <form css={formLayout} onSubmit={handleSubmit}>
-              <InputBox
-                formData={formData}
-                handleInputChange={handleInputChange}
-              />
-            </form>
-            <AlternativeLogin />
-          </>
-        )}
-
-        <SignUpLink navigate={navigate} />
-        <AuthBackground />
+          <SignUpLink navigate={navigate} />
+          <AuthBackground />
+        </div>
       </div>
 
       {/*forget password modal */}
@@ -86,9 +92,11 @@ const pageLayout = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  width: 100%;
   gap: 1rem;
   position: relative;
+  height: 100vh;
+  width: 1440px;
 `;
 
 const formLayout = css`
