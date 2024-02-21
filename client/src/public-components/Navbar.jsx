@@ -40,6 +40,7 @@ function Navbar() {
         `http://localhost:4000/sitters/sitterProflie`
       );
       // console.log(result.data);
+      console.log(result);
       setSitterDatta(result.data);
     } catch (error) {
       console.log(error);

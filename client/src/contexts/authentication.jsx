@@ -59,6 +59,7 @@ function AuthProvider(props) {
       );
 
       const token = response.data.token;
+      console.log("token: " + token);
 
       if (data.isRemember) {
         localStorage.setItem("isRemember", "true");
