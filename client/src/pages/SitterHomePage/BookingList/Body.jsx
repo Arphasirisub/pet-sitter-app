@@ -8,7 +8,7 @@ const bodyStyle = css`
   display: flex;
   height: 100vh;
   width: 100%;
-
+  padding: 40px 0px 80px 0px;
   flex-direction: column;
   align-items: center;
   background: var(--gray-100, #f6f6f9);

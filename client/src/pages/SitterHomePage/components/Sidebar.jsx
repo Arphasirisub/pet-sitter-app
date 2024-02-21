@@ -48,6 +48,9 @@ const Sidebar = ({ activeTaps, setActiveTaps }) => {
           onClick={() => {
             navigate("/");
           }}
+          css={css`
+            cursor: pointer;
+          `}
         />
       </div>
 
