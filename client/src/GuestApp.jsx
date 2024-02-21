@@ -19,6 +19,7 @@ function GuestApp() {
       <Route path="/" element={<OwnerHomePage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
+      <Route path="/booking/:start/:end/:id" element={<OwnerHomePage />} />
     </Routes>
   );
 }
