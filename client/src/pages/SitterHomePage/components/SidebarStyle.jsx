@@ -10,6 +10,7 @@ export const containerSidebarStyle = css`
   height: 100vh;
   border-right: 1px solid rgba(220, 223, 237, 1);
   padding: 16px 0px 16px 0px;
+  position: fixed;
 `;
 
 export const sectionLogoStyle = css`
@@ -46,11 +47,21 @@ export const sidebarStyle = css`
 export const logoutStyle = css`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 7px;
   cursor: pointer;
-  width: 220px;
-  margin-left: 20px;
+
   justify-content: flex-start;
+  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-left: 30px;
+  &:hover {
+    color: rgba(255, 112, 55, 1);
+    background-color: rgb(255, 241, 236);
+  }
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: rgba(91, 93, 111, 1);
 `;
 
 export const fontLogoutStyle = css`

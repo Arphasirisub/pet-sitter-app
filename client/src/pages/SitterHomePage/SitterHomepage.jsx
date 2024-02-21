@@ -37,6 +37,7 @@ function SisterHomepage() {
           display: flex;
           width: 100%;
           max-width: 1600px;
+          position: relative;
         `}
       >
         <Sidebar activeTaps={activeTaps} setActiveTaps={setActiveTaps} />
@@ -45,6 +46,7 @@ function SisterHomepage() {
             display: flex;
             flex-direction: column;
             width: 100%;
+            margin-left: 240px;
           `}
         >
           <TopBar />

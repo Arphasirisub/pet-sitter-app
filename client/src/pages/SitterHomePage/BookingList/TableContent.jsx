@@ -60,48 +60,22 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-function CustomizedTables({ searchbooking, setIsProfilePage }) {
-  const [fetchData, setFetchData] = useState([]);
-  const [bookingHistory, setBookingHistory] = useState([]);
+function CustomizedTables({
+  booked,
+  setIsProfilePage,
+  fetchData,
+  setFetchData,
+  bookingHistory,
+  setBookingHistory,
+  fetchBookingHistory,
+  searching,
+  currentItems,
+}) {
   const { state, checkToken } = useAuth();
   const navigate = useNavigate();
+
   useEffect(() => {
     checkToken();
-  }, []);
-
-  const fetchBookingHistory = async () => {
-    try {
-      const result = await axios.get(
-        `http://localhost:4000/bookings/sitterHomepage`
-      );
-      setFetchData(result.data);
-      setBookingHistory(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const searching = () => {
-    if (searchbooking) {
-      const filterbooking = fetchData.filter((booking) => {
-        return booking.owners.full_name
-          .toLowerCase()
-          .includes(searchbooking.toLowerCase());
-      });
-      console.log(filterbooking);
-      setBookingHistory(filterbooking);
-    } else {
-      setBookingHistory(fetchData);
-    }
-  };
-
-  useEffect(() => {
-    searching();
-  }, [searchbooking]);
-
-  // 1. fetch
-  useEffect(() => {
-    fetchBookingHistory();
   }, []);
 
   console.log(fetchData);
@@ -119,7 +93,7 @@ function CustomizedTables({ searchbooking, setIsProfilePage }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bookingHistory.map((row, index) => (
+          {currentItems.map((row, index) => (
             <StyledTableRow
               key={index}
               css={css`

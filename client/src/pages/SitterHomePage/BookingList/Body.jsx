@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import CustomizedTables from "./TableContent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const bodyStyle = css`
   display: flex;
-  height: 952px;
+  height: 100vh;
   width: 100%;
-  padding: 40px 0px 80px 0px;
+
   flex-direction: column;
   align-items: center;
   background: var(--gray-100, #f6f6f9);
@@ -45,13 +46,58 @@ const topicInputStyle = css`
 
 const Body = ({ setIsProfilePage }) => {
   const [booked, setbooked] = useState("");
+  const [fetchData, setFetchData] = useState([]);
+  const [bookingHistory, setBookingHistory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of items per page
+
+  const fetchBookingHistory = async () => {
+    try {
+      const result = await axios.get(
+        `http://localhost:4000/bookings/sitterHomepage`
+      );
+      setFetchData(result.data);
+      setBookingHistory(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searching = () => {
+    if (booked) {
+      const filterbooking = fetchData.filter((booking) => {
+        return booking.owners.full_name
+          .toLowerCase()
+          .includes(booked.toLowerCase());
+      });
+      console.log(filterbooking);
+      setBookingHistory(filterbooking);
+    } else {
+      setBookingHistory(fetchData);
+    }
+  };
+
+  useEffect(() => {
+    searching();
+  }, [booked]);
+
+  useEffect(() => {
+    fetchBookingHistory();
+  }, []);
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = bookingHistory.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // ส่ง booked ที่เป็น State เข้าไป ใน <CustomizedTables />
+
   return (
     <div className="container_body" css={bodyStyle}>
       <div className="section_topic" css={topicStyle}>
         <h3 css={fontStyle}>Booking List</h3>
-
         <div className="topic_input" css={topicInputStyle}>
           <input
             type="text"
@@ -60,7 +106,6 @@ const Body = ({ setIsProfilePage }) => {
             onChange={(event) => setbooked(event.target.value)}
             value={booked}
           />
-
           <select className="dropdown" css={inputStyle}>
             <option value="">All status</option>
             <option value="success">Success</option>
@@ -80,10 +125,62 @@ const Body = ({ setIsProfilePage }) => {
         `}
       >
         <CustomizedTables
-          searchbooking={booked}
+          booked={booked}
           setIsProfilePage={setIsProfilePage}
+          fetchData={fetchData}
+          setFetchData={setFetchData}
+          bookingHistory={bookingHistory}
+          setBookingHistory={setBookingHistory}
+          fetchBookingHistory={fetchBookingHistory}
+          searching={searching}
+          currentItems={currentItems}
         />
       </div>
+      {/* Pagination */}
+      <ul
+        className="pagination"
+        css={css`
+          display: flex;
+          justify-content: center;
+          list-style: none;
+          padding: 0;
+          margin-top: 20px; /* Adjust as needed */
+        `}
+      >
+        {Array.from({
+          length: Math.ceil(bookingHistory.length / itemsPerPage),
+        }).map((_, index) => (
+          <li
+            key={index}
+            className="page-item"
+            css={css`
+              margin: 0 5px;
+            `}
+          >
+            <button
+              className="page-link"
+              onClick={() => paginate(index + 1)}
+              css={css`
+                padding: 5px 10px; /* Adjust padding for the pagination buttons */
+                border: 1px solid #ccc;
+                background-color: #fff;
+                color: #333;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                /* Focus styles */
+                &:focus {
+                  outline: none;
+                  border-color: #007bff;
+                  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                }
+              `}
+            >
+              {index + 1}
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
