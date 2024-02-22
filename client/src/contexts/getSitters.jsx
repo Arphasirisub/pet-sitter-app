@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,18 @@ function SittersProvider(props) {
     }
   };
 
+  const [getSitterInfo, setGetSitterInfo] = useState({});
+
+  const getSitterData = async () => {
+    try {
+      const result = await axios(`http://localhost:4000/sitters/sitterProflie`);
+      // console.log(result);
+      setGetSitterInfo(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleStateChange = (fieldName, value) => {
     setSearchInput((prevSearchInput) => ({
       ...prevSearchInput,
@@ -67,6 +79,9 @@ function SittersProvider(props) {
         searchInput,
         setSearchInput,
         handleStateChange,
+        getSitterInfo,
+        setGetSitterInfo,
+        getSitterData,
       }}
     >
       {props.children}

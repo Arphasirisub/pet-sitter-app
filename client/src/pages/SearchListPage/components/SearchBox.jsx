@@ -32,8 +32,6 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function SearchBox() {
   const {
-    searchResult,
-    setSearchResult,
     getSitters,
     searchInput,
     setSearchInput,
@@ -184,7 +182,7 @@ function SearchBox() {
             </div>
           </div>
 
-          <p css={text}>Experience:</p>
+          <p css={text}> </p>
 
           <select
             css={inputStyles}
