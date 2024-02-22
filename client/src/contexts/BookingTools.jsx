@@ -56,8 +56,9 @@ function BookingToolsProvider(props) {
           },
         }
       );
-      setBookedTimeData(response2.data);
+
       // console.log(response2);
+      setBookedTimeData(response2.data);
     } catch (error) {
       console.error("Error fetching sitter details:", error);
     }
@@ -100,6 +101,8 @@ function BookingToolsProvider(props) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [bookingId, setBookingId] = useState(null);
   const [bookingResult, setBookingResult] = useState([]);
+  const [confirmPayment, setConfirmPayment] = useState(false);
+  const [confirmStatus, setConfirmStatus] = useState(false);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -147,6 +150,10 @@ function BookingToolsProvider(props) {
         getBookingResult,
         bookingResult,
         setBookingResult,
+        confirmPayment,
+        setConfirmPayment,
+        confirmStatus,
+        setConfirmStatus,
       }}
     >
       {props.children}

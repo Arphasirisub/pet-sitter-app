@@ -59,7 +59,7 @@ function AuthProvider(props) {
       );
 
       const token = response.data.token;
-
+      console.log(token);
       if (data.isRemember) {
         localStorage.setItem("isRemember", "true");
         localStorage.setItem("email", data.email);

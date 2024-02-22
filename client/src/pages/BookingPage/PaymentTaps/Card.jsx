@@ -1,83 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+import CheckoutForm from "./CheckoutForm";
 import { useBookingTools } from "../../../contexts/BookingTools";
-import axios from "axios";
-import { Typography, Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripe = await loadStripe(
+  "pk_test_51OjVWPDwx8QQepr8skWEKyKINrco0Yb3INjVGrOoyYOubhmF4MXH5qaeiKTnzlGqZOyT84KbEOfqlXKX7evJJgSD00WcxbUHVO"
+);
+
 export default function Card() {
-  // const [paymentMessage, setPaymentMessage] = useState("");
-  // const params = useParams();
-  // const { totalPrice, sitterData } = useBookingTools();
+  const [clientSecret, setClientSecret] = useState("");
+  const { totalPrice, bookingId } = useBookingTools();
+  const params = useParams();
 
-  // const ProductDisplay = () => (
-  //   <section>
-  //     <div className="product">
-  //       <div className="description">
-  //         <h3>{sitterData.trade_name}</h3>
-  //         <h5>{totalPrice}</h5>
-  //       </div>
-  //     </div>
-  //     <Button onClick={makePayment} type="button">
-  //       <Typography>Checkout</Typography>
-  //     </Button>
-  //   </section>
-  // );
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    fetch("http://localhost:4000/payments/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: parseFloat(totalPrice) * 100,
+        id: params.id,
+        bookingId: bookingId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+    console.log(bookingId);
+    console.log(params.id);
+  }, []);
 
-  // const Message = ({ paymentMessage }) => (
-  //   <section>
-  //     <p>{paymentMessage}</p>
-  //   </section>
-  // );
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
 
-  // // payment integration
-  // const makePayment = async () => {
-  //   const stripe = await loadStripe(
-  //     "pk_test_51OjVWPDwx8QQepr8skWEKyKINrco0Yb3INjVGrOoyYOubhmF4MXH5qaeiKTnzlGqZOyT84KbEOfqlXKX7evJJgSD00WcxbUHVO"
-  //   );
-
-  //   const response = await axios.post(
-  //     "http://localhost:4000/payments/api/create-checkout-session",
-  //     {
-  //       amount: parseFloat(totalPrice) * 100,
-  //       start: params.start,
-  //       end: params.end,
-  //       id: params.id,
-  //     }
-  //   );
-
-  //   const session = await response.data;
-
-  //   const result = stripe.redirectToCheckout({
-  //     sessionId: session.id,
-  //   });
-
-  //   if (result.error) {
-  //     console.log(result.error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   // Check to see if this is a redirect back from Checkout
-  //   const query = new URLSearchParams(window.location.search);
-
-  //   if (query.get("success")) {
-  //     handleConfirm();
-  //     setPaymentMessage(
-  //       "Order placed! You will receive an email confirmation."
-  //     );
-  //   }
-
-  //   if (query.get("canceled")) {
-  //     setPaymentMessage(
-  //       "Order canceled -- continue to shop around and checkout when you're ready."
-  //     );
-  //   }
-  // }, []);
-
-  return <div>Card</div>;
-  // paymentMessage ? (
-  //   <Message paymentMessage={paymentMessage} />
-  // ) : (
-  //   <ProductDisplay />
-  // );
+  return (
+    <div className="App">
+      {clientSecret && (
+        <Elements options={options} stripe={stripe}>
+          <CheckoutForm />
+        </Elements>
+      )}
+    </div>
+  );
 }

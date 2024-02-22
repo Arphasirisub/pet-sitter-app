@@ -133,3 +133,29 @@ sittersRouter.get("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
+  const sitterId = req.userId;
+  console.log(sitterId);
+  try {
+    // Fetch bookings data with an additional column "pets" for the count
+    const { data: bookings, error: bookingsError } = await supabase
+      .from("bookings")
+      .select(
+        "*,sitter_id(id,full_name,trade_name),owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(pet_name)) "
+      )
+      .eq("sitter_id", sitterId);
+
+    if (bookingsError) {
+      console.error("Error fetching bookings data:", bookingsError.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).json({ error: sitterId });
+    }
+    res.json(bookings);
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
