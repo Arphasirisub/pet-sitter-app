@@ -10,14 +10,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useBookingTools } from "../../../contexts/BookingTools";
 import moment from "moment";
+import axios from "axios";
 
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
@@ -64,19 +60,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function PayoutOption() {
-  const param = useParams();
-  const { getBookingData, bookedTimeData } = useBookingTools();
   const [totalEarning, setTotalEarning] = useState(0);
+  const [payoutData, setPayoutData] = useState([]);
 
+  const getPayoutData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/sitters/booking/payoutOption`
+      );
+
+      setPayoutData(response.data);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
   useEffect(() => {
-    getBookingData(param.id);
-    const total = bookedTimeData.reduce(
-      (acc, booking) => acc + booking.price,
-      0
-    );
+    getPayoutData();
+    const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
     setTotalEarning(total);
-    // console.log(bookedTimeData);
-  }, [param.id, bookedTimeData]);
+  }, [payoutData]);
 
   return (
     <>
@@ -159,8 +161,8 @@ function PayoutOption() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {bookedTimeData &&
-                  bookedTimeData.map((booking, index) => (
+                {payoutData &&
+                  payoutData.map((booking, index) => (
                     <StyledTableRow key={index}>
                       <StyledTableCell component="th" scope="row">
                         {moment(booking.created_at).format("d MMM, YYYY")}

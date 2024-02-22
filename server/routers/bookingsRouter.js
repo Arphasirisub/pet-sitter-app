@@ -388,6 +388,7 @@ bookingsRouter.get("/myBookingResult/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 bookingsRouter.get("/sitter/:id", async (req, res) => {
   const { id } = req.params;
   try {

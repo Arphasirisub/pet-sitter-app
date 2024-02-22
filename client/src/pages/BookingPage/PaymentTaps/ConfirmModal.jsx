@@ -24,36 +24,38 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
     message,
     setBookingId,
     bookingId,
+    setConfirmPayment,
+    confirmStatus,
   } = useBookingTools();
   const navigate = useNavigate();
   // payment integration
-  const makePayment = async (bookingId) => {
-    const stripe = await loadStripe(
-      "pk_test_51OjVWPDwx8QQepr8skWEKyKINrco0Yb3INjVGrOoyYOubhmF4MXH5qaeiKTnzlGqZOyT84KbEOfqlXKX7evJJgSD00WcxbUHVO"
-    );
+  // const makePayment = async (bookingId) => {
+  //   const stripe = await loadStripe(
+  //     "pk_test_51OjVWPDwx8QQepr8skWEKyKINrco0Yb3INjVGrOoyYOubhmF4MXH5qaeiKTnzlGqZOyT84KbEOfqlXKX7evJJgSD00WcxbUHVO"
+  //   );
 
-    const response = await axios.post(
-      "http://localhost:4000/payments/api/create-checkout-session",
-      {
-        amount: parseFloat(totalPrice) * 100,
-        start: params.start,
-        end: params.end,
-        id: params.id,
-        bookingId: bookingId,
-      }
-    );
+  //   const response = await axios.post(
+  //     "http://localhost:4000/payments/api/create-checkout-session",
+  //     {
+  //       amount: parseFloat(totalPrice) * 100,
+  //       start: params.start,
+  //       end: params.end,
+  //       id: params.id,
+  //       bookingId: bookingId,
+  //     }
+  //   );
 
-    const session = await response.data;
+  //   const session = await response.data;
 
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
+  //   const result = stripe.redirectToCheckout({
+  //     sessionId: session.id,
+  //   });
 
-    if (result.error) {
-      console.log(result.error);
-    }
-  };
-
+  //   if (result.error) {
+  //     console.log(result.error);
+  //   }
+  // };
+  console.log(confirmStatus);
   const handleConfirm = async () => {
     try {
       if (!params.start) {
@@ -82,6 +84,9 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
         console.log(response.data.bookingId);
       }
       if (paymentMethods === "card") {
+        // console.log(confirmStatus);
+        // if (confirmStatus) {
+        // }
         const end = new Date(Number(params.end));
         const response = await axios.post(
           `http://localhost:4000/bookings/myBooking/${params.id}`,
@@ -94,17 +99,22 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
             payment: paymentMethods,
           }
         );
-
         console.log(response);
         setBookingId(response.data.bookingId);
-        makePayment(response.data.bookingId);
         console.log(response.data.bookingId);
+        setConfirmPayment(true);
+        // console.log(confirmStatus);
+        // makePayment(response.data.bookingId);
       }
     } catch (error) {
       console.error("Error submitting booking:", error);
     }
   };
-
+  // useEffect(() => {
+  //   // if (confirmStatus) {
+  //   //   handleSubmit();
+  //   // }
+  // }, [confirmStatus]);
   return (
     <Modal
       aria-labelledby="transition-modal-title"

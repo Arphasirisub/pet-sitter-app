@@ -37,6 +37,9 @@ function BookingResultPageByCard() {
     setSelectedPets,
     setBookingId,
     setCompleteStep,
+    setConfirmPayment,
+    confirmStatus,
+    setConfirmStatus,
   } = useBookingTools();
 
   const calculateDurationInHours = (startTime, stopTime) => {
@@ -60,6 +63,8 @@ function BookingResultPageByCard() {
     setMessage("");
     setActiveSteps("yourPet");
     setDurationHours(0);
+    setConfirmPayment(false);
+    setConfirmStatus(false);
     navigate(`/owner/${bookingResult[0].owner_id}/bookingHistory`);
   };
 
@@ -76,11 +81,14 @@ function BookingResultPageByCard() {
     setMessage("");
     setActiveSteps("yourPet");
     setDurationHours(0);
+    setConfirmPayment(false);
+    setConfirmStatus(false);
     navigate(`/`);
   };
 
   useEffect(() => {
     getBookingResult(param.bookingId);
+    // console.log(confirmStatus);
     if (bookingResult.length > 0) {
       const startTime = bookingResult[0].booked_start;
       const stopTime = bookingResult[0].booked_stop;
