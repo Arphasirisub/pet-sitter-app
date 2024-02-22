@@ -18,7 +18,13 @@ function SectionTopicUpdatePage({ setIsUpdatePet }) {
     checkToken();
   }, []);
   return (
-    <div className="section_topic" css={sectionTopicStyle}>
+    <div
+      className="section_topic"
+      css={sectionTopicStyle}
+      onClick={() => {
+        navigate(`/owner/${state.user.id}/yourPet`);
+      }}
+    >
       <div
         className="topic_button"
         onClick={() => {
@@ -27,14 +33,7 @@ function SectionTopicUpdatePage({ setIsUpdatePet }) {
         css={topicButtonStyle}
       >
         <IoIosArrowBack />
-        <h3
-          onClick={() => {
-            navigate(`/owner/${state.user.id}/yourPet`);
-          }}
-          css={topicTextStyle}
-        >
-          Your Pet
-        </h3>
+        <h3 css={topicTextStyle}>Your Pet</h3>
       </div>
     </div>
   );

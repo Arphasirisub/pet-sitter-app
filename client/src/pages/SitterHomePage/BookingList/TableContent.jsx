@@ -63,6 +63,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 function CustomizedTables({ searchbooking, setIsProfilePage }) {
   const [fetchData, setFetchData] = useState([]);
   const [bookingHistory, setBookingHistory] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState({});
   const { state, checkToken } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
@@ -88,7 +89,6 @@ function CustomizedTables({ searchbooking, setIsProfilePage }) {
           .toLowerCase()
           .includes(searchbooking.toLowerCase());
       });
-      console.log(filterbooking);
       setBookingHistory(filterbooking);
     } else {
       setBookingHistory(fetchData);
@@ -103,8 +103,6 @@ function CustomizedTables({ searchbooking, setIsProfilePage }) {
   useEffect(() => {
     fetchBookingHistory();
   }, []);
-
-  console.log(fetchData);
 
   return (
     <RoundedTableContainer component={Paper}>
@@ -127,8 +125,9 @@ function CustomizedTables({ searchbooking, setIsProfilePage }) {
               `}
               onClick={() => {
                 setIsProfilePage(true);
+                setSelectedBooking(row);
                 navigate(
-                  `/sitter/${state.user.id}/booking-list/profilePage/${fetchData[index].owners.id}`
+                  `/sitter/${state.user.id}/booking-list/profilePage/${row.id}`
                 );
               }}
             >
