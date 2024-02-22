@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Typography } from "@mui/material";
+import { Pagination, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -41,12 +41,14 @@ const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     textAlign: "start",
+    fontSize: "16px",
+    fontWeight: "500",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
     color: getColorByStatus(status),
-    padding: 30,
     textAlign: "start",
+    fontSize: "16px",
+    fontWeight: "500",
   },
 }));
 
@@ -79,6 +81,12 @@ function PayoutOption() {
     const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
     setTotalEarning(total);
   }, [payoutData]);
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 9;
+  const indexOfLastRow = page * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = payoutData.slice(indexOfFirstRow, indexOfLastRow);
 
   return (
     <>
@@ -161,26 +169,41 @@ function PayoutOption() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {payoutData &&
-                  payoutData.map((booking, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
-                        {moment(booking.created_at).format("d MMM, YYYY")}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.owners?.full_name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.id}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.price} Baht.
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                {currentRows.map((booking, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell component="th" scope="row">
+                      {moment(booking.created_at).format("d MMM, YYYY")}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {booking.owners?.full_name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {booking.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {booking.price} Baht.
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
               </TableBody>
             </Table>
           </RoundedTableContainer>
+        </Stack>
+        <Stack alignItems={"center"}>
+          <Pagination
+            count={Math.ceil(payoutData.length / rowsPerPage)}
+            page={page}
+            onChange={(event, value) => setPage(value)}
+            sx={{
+              "& .MuiPaginationItem-page": {
+                color: "grey", // เปลี่ยนสีของตัวเลข
+              },
+              "& .MuiPaginationItem-page.Mui-selected": {
+                color: "#ff7037",
+                backgroundColor: "#FFF1EC", // เปลี่ยนสีเมื่อเป็น active
+              },
+            }}
+          />
         </Stack>
       </Stack>
     </>

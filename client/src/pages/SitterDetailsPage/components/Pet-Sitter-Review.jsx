@@ -204,6 +204,15 @@ const PetSitterReview = () => {
                 count={Math.ceil((sitterData?.comments?.length || 0) / 5)}
                 page={currentPage}
                 onChange={handleChangePage}
+                sx={{
+                  "& .MuiPaginationItem-page": {
+                    color: "grey", // เปลี่ยนสีของตัวเลข
+                  },
+                  "& .MuiPaginationItem-page.Mui-selected": {
+                    color: "#ff7037",
+                    backgroundColor: "#FFF1EC", // เปลี่ยนสีเมื่อเป็น active
+                  },
+                }}
               />
             </Stack>
           </Stack>
