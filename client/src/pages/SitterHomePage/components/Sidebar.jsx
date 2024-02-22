@@ -6,6 +6,7 @@ import { useAuth } from "../../../contexts/authentication";
 import { GoCreditCard } from "react-icons/go";
 import { IoList } from "react-icons/io5";
 import { BsFillPersonFill } from "react-icons/bs";
+import { MdLogout } from "react-icons/md";
 import {
   containerSidebarStyle,
   sectionLogoStyle,
@@ -47,6 +48,9 @@ const Sidebar = ({ activeTaps, setActiveTaps }) => {
           onClick={() => {
             navigate("/");
           }}
+          css={css`
+            cursor: pointer;
+          `}
         />
       </div>
 
@@ -86,21 +90,19 @@ const Sidebar = ({ activeTaps, setActiveTaps }) => {
       </div>
 
       <div className="section_logout" css={sectionLogoutStyle}>
-        <div className="logout" css={logoutStyle}>
-          <img
-            src="/src/PublicPicture/logoutlogo.png"
-            alt="logout"
-            width="16"
-            height="20px"
+        <div
+          className="logout"
+          css={logoutStyle}
+          onClick={() => {
+            logout();
+          }}
+        >
+          <MdLogout
+            css={css`
+              font-size: 24px;
+            `}
           />
-          <p
-            css={fontLogoutStyle}
-            onClick={() => {
-              logout();
-            }}
-          >
-            Log Out
-          </p>
+          Log Out
         </div>
       </div>
     </div>

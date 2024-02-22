@@ -5,6 +5,15 @@ import marieimg from "../../../PublicPicture/marieimg.png";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import { BsFillPersonFill } from "react-icons/bs";
+import { RiLogoutBoxRLine } from "react-icons/ri";
+
+import { FaListCheck } from "react-icons/fa6";
+import { BsCashCoin } from "react-icons/bs";
+
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
 
 const TopBar = () => {
   const containerHeadNavStyle = css`
@@ -22,6 +31,7 @@ const TopBar = () => {
     width: 40px;
     height: 40px;
     border-radius: 999px;
+    cursor: pointer;
   `;
 
   const nameStyle = css`
@@ -47,12 +57,96 @@ const TopBar = () => {
     getImg();
   }, []);
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <div className="container_headnav" css={containerHeadNavStyle}>
-      {img && <img src={img.profile_img} alt="Profile" css={logoStyle} />}
-      {img && <p css={nameStyle}>{img.full_name}</p>}
-    </div>
+    <>
+      <div className="container_headnav" css={containerHeadNavStyle}>
+        {img && (
+          <img
+            src={img.profile_img}
+            alt="Profile"
+            css={logoStyle}
+            onClick={handleClick}
+          />
+        )}
+        {img && <p css={nameStyle}>{img.full_name}</p>}
+      </div>
+      <Menu
+        id="fade-menu"
+        MenuListProps={{
+          "aria-labelledby": "fade-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <MenuItem
+          onClick={() => {
+            navigate(`/sitter/${state.user.id}`);
+            handleClose();
+          }}
+          css={petSitterMenuItemStyle}
+        >
+          <BsFillPersonFill />
+          Pet Sitter Profile
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            navigate(`/sitter/${state.user.id}`);
+            handleClose();
+          }}
+          css={petSitterMenuItemStyle}
+        >
+          <FaListCheck />
+          Booking List
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            navigate(`/sitter/${state.user.id}`);
+            handleClose();
+          }}
+          css={petSitterMenuItemStyle}
+        >
+          <BsCashCoin />
+          Payout Option
+        </MenuItem>
+        <hr></hr>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            logout();
+          }}
+          css={petSitterMenuItemStyle}
+        >
+          <RiLogoutBoxRLine />
+          Log out
+        </MenuItem>
+      </Menu>
+    </>
   );
 };
+
+const petSitterMenuItemStyle = css`
+  display: flex;
+  gap: 20px;
+  width: 230px;
+  padding-left: 30px;
+  font-size: 18px;
+
+  &:hover {
+    color: rgb(255, 112, 55);
+  }
+`;
 
 export default TopBar;
