@@ -27,7 +27,7 @@ const BookNowModal = () => {
 
   const param = useParams();
   const {
-    getBookingData,
+    getBookingDetailData,
     selectedTimeStart,
     setSelectedTimeStart,
     selectedTimeEnd,
@@ -50,7 +50,7 @@ const BookNowModal = () => {
   const stop = convertTime(selectedDate, selectedTimeEnd);
 
   useEffect(() => {
-    getBookingData(param.id);
+    getBookingDetailData(param.id);
     if (selectedDate) {
       console.log("Start time:", start);
       console.log("Stop time:", stop);

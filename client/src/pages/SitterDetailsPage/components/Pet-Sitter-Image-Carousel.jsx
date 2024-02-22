@@ -21,40 +21,36 @@ function Carousel() {
 
   return (
     <>
-      {sitterData && sitterData.image_gallery ? (
-        <Swiper
-          slidesPerView={3}
-          loop={true}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-          css={css`
-            width: 1280px;
-          `}
-        >
-          {sitterData.image_gallery?.map((item, index) => (
-            <SwiperSlide key={index}>
-              <Stack className="comment-reviewer" width="80%" spacing={2}>
-                <img
-                  alt={`image_gallery_${index}`}
-                  src={item}
-                  height="240px"
-                  width="415px"
-                  css={css`
-                    object-fit: cover;
-                    margin: auto;
-                  `}
-                />
-              </Stack>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ) : (
-        <CircularProgress color="warning" />
-      )}
+      <Swiper
+        slidesPerView={3}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+        css={css`
+          width: 1280px;
+        `}
+      >
+        {sitterData.image_gallery?.map((item, index) => (
+          <SwiperSlide key={index}>
+            <Stack className="comment-reviewer" width="80%" spacing={2}>
+              <img
+                alt={`image_gallery_${index}`}
+                src={item}
+                height="240px"
+                width="415px"
+                css={css`
+                  object-fit: cover;
+                  margin: auto;
+                `}
+              />
+            </Stack>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </>
   );
 }

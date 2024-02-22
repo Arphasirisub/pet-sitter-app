@@ -64,6 +64,26 @@ function BookingToolsProvider(props) {
     }
   };
 
+  const getBookingDetailData = async (sitter_id) => {
+    try {
+      const response2 = await axios.get(
+        `http://localhost:4000/bookings/detail/${sitter_id}`,
+        {
+          params: {
+            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
+            booked_stop: selectedTimeEnd,
+            id: bookingId,
+          },
+        }
+      );
+
+      // console.log(response2);
+      setBookedTimeData(response2.data);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
+
   const getBookingResult = async (booking_id) => {
     try {
       const results = await axios.get(
@@ -154,6 +174,7 @@ function BookingToolsProvider(props) {
         setConfirmPayment,
         confirmStatus,
         setConfirmStatus,
+        getBookingDetailData,
       }}
     >
       {props.children}
