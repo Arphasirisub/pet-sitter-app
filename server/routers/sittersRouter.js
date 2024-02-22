@@ -11,8 +11,8 @@ sittersRouter.get("/sitterProflie", protect, async (req, res) => {
     const { data, error } = await supabase
       .from("sitters")
       .select("*,comments(*,owner_id(full_name,profile_img))")
-      .eq("id", id)
-      .eq("is_active", true);
+      .eq("id", id);
+    // .eq("is_active", true);
 
     if (error) {
       console.error("Error fetching data:", error.message);

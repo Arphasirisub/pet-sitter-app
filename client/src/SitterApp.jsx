@@ -11,18 +11,33 @@ import SitterHomepage from "./pages/SitterHomePage/SitterHomepage";
 function SitterApp() {
   return (
     <Routes>
-      <Route path="/sitter/:id" element={<SitterHomepage />} />
       <Route path="/sitter/:id/:activeTaps/" element={<SitterHomepage />} />
       <Route
         path="/sitter/:id/:activeTaps/:subTaps/:id"
         element={<SitterHomepage />}
       />
 
-      <Route path="/login" element={<SitterHomepage />} />
+      <Route path="/login" element={<OwnerHomePage />} />
       <Route path="/register" element={<RegisterPage />} />
+
       <Route path="/" element={<OwnerHomePage />} />
       <Route path="/list" element={<SearchListPage />} />
       <Route path="/detail/:id" element={<SitterDetailsPage />} />
+      <Route path="/owner/:id/:activeTaps/" element={<OwnerHomePage />} />
+      <Route
+        path="/owner/:id/:activeTaps/:subTaps"
+        element={<OwnerHomePage />}
+      />
+      <Route
+        path="/owner/:id/:activeTaps/:subTaps/:petId"
+        element={<OwnerHomePage />}
+      />
+      <Route path="/booking/:start/:end/:id" element={<OwnerHomePage />} />
+      <Route
+        path="/booking/result/:bookingId/:id"
+        element={<OwnerHomePage />}
+      />
+      <Route path="/sitter/:id" element={<SitterHomepage />} />
     </Routes>
   );
 }

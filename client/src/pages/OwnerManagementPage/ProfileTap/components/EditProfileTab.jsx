@@ -77,24 +77,16 @@ function EditProfileTab() {
     getDataProfile();
   }, []);
   useEffect(() => {
-    if (
-      profileData &&
-      profileData.full_name &&
-      profileData.phone &&
-      profileData.email &&
-      profileData.birthday
-    ) {
-      setnameData(profileData.full_name);
-      setphoneData(profileData.phone);
-      setemailData(profileData.email);
-      setPictureData(profileData.profile_img);
-      setDateData(profileData.birthday);
-    }
+    setnameData(profileData.full_name);
+    setphoneData(profileData.phone);
+    setemailData(profileData.email);
+    setPictureData(profileData.profile_img);
+    setDateData(profileData.birthday);
   }, [profileData]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <div css={textprofilebox}>Profie</div>
+      <div css={textprofilebox}>Profile</div>
 
       <div css={profilepicturebox}>
         <img

@@ -9,14 +9,13 @@ import { useAuth } from "../../contexts/authentication.jsx";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import { useFacebook } from "../../contexts/facebook.jsx";
+
 import NewUserModal from "./components/NewUserModal.jsx";
+import { useAlternativeLogin } from "../../contexts/alternativeLogin.jsx";
 
 function OwnerHomePage() {
   const navigate = useNavigate();
-  const { facebookToken, isNewUser, setIsNewUser, userData, setUserData } =
-    useFacebook();
+  const { alternativeLoginToken } = useAlternativeLogin();
   const { checkToken, state } = useAuth();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ function OwnerHomePage() {
     console.log(accessToken);
 
     if (accessToken) {
-      facebookToken(accessToken);
+      alternativeLoginToken(accessToken);
     }
   }, []);
 

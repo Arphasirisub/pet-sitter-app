@@ -15,13 +15,10 @@ function Footer() {
         className="footer"
         css={css`
           background: #000000;
-          /* max-width: 1440px; */
           width: 100%;
-          /* width: 1440px; */
+          max-width: 1600px;
           height: 280px;
           text-align: center;
-
-          /* margin-top: 20px; */
         `}
       >
         <div className="footer__logo">

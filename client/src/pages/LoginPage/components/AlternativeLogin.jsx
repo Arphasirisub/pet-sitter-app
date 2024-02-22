@@ -3,12 +3,16 @@ import { css } from "@emotion/react";
 
 import facebook from "../../../PublicPicture/facebook.png";
 import google from "../../../PublicPicture/google.png";
-import { useFacebook } from "../../../contexts/facebook";
+import { useAlternativeLogin } from "../../../contexts/alternativeLogin";
 export function AlternativeLogin() {
-  const { facebookLogin } = useFacebook();
+  const { facebookLogin, googleLogin } = useAlternativeLogin();
 
   const handleFacebookLogin = async () => {
     facebookLogin();
+  };
+
+  const handleGoogleLogin = async () => {
+    googleLogin();
   };
 
   return (
@@ -58,7 +62,7 @@ export function AlternativeLogin() {
       >
         <img src={facebook} alt="Facebook" onClick={handleFacebookLogin} />
 
-        <img src={google} alt="Google" />
+        <img src={google} alt="Google" onClick={handleGoogleLogin} />
       </div>
     </>
   );

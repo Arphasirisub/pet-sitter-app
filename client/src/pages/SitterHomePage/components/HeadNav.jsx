@@ -7,6 +7,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useAuth } from "../../../contexts/authentication";
 
 import { FaListCheck } from "react-icons/fa6";
 import { BsCashCoin } from "react-icons/bs";
@@ -14,6 +15,7 @@ import { BsCashCoin } from "react-icons/bs";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
+import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
   const containerHeadNavStyle = css`
@@ -39,6 +41,8 @@ const TopBar = () => {
     font-size: 16px;
     font-weight: 500;
   `;
+  const navigate = useNavigate();
+  const { state, logout } = useAuth();
 
   const [img, setImg] = useState("");
   const getImg = async () => {
@@ -93,7 +97,7 @@ const TopBar = () => {
       >
         <MenuItem
           onClick={() => {
-            navigate(`/sitter/${state.user.id}`);
+            navigate(`/sitter/${state.user.id}/pet-sitter-profile`);
             handleClose();
           }}
           css={petSitterMenuItemStyle}
@@ -103,7 +107,7 @@ const TopBar = () => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            navigate(`/sitter/${state.user.id}`);
+            navigate(`/sitter/${state.user.id}/booking-list`);
             handleClose();
           }}
           css={petSitterMenuItemStyle}
@@ -113,7 +117,7 @@ const TopBar = () => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            navigate(`/sitter/${state.user.id}`);
+            navigate(`/sitter/${state.user.id}/payout-option`);
             handleClose();
           }}
           css={petSitterMenuItemStyle}

@@ -15,6 +15,8 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { MdOutlinePets } from "react-icons/md";
 import { MdHistory } from "react-icons/md";
+import { FaListCheck } from "react-icons/fa6";
+import { BsCashCoin } from "react-icons/bs";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ function Navbar() {
         `http://localhost:4000/sitters/sitterProflie`
       );
       // console.log(result.data);
+      console.log(result);
       setSitterDatta(result.data);
     } catch (error) {
       console.log(error);
@@ -121,58 +124,115 @@ function Navbar() {
                 onClick={handleClick}
               />
 
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  "aria-labelledby": "fade-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-              >
-                <MenuItem
-                  onClick={() => {
-                    navigate(`/owner/${state.user.id}/profile`);
-                    handleClose();
+              {state.user?.role === "pet_owner" && (
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
                   }}
-                  css={menuItemStyle}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
                 >
-                  <BsFillPersonFill />
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate(`/owner/${state.user.id}/yourPet`);
-                    handleClose();
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/owner/${state.user.id}/profile`);
+                      handleClose();
+                    }}
+                    css={petOwnerMenuItemStyle}
+                  >
+                    <BsFillPersonFill />
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/owner/${state.user.id}/yourPet`);
+                      handleClose();
+                    }}
+                    css={petOwnerMenuItemStyle}
+                  >
+                    <MdOutlinePets />
+                    Your Pet
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/owner/${state.user.id}/bookingHistory`);
+                      handleClose();
+                    }}
+                    css={petOwnerMenuItemStyle}
+                  >
+                    <MdHistory />
+                    History
+                  </MenuItem>
+                  <hr></hr>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      logout();
+                    }}
+                    css={petOwnerMenuItemStyle}
+                  >
+                    <RiLogoutBoxRLine />
+                    Log out
+                  </MenuItem>
+                </Menu>
+              )}
+
+              {state.user?.role === "pet_sitter" && (
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
                   }}
-                  css={menuItemStyle}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
                 >
-                  <MdOutlinePets />
-                  Your Pet
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate(`/owner/${state.user.id}/bookingHistory`);
-                    handleClose();
-                  }}
-                  css={menuItemStyle}
-                >
-                  <MdHistory />
-                  History
-                </MenuItem>
-                <hr></hr>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    logout();
-                  }}
-                  css={menuItemStyle}
-                >
-                  <RiLogoutBoxRLine />
-                  Log out
-                </MenuItem>
-              </Menu>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/sitter/${state.user.id}/pet-sitter-profile`);
+                      handleClose();
+                    }}
+                    css={petSitterMenuItemStyle}
+                  >
+                    <BsFillPersonFill />
+                    Pet Sitter Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/sitter/${state.user.id}/booking-list`);
+                      handleClose();
+                    }}
+                    css={petSitterMenuItemStyle}
+                  >
+                    <FaListCheck />
+                    Booking List
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate(`/sitter/${state.user.id}/payout-option`);
+                      handleClose();
+                    }}
+                    css={petSitterMenuItemStyle}
+                  >
+                    <BsCashCoin />
+                    Payout Option
+                  </MenuItem>
+                  <hr></hr>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      logout();
+                    }}
+                    css={petSitterMenuItemStyle}
+                  >
+                    <RiLogoutBoxRLine />
+                    Log out
+                  </MenuItem>
+                </Menu>
+              )}
             </>
           ) : (
             <div
@@ -231,10 +291,22 @@ function Navbar() {
   );
 }
 
-const menuItemStyle = css`
+const petOwnerMenuItemStyle = css`
   display: flex;
   gap: 10px;
   width: 186px;
+  padding-left: 30px;
+  font-size: 18px;
+
+  &:hover {
+    color: rgb(255, 112, 55);
+  }
+`;
+
+const petSitterMenuItemStyle = css`
+  display: flex;
+  gap: 20px;
+  width: 230px;
   padding-left: 30px;
   font-size: 18px;
 
