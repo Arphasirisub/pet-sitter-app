@@ -81,7 +81,7 @@ function AuthProvider(props) {
       if (userDataFromToken.role === "pet_owner") {
         navigate("/");
       } else {
-        navigate(`/sitter/${userDataFromToken.id}`);
+        navigate(`/sitter/${userDataFromToken.id}/booking-list`);
       }
 
       localStorage.setItem("token", token);

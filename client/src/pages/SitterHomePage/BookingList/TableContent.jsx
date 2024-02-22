@@ -78,8 +78,6 @@ function CustomizedTables({
     checkToken();
   }, []);
 
-  console.log(fetchData);
-
   return (
     <RoundedTableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -101,9 +99,9 @@ function CustomizedTables({
               `}
               onClick={() => {
                 setIsProfilePage(true);
-                navigate(
-                  `/sitter/${state.user.id}/booking-list/profilePage/${fetchData[index].owners.id}`
-                );
+                // navigate(
+                //   `/sitter/${state.user.id}/booking-list/profilePage/${fetchData[index].owners.id}`
+                // );
               }}
             >
               <StyledTableCell

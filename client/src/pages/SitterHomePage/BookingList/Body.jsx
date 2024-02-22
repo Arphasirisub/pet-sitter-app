@@ -46,7 +46,7 @@ const topicInputStyle = css`
 
 const Body = ({ setIsProfilePage }) => {
   const [booked, setbooked] = useState("");
-  const [fetchData, setFetchData] = useState([]);
+
   const [bookingHistory, setBookingHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Number of items per page
@@ -56,8 +56,14 @@ const Body = ({ setIsProfilePage }) => {
       const result = await axios.get(
         `http://localhost:4000/bookings/sitterHomepage`
       );
-      setFetchData(result.data);
-      setBookingHistory(result.data);
+      console.log(result.data);
+      // Sort the data based on created_at in descending order
+      const sortedData = result.data.sort((a, b) => {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+
+      setBookingHistory(sortedData);
+      console.log(sortedData);
     } catch (error) {
       console.log(error);
     }
@@ -65,21 +71,19 @@ const Body = ({ setIsProfilePage }) => {
 
   const searching = () => {
     if (booked) {
-      const filterbooking = fetchData.filter((booking) => {
+      const filterbooking = bookingHistory.filter((booking) => {
         return booking.owners.full_name
           .toLowerCase()
           .includes(booked.toLowerCase());
       });
       console.log(filterbooking);
       setBookingHistory(filterbooking);
-    } else {
-      setBookingHistory(fetchData);
     }
   };
 
   useEffect(() => {
     searching();
-  }, [booked]);
+  }, [booked, bookingHistory]);
 
   useEffect(() => {
     fetchBookingHistory();
@@ -87,9 +91,11 @@ const Body = ({ setIsProfilePage }) => {
 
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = bookingHistory.slice(indexOfFirstItem, indexOfLastItem);
 
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  console.log(indexOfFirstItem, indexOfLastItem);
+  const currentItems = bookingHistory.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(currentItems);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // ส่ง booked ที่เป็น State เข้าไป ใน <CustomizedTables />
@@ -127,8 +133,6 @@ const Body = ({ setIsProfilePage }) => {
         <CustomizedTables
           booked={booked}
           setIsProfilePage={setIsProfilePage}
-          fetchData={fetchData}
-          setFetchData={setFetchData}
           bookingHistory={bookingHistory}
           setBookingHistory={setBookingHistory}
           fetchBookingHistory={fetchBookingHistory}
