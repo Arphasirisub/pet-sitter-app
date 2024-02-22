@@ -42,9 +42,9 @@ function Navbar() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      if (state.user.role === "pet_owner") {
+      if (state.user?.role === "pet_owner") {
         getOwnerData();
-      } else if (state.user.role === "pet_sitter") {
+      } else if (state.user?.role === "pet_sitter") {
         getSitterData();
       }
     }
@@ -98,16 +98,9 @@ function Navbar() {
       >
         {state.isAuthenticated && state.user ? (
           <>
-            <div>
-              {ownerData ||
-                (sitterData && (ownerData.full_name || sitterData.full_name))}
-            </div>
+            <div>{ownerData.full_name || sitterData.full_name}</div>
             <img
-              src={
-                ownerData ||
-                (sitterData &&
-                  (ownerData.profile_img || sitterData.profile_img))
-              }
+              src={ownerData.profile_img || sitterData.profile_img}
               alt="Profile"
               css={css`
                 width: 40px;

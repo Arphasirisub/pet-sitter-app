@@ -7,13 +7,15 @@ sgMail.setApiKey(process.env.SEND_GRID_KEY);
 
 export const bookingsRouter = Router();
 
-bookingsRouter.get("/sitterHomepage",protect, async (req, res) => {
+bookingsRouter.get("/sitterHomepage", protect, async (req, res) => {
   const id = req.userId;
   try {
     // Fetch bookings data with an additional column "pets" for the count
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select("*,owners(full_name), pet_bookings:pet_booking(booking_id) ")
+      .select(
+        "*,owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(*))"
+      )
       .eq("sitter_id", id)
       .order("created_at", { ascending: false });
 

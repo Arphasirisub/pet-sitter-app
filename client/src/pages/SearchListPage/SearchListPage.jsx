@@ -10,19 +10,23 @@ import {
   containerStyles,
   headingStyles,
   sticky,
+  headingContainer,
   // pageContainer,
 } from "./components/Style.jsx";
 
 function SearchListPage() {
-
-
   return (
     <>
       <Navbar />
-      <div css={containerStyles}>
-        <p css={headingStyles}>Search For Pet Sitter</p>
-        <div css={sticky}>
-          <div css={seachLishContainer}>
+      <div className="search-pet-sitter-container" css={containerStyles}>
+        <div className="heading-container" css={headingContainer}>
+          <div className="heading-styles" css={headingStyles}>
+            Search For Pet Sitter
+          </div>
+        </div>
+
+        <div className="position-sticky" css={sticky}>
+          <div className="seach-list-container" css={seachLishContainer}>
             <SearchBox />
             <SearchResult />
           </div>
