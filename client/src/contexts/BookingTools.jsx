@@ -123,6 +123,7 @@ function BookingToolsProvider(props) {
   const [bookingResult, setBookingResult] = useState([]);
   const [confirmPayment, setConfirmPayment] = useState(false);
   const [confirmStatus, setConfirmStatus] = useState(false);
+  const [isUpdateCalendar, setIsUpdateCalendar] = useState(false);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -175,6 +176,8 @@ function BookingToolsProvider(props) {
         confirmStatus,
         setConfirmStatus,
         getBookingDetailData,
+        isUpdateCalendar,
+        setIsUpdateCalendar,
       }}
     >
       {props.children}

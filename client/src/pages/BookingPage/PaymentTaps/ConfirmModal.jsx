@@ -26,6 +26,7 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
     bookingId,
     setConfirmPayment,
     confirmStatus,
+    isUpdateCalendar,
   } = useBookingTools();
   const navigate = useNavigate();
   // payment integration
@@ -82,6 +83,19 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
         setBookingId(response.data.bookingId);
         navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
         console.log(response.data.bookingId);
+        if (isUpdateCalendar === true) {
+          axios.post(
+            `http://localhost:4000/google/schedule_event/${params.id}`,
+            {
+              start: start,
+              end: end,
+              pets: selectedPets,
+              price: totalPrice,
+              message: message,
+              payment: paymentMethods,
+            }
+          );
+        }
       }
       if (paymentMethods === "card") {
         // console.log(confirmStatus);
@@ -105,6 +119,19 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
         setConfirmPayment(true);
         // console.log(confirmStatus);
         // makePayment(response.data.bookingId);
+        if (isUpdateCalendar === true) {
+          axios.post(
+            `http://localhost:4000/google/schedule_event/${params.id}`,
+            {
+              start: start,
+              end: end,
+              pets: selectedPets,
+              price: totalPrice,
+              message: message,
+              payment: paymentMethods,
+            }
+          );
+        }
       }
     } catch (error) {
       console.error("Error submitting booking:", error);
@@ -174,6 +201,7 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
             >
               Are you sure to booking this pet sitter?
             </Typography>
+
             <div
               css={css`
                 display: flex;

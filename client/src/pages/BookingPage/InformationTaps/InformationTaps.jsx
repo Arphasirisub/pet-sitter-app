@@ -18,6 +18,8 @@ function InformationTaps() {
     setShowWarningModal,
     showWarningModal,
     setOwnerData,
+    isUpdateCalendar,
+    setIsUpdateCalendar,
   } = useBookingTools();
   const { state } = useAuth();
   useEffect(() => {
@@ -99,6 +101,32 @@ function InformationTaps() {
             `}
           />
         </div>
+
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            color: rgb(123, 126, 143);
+            gap: 10px;
+          `}
+        >
+          {" "}
+          <img
+            src="https://logowik.com/content/uploads/images/google-calendar5094.jpg"
+            css={css`
+              width: 100px;
+            `}
+          ></img>
+          <input
+            type="checkbox"
+            name="checkbox"
+            value={isUpdateCalendar}
+            onChange={(e) => {
+              setIsUpdateCalendar(e.target.checked);
+            }}
+          ></input>
+          <label for="checkbox">Update to your google calendar?</label>
+        </div>
         <div
           css={css`
             display: flex;
@@ -152,6 +180,13 @@ function InformationTaps() {
                 information: true,
               }));
               setActiveSteps("payment");
+              if (isUpdateCalendar === true) {
+                // Construct the URL for Google OAuth2 consent screen
+                const authUrl = "http://localhost:4000/google";
+
+                // Open the consent screen in a new tab
+                window.open(authUrl, "_blank");
+              }
             }}
           >
             Next
