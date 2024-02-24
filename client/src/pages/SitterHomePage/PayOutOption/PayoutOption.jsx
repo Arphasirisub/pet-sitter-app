@@ -41,21 +41,17 @@ const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
     textAlign: "start",
-    fontSize: "16px",
-    fontWeight: "500",
   },
   [`&.${tableCellClasses.body}`]: {
-    color: getColorByStatus(status),
-    textAlign: "start",
     fontSize: "16px",
+    color: getColorByStatus(status),
+    padding: "20px 16px",
+    textAlign: "start",
     fontWeight: "500",
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+const StyledTableRow = styled(TableRow)(() => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -181,7 +177,9 @@ function PayoutOption() {
                       {booking.id}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {booking.price} Baht.
+                      <Typography color={"#1CCD83"}>
+                        {booking.price} THB.
+                      </Typography>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

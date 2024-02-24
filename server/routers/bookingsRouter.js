@@ -168,7 +168,16 @@ bookingsRouter.get("/mybookings", protect, async (req, res) => {
 bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
   const sitterId = req.params.id;
   const ownerId = req.userId;
-  const { start, end, pets, price, message, payment } = req.body;
+  const {
+    start,
+    end,
+    pets,
+    price,
+    message,
+    payment,
+    payment_id,
+    payment_status,
+  } = req.body;
 
   try {
     // Insert data into the 'bookings' table
@@ -184,6 +193,8 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
           status: "Waiting for confirm",
           message: message,
           payment: payment,
+          payment_id: payment_id,
+          payment_status: payment_status,
         },
       ]);
 
@@ -260,7 +271,7 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
        <p>To accept the booking and add it to your Google Calendar, please <a href="${googleCalendarLink}">click here</a>.</p>`,
     };
 
-    await sgMail.send(msg);
+    // await sgMail.send(msg);
 
     res.status(200).json({ bookingId: bookingId });
   } catch (error) {

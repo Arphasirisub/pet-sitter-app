@@ -48,7 +48,7 @@ paymentRouter.post("/api/create-checkout-session", async (req, res) => {
 
 paymentRouter.post("/create-payment-intent", async (req, res) => {
   try {
-    const { amount, id, bookingId } = req.body;
+    const { amount } = req.body;
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripeInstance.paymentIntents.create({
       amount: amount,
@@ -61,8 +61,6 @@ paymentRouter.post("/create-payment-intent", async (req, res) => {
 
     res.send({
       clientSecret: paymentIntent.client_secret,
-      id: id,
-      bookingId: bookingId,
     });
   } catch (error) {
     console.error("Error creating checkout session:", error);

@@ -6,21 +6,17 @@ import SelectPaymentMethods from "./SelectPaymentMethods";
 import { useBookingTools } from "../../../contexts/BookingTools";
 import Card from "./Card";
 import Cash from "./Cash";
-import axios from "axios";
-import { useParams } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
+
 function PaymentTaps() {
-  const [paymentMethods, setPaymentMethods] = useState("card");
+  // const [paymentMethods, setPaymentMethods] = useState("card");
   const [show, setShow] = useState(false);
   const {
     setActiveSteps,
     setCompleteStep,
     completeStep,
-    selectedPets,
-    totalPrice,
-    message,
-    setBookingId,
-    bookingId,
+    paymentMethods,
+    setPaymentMethods,
   } = useBookingTools();
 
   const handleSubmit = async () => {

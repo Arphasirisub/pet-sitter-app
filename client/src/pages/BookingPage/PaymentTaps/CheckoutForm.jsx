@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { useState } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -6,46 +8,18 @@ import {
 } from "@stripe/react-stripe-js";
 import { useParams } from "react-router-dom";
 import { useBookingTools } from "../../../contexts/BookingTools";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-  const [message, setMessage] = useState(null);
+  const [messages, setMessages] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { bookingId, confirmPayment, confirmStatus, setConfirmStatus } =
+  const [colorText, setColorText] = useState("");
+  const { bookingId, setConfirmPayment, setConfirmStatus, setPaymentId } =
     useBookingTools();
   const param = useParams();
-
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
-    });
-  }, [stripe]);
 
   const handleSubmit = async (e) => {
     if (e) {
@@ -58,50 +32,49 @@ function CheckoutForm() {
       return;
     }
 
-    setIsLoading(true);
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: `http://localhost:5173/booking/result/${bookingId}/${param.id}`,
+        },
+        redirect: "if_required",
+      });
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `http://localhost:5173/booking/result/${bookingId}/${param.id}`,
-      },
-    });
+      if (result.paymentIntent) {
+        console.log(result.paymentIntent);
+        console.log(result.paymentIntent.id);
+        console.log(result.paymentIntent.status);
+        setIsLoading(true);
+        setConfirmPayment(true);
+        setConfirmStatus(result.paymentIntent.status);
+        setPaymentId(result.paymentIntent.id);
+        setMessages("Payment successfully");
+        setColorText("green");
+      }
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error?.type === "card_error" || error?.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
+      if (result.error) {
+        console.log(result.error);
+        setMessages(result.error.message);
+        setColorText("red");
+      }
+    } catch (error) {
+      console.error("Error payment:", error);
     }
-
-    setIsLoading(false);
   };
 
   const paymentElementOptions = {
     layout: "tabs",
   };
-  // Check if confirmPayment is true, if so, automatically submit the form
-  useEffect(() => {
-    if (confirmPayment) {
-      handleSubmit();
-    }
-  }, [confirmPayment]);
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      <Button type="submit" id="submit" disabled={isLoading}>
+        Pay Now
+      </Button>
+      {messages && <Typography color={colorText}>{messages}</Typography>}
     </form>
   );
 }
