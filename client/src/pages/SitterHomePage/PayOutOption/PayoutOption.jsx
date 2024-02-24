@@ -14,6 +14,9 @@ import { CardActionArea } from "@mui/material";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import { LuWallet } from "react-icons/lu";
+import { CiBitcoin } from "react-icons/ci";
+import { BsCashCoin } from "react-icons/bs";
 
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
@@ -120,14 +123,17 @@ function PayoutOption() {
             }}
           >
             <Stack direction={"row"} justifyContent={"space-between"}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                fontWeight="bold"
-                component="div"
-              >
-                Total Earning:
-              </Typography>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                <CiBitcoin size={26} />
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  Total Earning:
+                </Typography>
+              </Stack>
               <Typography
                 gutterBottom
                 variant="subtitle1"
@@ -152,14 +158,17 @@ function PayoutOption() {
             }}
           >
             <Stack direction={"row"} justifyContent={"space-between"}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                fontWeight="bold"
-                component="div"
-              >
-                Bank Account
-              </Typography>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                <LuWallet />
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  Bank Account
+                </Typography>
+              </Stack>
               <Typography
                 gutterBottom
                 variant="subtitle1"
