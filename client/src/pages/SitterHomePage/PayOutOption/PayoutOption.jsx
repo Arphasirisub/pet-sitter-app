@@ -67,22 +67,32 @@ function PayoutOption() {
         `http://localhost:4000/sitters/booking/payoutOption`
       );
 
-      setPayoutData(response.data);
+      setPayoutData(response.data.bookings);
+      setTotalEarning(response.data.totalPrice);
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.bookings);
+      console.log(response.data.totalPrice);
     } catch (error) {
       console.error("Error fetching sitter details:", error);
     }
   };
-  useEffect(() => {
-    getPayoutData();
-    const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
-    setTotalEarning(total);
-  }, [payoutData]);
 
   const [page, setPage] = useState(1);
-  const rowsPerPage = 9;
+  const rowsPerPage = 8;
   const indexOfLastRow = page * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = payoutData.slice(indexOfFirstRow, indexOfLastRow);
+
+  const lastThreeDigits = (number) => {
+    const bankNumbers = number.toString();
+    const lastThreeDigits = bankNumbers.substring(7);
+    return lastThreeDigits;
+  };
+
+  useEffect(() => {
+    getPayoutData();
+  }, []);
 
   return (
     <>
@@ -141,14 +151,29 @@ function PayoutOption() {
               marginRight: 8,
             }}
           >
-            <Typography
-              gutterBottom
-              variant="subtitle1"
-              fontWeight="bold"
-              component="div"
-            >
-              Bank Account
-            </Typography>
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                fontWeight="bold"
+                component="div"
+              >
+                Bank Account
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                fontWeight="bold"
+                component="div"
+              >
+                {payoutData?.length > 0 && (
+                  <Typography color={"#FF7037"}>
+                    {payoutData[0].sitter_id.bank_name}*
+                    {lastThreeDigits(payoutData[0].sitter_id.bank_numbers)}
+                  </Typography>
+                )}
+              </Typography>
+            </Stack>
           </CardActionArea>
         </Stack>
         <Stack className="part-3">
@@ -165,10 +190,10 @@ function PayoutOption() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {currentRows.map((booking, index) => (
-                  <StyledTableRow key={index}>
+                {currentRows.map((booking) => (
+                  <StyledTableRow key={booking.id}>
                     <StyledTableCell component="th" scope="row">
-                      {moment(booking.created_at).format("d MMM, YYYY")}
+                      {moment(booking.created_at).format("D MMM, YYYY")}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {booking.owners?.full_name}
