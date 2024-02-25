@@ -2,12 +2,12 @@ import { Router } from "express";
 import supabase from "../utills/supabase.js";
 import { protect } from "../middlewares/protect.js";
 import stripe from "stripe";
+import dotenv from "dotenv";
 
 export const paymentRouter = Router();
+dotenv.config();
 
-const stripeInstance = stripe(
-  "sk_test_51OjVWPDwx8QQepr8xI2VnftyywEikkReA509MLwWgNRzHRCPtcY4qoswmAbkwA8exoEBARY3PMeyyU6FHONqfHyb00IFqWJOt1"
-);
+const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 
 paymentRouter.post("/create-payment-intent", async (req, res) => {
   try {
