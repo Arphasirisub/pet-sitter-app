@@ -9,43 +9,6 @@ const stripeInstance = stripe(
   "sk_test_51OjVWPDwx8QQepr8xI2VnftyywEikkReA509MLwWgNRzHRCPtcY4qoswmAbkwA8exoEBARY3PMeyyU6FHONqfHyb00IFqWJOt1"
 );
 
-paymentRouter.post("/api/create-checkout-session", async (req, res) => {
-  try {
-    const { amount, start, end, id, bookingId } = req.body;
-    const session = await stripeInstance.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "thb",
-            product_data: {
-              name: "Booking Price",
-            },
-            unit_amount: amount,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `http://localhost:5173/booking/result/${bookingId}/${id}`,
-      cancel_url: "http://localhost:5173/booking/cancel",
-    });
-    console.log(bookingId);
-    console.log(session);
-    res.json({ id: session.id });
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-    res.status(500).json({ error: "Could not create checkout session" });
-  }
-});
-
-// const calculateOrderAmount = (items) => {
-//   // Replace this constant with a calculation of the order's amount
-//   // Calculate the order total on the server to prevent
-//   // people from directly manipulating the amount on the client
-//   return 1400;
-// };
-
 paymentRouter.post("/create-payment-intent", async (req, res) => {
   try {
     const { amount } = req.body;

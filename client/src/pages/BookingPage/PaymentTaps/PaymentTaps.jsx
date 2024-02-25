@@ -17,10 +17,24 @@ function PaymentTaps() {
     completeStep,
     paymentMethods,
     setPaymentMethods,
+    confirmStatus,
   } = useBookingTools();
 
   const handleSubmit = async () => {
     setShow(true);
+  };
+
+  const handleBackButton = () => {
+    if (confirmStatus === "succeeded") {
+      setShow(false);
+      alert("การชำระเงินสำเร็จแล้ว กรุณากด Confirm Booking");
+    } else {
+      setCompleteStep({
+        ...completeStep,
+        payment: false,
+      });
+      setActiveSteps("information");
+    }
   };
 
   return (
@@ -61,13 +75,7 @@ function PaymentTaps() {
                 color: black;
               }
             `}
-            onClick={() => {
-              setCompleteStep({
-                ...completeStep,
-                payment: false,
-              });
-              setActiveSteps("information");
-            }}
+            onClick={handleBackButton}
           >
             Back
           </Button>

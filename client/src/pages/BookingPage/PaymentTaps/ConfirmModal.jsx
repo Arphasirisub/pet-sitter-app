@@ -44,12 +44,13 @@ function ConfirmModal({ show, setShow }) {
             price: totalPrice,
             message: message,
             payment: paymentMethods,
+            payment_status: "Pay by Cash",
           }
         );
         console.log(response);
+        console.log(response.data.bookingId);
         setBookingId(response.data.bookingId);
         navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
-        console.log(response.data.bookingId);
       }
       if (paymentMethods === "card") {
         if (confirmStatus === "succeeded") {
@@ -73,11 +74,10 @@ function ConfirmModal({ show, setShow }) {
           setBookingId(response.data.bookingId);
           navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
         }
-      }
-
-      if (confirmStatus !== "succeeded") {
-        setShow(false);
-        alert("การชำระไม่สำเร็จ โปรดตรวจสอบอีกครั้ง");
+        if (confirmStatus !== "succeeded") {
+          setShow(false);
+          alert("การชำระไม่สำเร็จ โปรดตรวจสอบอีกครั้ง");
+        }
       }
     } catch (error) {
       console.error("Error submitting booking:", error);

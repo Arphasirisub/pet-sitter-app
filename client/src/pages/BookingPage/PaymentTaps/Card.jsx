@@ -25,14 +25,10 @@ export default function Card() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         amount: parseFloat(totalPrice) * 100,
-        id: params.id,
-        bookingId: bookingId,
       }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-    console.log(bookingId);
-    console.log(params.id);
   }, []);
 
   const appearance = {
