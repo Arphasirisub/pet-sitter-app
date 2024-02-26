@@ -30,32 +30,6 @@ function OwnerHomePage() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const url = window.location.href;
-  //   const parsedUrl = new URL(url);
-  //   const params = new URLSearchParams(parsedUrl.search);
-  //   const accessPermission = params.get("code");
-
-  //   if (accessPermission) {
-  //     const fetchPermission = async () => {
-  //       try {
-  //         // Make a POST request to your backend to handle the permission code
-  //         const response = axios.post(`http://localhost:4000/google/callback`, {
-  //           code: accessPermission,
-  //         });
-  //         console.log(response.data); // Log the response from the backend
-
-  //         // Handle the response as needed
-  //       } catch (error) {
-  //         console.error("Error handling permission code:", error);
-  //         // Handle error if necessary
-  //       }
-  //     };
-
-  //     fetchPermission(); // Call the function to make the POST request
-  //   }
-  // }, []);
-
   return (
     <div>
       <Navbar />
