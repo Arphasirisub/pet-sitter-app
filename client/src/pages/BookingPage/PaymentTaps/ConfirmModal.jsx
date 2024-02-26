@@ -21,6 +21,7 @@ function ConfirmModal({ show, setShow }) {
     confirmStatus,
     paymentMethods,
     paymentId,
+    isUpdateCalendar,
   } = useBookingTools();
   const navigate = useNavigate();
 
@@ -51,6 +52,19 @@ function ConfirmModal({ show, setShow }) {
         console.log(response.data.bookingId);
         setBookingId(response.data.bookingId);
         navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
+        if (isUpdateCalendar === true) {
+          axios.post(
+            `http://localhost:4000/google/schedule_event/${params.id}`,
+            {
+              start: start,
+              end: end,
+              pets: selectedPets,
+              price: totalPrice,
+              message: message,
+              payment: paymentMethods,
+            }
+          );
+        }
       }
       if (paymentMethods === "card") {
         if (confirmStatus === "succeeded") {
@@ -73,6 +87,19 @@ function ConfirmModal({ show, setShow }) {
           console.log(response.data.bookingId);
           setBookingId(response.data.bookingId);
           navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
+          if (isUpdateCalendar === true) {
+            axios.post(
+              `http://localhost:4000/google/schedule_event/${params.id}`,
+              {
+                start: start,
+                end: end,
+                pets: selectedPets,
+                price: totalPrice,
+                message: message,
+                payment: paymentMethods,
+              }
+            );
+          }
         }
         if (confirmStatus !== "succeeded") {
           setShow(false);
@@ -143,6 +170,7 @@ function ConfirmModal({ show, setShow }) {
             >
               Are you sure to booking this pet sitter?
             </Typography>
+
             <div
               css={css`
                 display: flex;

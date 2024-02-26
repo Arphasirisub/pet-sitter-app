@@ -125,6 +125,7 @@ function BookingToolsProvider(props) {
   const [confirmStatus, setConfirmStatus] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState("card");
   const [paymentId, setPaymentId] = useState("");
+  const [isUpdateCalendar, setIsUpdateCalendar] = useState(false);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -181,6 +182,8 @@ function BookingToolsProvider(props) {
         setPaymentMethods,
         paymentId,
         setPaymentId,
+        isUpdateCalendar,
+        setIsUpdateCalendar,
       }}
     >
       {props.children}
