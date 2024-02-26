@@ -271,7 +271,7 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
        <p>To accept the booking and add it to your Google Calendar, please <a href="${googleCalendarLink}">click here</a>.</p>`,
     };
 
-    // await sgMail.send(msg);
+    await sgMail.send(msg);
 
     res.status(200).json({ bookingId: bookingId });
   } catch (error) {
