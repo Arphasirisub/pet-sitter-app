@@ -13,31 +13,31 @@ import { useSitter } from "../../../../contexts/getSitters";
 import { useEffect, useState } from "react";
 
 function AddressInfo() {
-  const { getSitterInfo, getSitterData } = useSitter();
-  const [address, setAddress] = useState("");
-  const [district, setDistrict] = useState("");
-  const [subDistrict, setSubDistrict] = useState("");
-  const [province, setProvince] = useState("");
-  const [postCode, setPostCode] = useState("");
+  const {
+    getSitterInfo,
+    getSitterData,
+    address,
+    setAddress,
+    district,
+    setDistrict,
+    subDistrict,
+    setSubDistrict,
+    province,
+    setProvince,
+    postCode,
+    setPostCode,
+  } = useSitter();
+
   useEffect(() => {
     getSitterData();
   }, []);
 
   useEffect(() => {
-    if (
-      getSitterInfo &&
-      getSitterInfo.district &&
-      getSitterInfo.province &&
-      getSitterInfo.post_code &&
-      getSitterInfo.sub_district &&
-      getSitterInfo.address_detail
-    ) {
-      setDistrict(getSitterInfo.district);
-      setProvince(getSitterInfo.province);
-      setPostCode(getSitterInfo.post_code);
-      setSubDistrict(getSitterInfo.sub_district);
-      setAddress(getSitterInfo.address_detail);
-    }
+    setDistrict(getSitterInfo.district);
+    setProvince(getSitterInfo.province);
+    setPostCode(getSitterInfo.post_code);
+    setSubDistrict(getSitterInfo.sub_district);
+    setAddress(getSitterInfo.address_detail);
   }, [getSitterInfo]);
 
   return (

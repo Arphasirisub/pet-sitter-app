@@ -18,19 +18,25 @@ import { useEffect, useState } from "react";
 import { useSitter } from "../../../../contexts/getSitters";
 import uploadImg from "../../../../PublicPicture/uploadphoto.png";
 import deleteIcon from "../../../../PublicPicture/delete.png";
+import axios from "axios";
 
 function PetSitterInfo() {
-  const { getSitterInfo, getSitterData } = useSitter();
+  const {
+    getSitterInfo,
+    setGetSitterInfo,
+    getSitterData,
+    tradeName,
+    setTradeName,
+    service,
+    setService,
+    myPlace,
+    setMyPlace,
+    petType,
+    setPetType,
+    imgGallery,
+    setImgGallery,
+  } = useSitter();
   const animationSection = makeAnimated();
-  const [tradeName, setTradeName] = useState("");
-  const [service, setService] = useState("");
-  const [myPlace, setMyPlace] = useState("");
-  const [petType, setPetType] = useState({
-    dog: false,
-    cat: false,
-    bird: false,
-    rabbit: false,
-  });
 
   const options = [
     { value: "dog", label: "Dog" },
@@ -43,24 +49,56 @@ function PetSitterInfo() {
   }, []);
 
   useEffect(() => {
-    if (
-      getSitterInfo &&
-      getSitterInfo.trade_name &&
-      getSitterInfo.service &&
-      getSitterInfo.my_place
-    ) {
-      setTradeName(getSitterInfo.trade_name);
-      setService(getSitterInfo.service);
-      setMyPlace(getSitterInfo.my_place);
-      setPetType({
-        ...petType,
-        dog: getSitterInfo.dog,
-        cat: getSitterInfo.cat,
-        bird: getSitterInfo.bird,
-        rabbit: getSitterInfo.rabbit,
-      });
-    }
+    setTradeName(getSitterInfo.trade_name);
+    setService(getSitterInfo.service);
+    setMyPlace(getSitterInfo.my_place);
+    setPetType({
+      ...petType,
+      dog: getSitterInfo.dog,
+      cat: getSitterInfo.cat,
+      bird: getSitterInfo.bird,
+      rabbit: getSitterInfo.rabbit,
+    });
+    setImgGallery(getSitterInfo.image_gallery);
   }, [getSitterInfo]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]; // Get the selected file from the event
+    const maxFileSize = 20 * 1024 * 1024; // 10MB in bytes
+    console.log(file);
+
+    if (file && file.size > maxFileSize) {
+      console.error("File size exceeds the limit (10MB)");
+      return;
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newImg = reader.result;
+        // Update getSitterInfo with the new image
+        setGetSitterInfo((prevSitterInfo) => ({
+          ...prevSitterInfo,
+          image_gallery: [...prevSitterInfo.image_gallery, newImg],
+        }));
+        // Update imgGallery with the new image
+        setImgGallery((prevImgGallery) => [...prevImgGallery, newImg]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log(imgGallery);
+  // }, []);
+
+  const newImgGallery = Array.isArray(imgGallery) ? imgGallery : [];
+
+  const handleDeleteGallery = (img) => {
+    console.log(img);
+    const newImageGallery = imgGallery.filter((image) => image !== img);
+    setImgGallery(newImageGallery);
+  };
 
   return (
     <div css={inputContainer}>
@@ -150,24 +188,33 @@ function PetSitterInfo() {
       ></textarea>
       <p css={titleStyle}>Image Gallery (Maximum 10 images)</p>
       <div css={imgGalleryContainer}>
-        {getSitterInfo &&
-          getSitterInfo.image_gallery &&
-          getSitterInfo.image_gallery.map((img, index) => (
-            <div css={position}>
-              <img
-                css={imgStyle}
-                key={index}
-                src={img}
-                alt={`Image ${index}`}
-              />
-              <button css={deleteButton}>
-                <img src={deleteIcon} />
-              </button>
-            </div>
-          ))}
-        <button css={addImage}>
-          <img src={uploadImg} alt="uploadImg" />
-        </button>
+        {newImgGallery.map((img, index) => (
+          <div key={index} css={position}>
+            <img css={imgStyle} src={img} alt={`Image ${index}`} />
+            <button
+              css={deleteButton}
+              onClick={() => {
+                handleDeleteGallery(img[index]);
+              }}
+            >
+              <img src={deleteIcon} />
+            </button>
+          </div>
+        ))}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e)}
+          multiple
+          style={{ display: "none" }}
+          id="imageUpload"
+        />
+        <label
+          htmlFor="imageUpload"
+          hidden={newImgGallery.length <= 9 ? false : true}
+        >
+          <img src={uploadImg} css={addImage} alt="uploadImg" />
+        </label>
       </div>
     </div>
   );

@@ -64,9 +64,7 @@ export const titleStyle = css`
 export const addImage = css`
   width: 200px;
   height: 200px;
-  background-color: #fff1ec;
   border-radius: 10px;
-  cursor: pointer;
 `;
 
 export const selectionStyle = css`

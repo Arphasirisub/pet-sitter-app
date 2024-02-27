@@ -52,6 +52,29 @@ function SittersProvider(props) {
   };
 
   const [getSitterInfo, setGetSitterInfo] = useState({});
+  //sitterProfile useState()
+  const [imgGallery, setImgGallery] = useState([]);
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [introduction, setIntroduction] = useState("");
+  const [experience, setExperience] = useState("");
+  const [address, setAddress] = useState("");
+  const [district, setDistrict] = useState("");
+  const [subDistrict, setSubDistrict] = useState("");
+  const [province, setProvince] = useState("");
+  const [postCode, setPostCode] = useState("");
+  const [tradeName, setTradeName] = useState("");
+  const [service, setService] = useState("");
+  const [myPlace, setMyPlace] = useState("");
+  const [updateImg, setUpdateImg] = useState("");
+  const [petType, setPetType] = useState({
+    dog: false,
+    cat: false,
+    bird: false,
+    rabbit: false,
+  });
 
   const getSitterData = async () => {
     try {
@@ -61,6 +84,32 @@ function SittersProvider(props) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSubmitSitter = async () => {
+    const updateImage = updateImg;
+    
+    await axios.put(`http://localhost:4000/sitters/myProfile`, {
+      full_name: name,
+      profile_img: updateImage || getSitterInfo.profile_img,
+      experience,
+      phone,
+      introduction,
+      trade_name: tradeName,
+      dog: petType.dog,
+      cat: petType.cat,
+      bird: petType.bird,
+      rabbit: petType.rabbit,
+      service,
+      my_place: myPlace,
+      address_detail: address,
+      sub_district: subDistrict,
+      district,
+      province,
+      post_code: postCode,
+      image_gallery: imgGallery || getSitterInfo.image_gallery,
+    });
+
   };
 
   const handleStateChange = (fieldName, value) => {
@@ -82,6 +131,41 @@ function SittersProvider(props) {
         getSitterInfo,
         setGetSitterInfo,
         getSitterData,
+        name,
+        setName,
+        nameError,
+        setNameError,
+        phone,
+        setPhone,
+        email,
+        setEmail,
+        introduction,
+        setIntroduction,
+        experience,
+        setExperience,
+        address,
+        setAddress,
+        district,
+        setDistrict,
+        subDistrict,
+        setSubDistrict,
+        province,
+        setProvince,
+        postCode,
+        setPostCode,
+        tradeName,
+        setTradeName,
+        service,
+        setService,
+        myPlace,
+        setMyPlace,
+        petType,
+        setPetType,
+        handleSubmitSitter,
+        updateImg,
+        setUpdateImg,
+        imgGallery,
+        setImgGallery,
       }}
     >
       {props.children}

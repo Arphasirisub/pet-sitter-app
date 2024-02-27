@@ -34,7 +34,22 @@ function init() {
   app.use("/comments", commentsRouter);
   app.use("/google", googleRouter);
   app.use("/payments", paymentRouter);
+  app.use(bodyParser.json({ limit: "35mb" }));
 
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+      limit: "35mb",
+      parameterLimit: 50000,
+    })
+  ),
+    app.use((err, req, res, next) => {
+      if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+        res.status(400).json({ error: "Invalid JSON payload" });
+      } else {
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

@@ -159,3 +159,83 @@ sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+sittersRouter.put("/myProfile", protect, async (req, res) => {
+  try {
+    const sitterId = req.userId;
+    const {
+      full_name,
+      experience,
+      phone,
+      introduction,
+      trade_name,
+      dog,
+      cat,
+      bird,
+      rabbit,
+      service,
+      my_place,
+      profile_img,
+      image_gallery,
+      address_detail,
+      sub_district,
+      district,
+      province,
+      post_code,
+    } = req.body;
+    console.log(req.body);
+    const { data, error } = await supabase
+      .from("sitters")
+      .update({
+        full_name,
+        experience,
+        phone,
+        introduction,
+        trade_name,
+        dog,
+        cat,
+        bird,
+        rabbit,
+        service,
+        my_place,
+        profile_img,
+        image_gallery,
+        address_detail,
+        sub_district,
+        district,
+        province,
+        post_code,
+      })
+      .eq("id", sitterId)
+      .single();
+
+    res.status(200).json({ message: "Data has been update !" });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+sittersRouter.post("/myGallery", protect, async (req, res) => {
+  try {
+    const sitterId = req.userId;
+    const { image } = req.body; // Assuming the request body contains the image object to delete
+
+    const { data, error } = await supabase
+      .from("sitters")
+      .update()
+      .eq("id", sitterId);
+    res.status(200).json({ message: "Successfully deleted gallery." });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});

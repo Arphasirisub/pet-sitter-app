@@ -19,37 +19,42 @@ import {
 import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
 
 function BasicInfo() {
-  // const { searchInput, handleStateChange } = useSitter();
-  const { imageSrc, handleFileChange } = useMyPetsTools();
-  const { getSitterInfo, getSitterData } = useSitter();
-  const [name, setName] = useState("");
+  const {
+    getSitterInfo,
+    setGetSitterInfo,
+    getSitterData,
+    name,
+    setName,
+    phone,
+    setPhone,
+    email,
+    setEmail,
+    introduction,
+    setIntroduction,
+    experience,
+    setExperience,
+    updateImg,
+    setUpdateImg,
+  } = useSitter();
   const [nameError, setNameError] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [introduction, setIntroduction] = useState("");
-  const [experience, setExperience] = useState("");
-  useEffect(() => {}, [imageSrc]);
 
   useEffect(() => {
     getSitterData();
   }, []);
 
   useEffect(() => {
-    if (
-      getSitterInfo &&
-      getSitterInfo.full_name &&
-      getSitterInfo.phone &&
-      getSitterInfo.email &&
-      getSitterInfo.introduction &&
-      getSitterInfo.experience
-    ) {
-      setName(getSitterInfo.full_name);
-      setEmail(getSitterInfo.email);
-      setIntroduction(getSitterInfo.introduction);
-      setPhone(getSitterInfo.phone);
-      setExperience(getSitterInfo.experience);
-    }
+    // console.log(getSitterInfo);
+    setName(getSitterInfo.full_name);
+    setEmail(getSitterInfo.email);
+    setIntroduction(getSitterInfo.introduction);
+    setPhone(getSitterInfo.phone);
+    setExperience(getSitterInfo.experience);
+    setUpdateImg(getSitterInfo.profile_img);
   }, [getSitterInfo]);
+
+  useEffect(() => {
+    // console.log(experience);
+  }, [experience]);
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
@@ -62,18 +67,44 @@ function BasicInfo() {
     }
   };
 
+  const handleFileUpdate = (e) => {
+    const file = e.target.files[0]; // Get the selected file from the event
+    const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
+    console.log(file);
+    if (file && file.size > maxFileSize) {
+      console.error("File size exceeds the limit (2MB)");
+      return; // Exit the function if file size exceeds the limit
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUpdateImg(reader.result);
+        setGetSitterInfo({ ...getSitterData, profile_img: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  useEffect(() => {
+    // console.log(updateImg);
+  }, [getSitterInfo]);
+
   return (
     <>
       <div css={basicInfoContainer}>
         <p css={headingStyle}>Basic Information</p>
         <p>Profile Image</p>
         <div css={imgContainer}>
-          <img css={profileImg} src={imageSrc} alt="user-proflie" />
+          <img
+            css={profileImg}
+            src={getSitterInfo.profile_img}
+            alt="user-proflie"
+          />
           <input
             id="fileInput"
             type="file"
             accept="image/*"
-            onChange={(e) => handleFileChange(e)}
+            onChange={(e) => handleFileUpdate(e)}
             style={{ display: "none" }}
           />
           <label htmlFor="fileInput">
@@ -117,6 +148,8 @@ function BasicInfo() {
                 setExperience(e.target.value);
               }}
             >
+              <option value="0">0 Years</option>
+              <option value="0.5">0.5 Years</option>
               <option value="1">1 Years</option>
               <option value="1.5">1.5 Years</option>
               <option value="2">2 Years</option>
@@ -133,7 +166,7 @@ function BasicInfo() {
               <option value="7.5">7.5 Years</option>
               <option value="8">8 Years</option>
               <option value="8.5">8.5 Years</option>
-              <option value="9">9 Years</option>
+              <option value="9">9+ Years</option>
             </select>
           </div>
         </div>
@@ -161,7 +194,7 @@ function BasicInfo() {
               name="email"
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
               css={input}
-              required
+              disabled
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
