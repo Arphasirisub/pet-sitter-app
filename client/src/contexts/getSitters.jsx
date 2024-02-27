@@ -81,6 +81,29 @@ function SittersProvider(props) {
       const result = await axios(`http://localhost:4000/sitters/sitterProflie`);
       // console.log(result);
       setGetSitterInfo(result.data);
+
+      setName(getSitterInfo.full_name);
+      setEmail(getSitterInfo.email);
+      setIntroduction(getSitterInfo.introduction);
+      setPhone(getSitterInfo.phone);
+      setExperience(getSitterInfo.experience);
+      setUpdateImg(getSitterInfo.profile_img);
+      setTradeName(getSitterInfo.trade_name);
+      setService(getSitterInfo.service);
+      setMyPlace(getSitterInfo.my_place);
+      setPetType({
+        ...petType,
+        dog: getSitterInfo.dog,
+        cat: getSitterInfo.cat,
+        bird: getSitterInfo.bird,
+        rabbit: getSitterInfo.rabbit,
+      });
+      setImgGallery(getSitterInfo.image_gallery);
+      setDistrict(getSitterInfo.district);
+      setProvince(getSitterInfo.province);
+      setPostCode(getSitterInfo.post_code);
+      setSubDistrict(getSitterInfo.sub_district);
+      setAddress(getSitterInfo.address_detail);
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +111,7 @@ function SittersProvider(props) {
 
   const handleSubmitSitter = async () => {
     const updateImage = updateImg;
-    
+
     await axios.put(`http://localhost:4000/sitters/myProfile`, {
       full_name: name,
       profile_img: updateImage || getSitterInfo.profile_img,
@@ -110,6 +133,7 @@ function SittersProvider(props) {
       image_gallery: imgGallery || getSitterInfo.image_gallery,
     });
 
+    await getSitterData();
   };
 
   const handleStateChange = (fieldName, value) => {

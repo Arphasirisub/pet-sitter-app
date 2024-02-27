@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import BasicInfo from "./component/basicInfo.jsx";
 import PetSitterInfo from "./component/PetSitterInfo.jsx";
-import AddressInfo from "./component/addressInfo.jsx";
+import AddressInfo from "./component/AddressInfo.jsx";
 import { sitterProfileContainer } from "./Style/sitterProfileStyle.jsx";
 import {
   headingContainer,

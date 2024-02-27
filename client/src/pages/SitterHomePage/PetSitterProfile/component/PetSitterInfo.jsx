@@ -94,10 +94,10 @@ function PetSitterInfo() {
 
   const newImgGallery = Array.isArray(imgGallery) ? imgGallery : [];
 
-  const handleDeleteGallery = (img) => {
-    console.log(img);
-    const newImageGallery = imgGallery.filter((image) => image !== img);
-    setImgGallery(newImageGallery);
+  const handleDeleteGallery = (index) => {
+    const updatedGallery = [...imgGallery]; // Create a copy of imgGallery array
+    updatedGallery.splice(index, 1); // Remove one element at the specified index
+    setImgGallery(updatedGallery); // Update the state with the modified array
   };
 
   return (
@@ -188,19 +188,21 @@ function PetSitterInfo() {
       ></textarea>
       <p css={titleStyle}>Image Gallery (Maximum 10 images)</p>
       <div css={imgGalleryContainer}>
-        {newImgGallery.map((img, index) => (
-          <div key={index} css={position}>
-            <img css={imgStyle} src={img} alt={`Image ${index}`} />
-            <button
-              css={deleteButton}
-              onClick={() => {
-                handleDeleteGallery(img[index]);
-              }}
-            >
-              <img src={deleteIcon} />
-            </button>
-          </div>
-        ))}
+        {imgGallery &&
+          imgGallery.map((img, index) => (
+            <div key={index} css={position}>
+              <img css={imgStyle} src={img} alt={`Image ${index}`} />
+              <button
+                css={deleteButton}
+                onClick={() => {
+                  handleDeleteGallery(index);
+                }}
+              >
+                <img src={deleteIcon} alt={`Delete Image ${index}`} />
+              </button>
+            </div>
+          ))}
+
         <input
           type="file"
           accept="image/*"
