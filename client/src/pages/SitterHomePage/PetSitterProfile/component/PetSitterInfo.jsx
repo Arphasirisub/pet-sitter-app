@@ -153,13 +153,8 @@ function PetSitterInfo() {
         {getSitterInfo &&
           getSitterInfo.image_gallery &&
           getSitterInfo.image_gallery.map((img, index) => (
-            <div css={position}>
-              <img
-                css={imgStyle}
-                key={index}
-                src={img}
-                alt={`Image ${index}`}
-              />
+            <div css={position} key={index}>
+              <img css={imgStyle} src={img} alt={`Image ${index}`} />
               <button css={deleteButton}>
                 <img src={deleteIcon} />
               </button>

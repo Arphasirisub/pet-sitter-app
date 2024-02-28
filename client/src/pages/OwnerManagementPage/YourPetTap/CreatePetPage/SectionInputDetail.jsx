@@ -50,16 +50,15 @@ function SectionInputDetail() {
     useMyPetsTools();
   const params = useParams();
   const { checkToken } = useAuth();
-  const [open, setOpen] = React.useState(false);
   const [formSubmitted, setFormSubmitted] = React.useState(false);
 
   useEffect(() => {
     checkToken();
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleSubmit = async (event) => {
     try {

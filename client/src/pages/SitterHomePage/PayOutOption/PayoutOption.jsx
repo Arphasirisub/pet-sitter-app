@@ -78,7 +78,7 @@ function PayoutOption() {
     getPayoutData();
     const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
     setTotalEarning(total);
-  }, [payoutData]);
+  }, []);
 
   return (
     <>

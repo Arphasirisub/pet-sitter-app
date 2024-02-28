@@ -7,3 +7,17 @@ export const contentStyle = css`
   flex-direction: column;
   gap: 4px;
 `;
+
+export const popUpDetailStyle = css`
+  display: flex;
+  flex-direction: column;
+  width: 392px;
+  gap: 4px;
+`;
+
+export const popUpDetaiPetlStyle = css`
+  display: flex;
+  flex-direction: column;
+  width: 176px;
+  gap: 4px;
+`;

@@ -23,7 +23,7 @@ function SectionContentYourPet({ setIsUpdatePet }) {
   useEffect(() => {
     checkToken();
     getPet(params.id);
-  }, [allPet]);
+  }, []);
 
   return (
     <div className="section_content" css={sectionContentStyle}>

@@ -29,7 +29,6 @@ function RatingDropdown() {
   const handleSubmit = async () => {
     getSitters();
   };
-  console.log(changeColor);
   return (
     <div className="bargroup_rating" css={ratingStyle}>
       <span css={text}>Rating:</span>

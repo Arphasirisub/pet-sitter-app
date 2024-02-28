@@ -135,7 +135,7 @@ sittersRouter.get("/", async (req, res) => {
 });
 sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
   const sitterId = req.userId;
-  console.log(sitterId);
+  // console.log(sitterId);
   try {
     // Fetch bookings data with an additional column "pets" for the count
     const { data: bookings, error: bookingsError } = await supabase

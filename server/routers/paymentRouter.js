@@ -30,8 +30,8 @@ paymentRouter.post("/api/create-checkout-session", async (req, res) => {
       success_url: `http://localhost:5173/booking/result/${bookingId}/${id}`,
       cancel_url: "http://localhost:5173/booking/cancel",
     });
-    console.log(bookingId);
-    console.log(session);
+    // console.log(bookingId);
+    // console.log(session);
     res.json({ id: session.id });
   } catch (error) {
     console.error("Error creating checkout session:", error);

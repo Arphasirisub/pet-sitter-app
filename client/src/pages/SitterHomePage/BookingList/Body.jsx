@@ -10,7 +10,7 @@ const bodyStyle = css`
   width: 100%;
   padding: 40px 0px 80px 0px;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background: var(--gray-100, #f6f6f9);
   gap: 24px;
 `;
@@ -20,6 +20,7 @@ const topicStyle = css`
   align-items: center;
   justify-content: space-between;
   width: 1120px;
+  padding-left: 40px;
 `;
 
 const inputStyle = css`
@@ -122,6 +123,7 @@ const Body = ({ setIsProfilePage }) => {
           display: flex;
           justify-content: center;
           align-items: center;
+          padding-left: 40px;
         `}
       >
         <CustomizedTables

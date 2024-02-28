@@ -9,8 +9,6 @@ commentsRouter.get("/myPost", protect, async (req, res) => {
   const sitter_id = req.query.sitter_id;
   const booking_id = Number(req.query.booking_id);
 
-  console.log(owner_id, sitter_id, booking_id);
-
   // Validate the input parameters
   if (!sitter_id || !booking_id) {
     return res

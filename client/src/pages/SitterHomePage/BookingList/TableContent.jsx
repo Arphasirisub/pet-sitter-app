@@ -2,6 +2,7 @@ import * as React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { LuDot } from "react-icons/lu";
+import { RxDotFilled } from "react-icons/rx";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +11,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
@@ -152,12 +151,7 @@ function CustomizedTables({
                 `}
               >
                 {row.status}
-                <LuDot
-                  css={css`
-                    width: 40px;
-                    height: 40px;
-                  `}
-                />
+                <RxDotFilled />
               </StyledTableCell>
             </StyledTableRow>
           ))}

@@ -10,7 +10,8 @@ import {
 import { useEffect, useState } from "react";
 
 function SectionImportImgUpdatePage() {
-  const { postById, setPostById, setUpdateImageSrc } = useMyPetsTools();
+  const { postById, setPostById } = useMyPetsTools();
+  console.log(postById);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file from the event
@@ -24,7 +25,6 @@ function SectionImportImgUpdatePage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUpdateImageSrc(reader.result);
         setPostById({ ...postById, picture: reader.result });
       };
       reader.readAsDataURL(file);
