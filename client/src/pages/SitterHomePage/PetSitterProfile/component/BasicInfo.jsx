@@ -38,24 +38,6 @@ function BasicInfo() {
   } = useSitter();
   const [nameError, setNameError] = useState("");
 
-  useEffect(() => {
-    getSitterData();
-  }, []);
-
-  useEffect(() => {
-    // console.log(getSitterInfo);
-    setName(getSitterInfo.full_name);
-    setEmail(getSitterInfo.email);
-    setIntroduction(getSitterInfo.introduction);
-    setPhone(getSitterInfo.phone);
-    setExperience(getSitterInfo.experience);
-    setUpdateImg(getSitterInfo.profile_img);
-  }, [getSitterInfo]);
-
-  useEffect(() => {
-    // console.log(experience);
-  }, [experience]);
-
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setName(newName);

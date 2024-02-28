@@ -82,28 +82,28 @@ function SittersProvider(props) {
       // console.log(result);
       setGetSitterInfo(result.data);
 
-      setName(getSitterInfo.full_name);
-      setEmail(getSitterInfo.email);
-      setIntroduction(getSitterInfo.introduction);
-      setPhone(getSitterInfo.phone);
-      setExperience(getSitterInfo.experience);
-      setUpdateImg(getSitterInfo.profile_img);
-      setTradeName(getSitterInfo.trade_name);
-      setService(getSitterInfo.service);
-      setMyPlace(getSitterInfo.my_place);
+      setName(result.data.full_name);
+      setEmail(result.data.email);
+      setIntroduction(result.data.introduction);
+      setPhone(result.data.phone);
+      setExperience(result.data.experience);
+      setUpdateImg(result.data.profile_img);
+      setTradeName(result.data.trade_name);
+      setService(result.data.service);
+      setMyPlace(result.data.my_place);
       setPetType({
         ...petType,
-        dog: getSitterInfo.dog,
-        cat: getSitterInfo.cat,
-        bird: getSitterInfo.bird,
-        rabbit: getSitterInfo.rabbit,
+        dog: result.data.dog,
+        cat: result.data.cat,
+        bird: result.data.bird,
+        rabbit: result.data.rabbit,
       });
-      setImgGallery(getSitterInfo.image_gallery);
-      setDistrict(getSitterInfo.district);
-      setProvince(getSitterInfo.province);
-      setPostCode(getSitterInfo.post_code);
-      setSubDistrict(getSitterInfo.sub_district);
-      setAddress(getSitterInfo.address_detail);
+      setImgGallery(result.data.image_gallery);
+      setDistrict(result.data.district);
+      setProvince(result.data.province);
+      setPostCode(result.data.post_code);
+      setSubDistrict(result.data.sub_district);
+      setAddress(result.data.address_detail);
     } catch (error) {
       console.log(error);
     }

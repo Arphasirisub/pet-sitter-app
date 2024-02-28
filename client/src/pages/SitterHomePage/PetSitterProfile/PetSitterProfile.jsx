@@ -12,9 +12,13 @@ import {
 import axios from "axios";
 import { useSitter } from "../../../contexts/getSitters.jsx";
 import { useMyPetsTools } from "../../../contexts/myPetsTools.jsx";
+import { useEffect, useState } from "react";
 
 function PetSitterProfile() {
-  const { handleSubmitSitter } = useSitter();
+  const { handleSubmitSitter, getSitterData } = useSitter();
+  useEffect(() => {
+    getSitterData();
+  }, []);
 
   return (
     <form onSubmit={handleSubmitSitter}>

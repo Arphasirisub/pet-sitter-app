@@ -32,13 +32,13 @@ function AddressInfo() {
     getSitterData();
   }, []);
 
-  useEffect(() => {
-    setDistrict(getSitterInfo.district);
-    setProvince(getSitterInfo.province);
-    setPostCode(getSitterInfo.post_code);
-    setSubDistrict(getSitterInfo.sub_district);
-    setAddress(getSitterInfo.address_detail);
-  }, [getSitterInfo]);
+  // useEffect(() => {
+  //   setDistrict(getSitterInfo.district);
+  //   setProvince(getSitterInfo.province);
+  //   setPostCode(getSitterInfo.post_code);
+  //   setSubDistrict(getSitterInfo.sub_district);
+  //   setAddress(getSitterInfo.address_detail);
+  // }, [getSitterInfo]);
 
   return (
     <>
