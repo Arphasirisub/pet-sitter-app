@@ -56,6 +56,7 @@ function MyPetsToolsProvider(props) {
     try {
       const result = await axios.get(`http://localhost:4000/pets/myPets`);
       setAllPet(result.data.data);
+      console.log(result);
     } catch (error) {
       console.error("Error fetching pets:", error);
     }
@@ -100,7 +101,6 @@ function MyPetsToolsProvider(props) {
   const [imageSrc, setImageSrc] = useState(imgimport);
   const [updateImageSrc, setUpdateImageSrc] = useState(null);
   const [importImage, setImportImage] = useState();
- 
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file from the event
