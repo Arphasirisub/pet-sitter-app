@@ -44,26 +44,24 @@ function BasicInfo() {
   } = useSitter();
   const [nameError, setNameError] = useState("");
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     getSitterData();
   }, []);
 
-  useEffect(() => {
-    // console.log(getSitterInfo);
-    setName(getSitterInfo.full_name);
-    setEmail(getSitterInfo.email);
-    setIntroduction(getSitterInfo.introduction);
-    setPhone(getSitterInfo.phone);
-    setExperience(getSitterInfo.experience);
-    setUpdateImg(getSitterInfo.profile_img);
-    setIsActive(getSitterInfo.is_active);
-  }, [getSitterInfo]);
+  // useEffect(() => {
+  //   // console.log(getSitterInfo);
+  //   setName(getSitterInfo.full_name);
+  //   setEmail(getSitterInfo.email);
+  //   setIntroduction(getSitterInfo.introduction);
+  //   setPhone(getSitterInfo.phone);
+  //   setExperience(getSitterInfo.experience);
+  //   setUpdateImg(getSitterInfo.profile_img);
+  //   setIsActive(getSitterInfo.is_active);
+  // }, [getSitterInfo]);
 
-  useEffect(() => {
-    // console.log(experience);
-  }, [experience]);
+  // useEffect(() => {
+  //   // console.log(experience);
+  // }, [experience]);
 
   const handleIsActiveChange = (event) => {
     const newValue = event.target.checked; // Get the new value
@@ -76,7 +74,6 @@ function BasicInfo() {
     }));
   };
 
->>>>>>> origin/feat/pet-sitter-profile-update
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setName(newName);
@@ -106,9 +103,9 @@ function BasicInfo() {
       reader.readAsDataURL(file);
     }
   };
-  useEffect(() => {
-    // console.log(updateImg);
-  }, [getSitterInfo]);
+  // useEffect(() => {
+  //   // console.log(updateImg);
+  // }, [getSitterInfo]);
 
   return (
     <>
@@ -121,7 +118,7 @@ function BasicInfo() {
                 root: Root,
               }}
               {...label}
-              defaultChecked={isActive} // Make sure isActive reflects the initial state
+              checked={isActive}
               onChange={handleIsActiveChange} // Use onChange instead of onClick for toggling
             />
             <p css={showProfileStyle}> Show Profile</p>

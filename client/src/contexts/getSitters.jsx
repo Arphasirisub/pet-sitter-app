@@ -107,6 +107,7 @@ function SittersProvider(props) {
       setSubDistrict(result.data.sub_district);
       setAddress(result.data.address_detail);
       setPin({ lat: result.data.latitude, lng: result.data.longitude });
+      setIsActive(result.data.is_active);
     } catch (error) {
       console.log(error);
     }
