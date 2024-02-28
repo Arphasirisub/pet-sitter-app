@@ -69,6 +69,7 @@ function CustomizedTables({
   fetchBookingHistory,
   searching,
   currentItems,
+  fillterStatus,
 }) {
   const { state, checkToken } = useAuth();
   const navigate = useNavigate();

@@ -51,12 +51,14 @@ const Body = ({ setIsProfilePage }) => {
   const [bookingHistory, setBookingHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Number of items per page
+  const [fillterStatus, setFillterStatus] = useState("");
 
   const fetchBookingHistory = async () => {
     try {
       const result = await axios.get(
         `http://localhost:4000/bookings/sitterHomepage`
       );
+      console.log(result);
       setFetchData(result.data);
       setBookingHistory(result.data);
     } catch (error) {
@@ -65,22 +67,34 @@ const Body = ({ setIsProfilePage }) => {
   };
 
   const searching = () => {
-    if (booked) {
-      const filterbooking = fetchData.filter((booking) => {
-        return booking.owners.full_name
-          .toLowerCase()
-          .includes(booked.toLowerCase());
-      });
+    let filterbooking = fetchData;
+
+    try {
+      if (booked) {
+        filterbooking = filterbooking.filter((booking) => {
+          return booking.owners.full_name
+            .toLowerCase()
+            .includes(booked.toLowerCase());
+        });
+      }
+
+      if (fillterStatus) {
+        filterbooking = filterbooking.filter(
+          (booking) =>
+            booking.status.toLowerCase() === fillterStatus.toLowerCase()
+        );
+      }
+
       console.log(filterbooking);
       setBookingHistory(filterbooking);
-    } else {
-      setBookingHistory(fetchData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     searching();
-  }, [booked]);
+  }, [booked, fillterStatus]);
 
   useEffect(() => {
     fetchBookingHistory();
@@ -92,8 +106,6 @@ const Body = ({ setIsProfilePage }) => {
   const currentItems = bookingHistory.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // ส่ง booked ที่เป็น State เข้าไป ใน <CustomizedTables />
 
   return (
     <div className="container_body" css={bodyStyle}>
@@ -107,13 +119,18 @@ const Body = ({ setIsProfilePage }) => {
             onChange={(event) => setbooked(event.target.value)}
             value={booked}
           />
-          <select className="dropdown" css={inputStyle}>
+          <select
+            className="dropdown"
+            css={inputStyle}
+            onChange={(event) => setFillterStatus(event.target.value)}
+            value={fillterStatus}
+          >
             <option value="">All status</option>
-            <option value="success">Success</option>
-            <option value="inService">In service</option>
-            <option value="waitingService">Waiting for service</option>
-            <option value="waitingConfirm">Waiting for confirm</option>
-            <option value="canceled">Canceled</option>
+            <option value="Success">Success</option>
+            <option value="In service">In service</option>
+            <option value="Waiting for service">Waiting for service</option>
+            <option value="Waiting for confirm">Waiting for confirm</option>
+            <option value="Canceled">Canceled</option>
           </select>
         </div>
       </div>
@@ -136,6 +153,7 @@ const Body = ({ setIsProfilePage }) => {
           fetchBookingHistory={fetchBookingHistory}
           searching={searching}
           currentItems={currentItems}
+          fillterStatus={fillterStatus}
         />
       </div>
       {/* Pagination */}
