@@ -10,62 +10,31 @@ import Fade from "@mui/material/Fade";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
 
-function ConfirmModal({ show, setShow, paymentMethods }) {
+function ConfirmModal({ show, setShow }) {
   const params = useParams();
   const {
-    setActiveSteps,
-    setCompleteStep,
-    completeStep,
     selectedPets,
     totalPrice,
     message,
     setBookingId,
-    bookingId,
-    setConfirmPayment,
     confirmStatus,
+    paymentMethods,
+    paymentId,
+    isUpdateCalendar,
   } = useBookingTools();
   const navigate = useNavigate();
-  // payment integration
-  // const makePayment = async (bookingId) => {
-  //   const stripe = await loadStripe(
-  //     "pk_test_51OjVWPDwx8QQepr8skWEKyKINrco0Yb3INjVGrOoyYOubhmF4MXH5qaeiKTnzlGqZOyT84KbEOfqlXKX7evJJgSD00WcxbUHVO"
-  //   );
 
-  //   const response = await axios.post(
-  //     "http://localhost:4000/payments/api/create-checkout-session",
-  //     {
-  //       amount: parseFloat(totalPrice) * 100,
-  //       start: params.start,
-  //       end: params.end,
-  //       id: params.id,
-  //       bookingId: bookingId,
-  //     }
-  //   );
-
-  //   const session = await response.data;
-
-  //   const result = stripe.redirectToCheckout({
-  //     sessionId: session.id,
-  //   });
-
-  //   if (result.error) {
-  //     console.log(result.error);
-  //   }
-  // };
-  console.log(confirmStatus);
   const handleConfirm = async () => {
     try {
       if (!params.start) {
         throw new Error("Start date is missing");
       }
-      const start = new Date(Number(params.start));
       if (!params.end) {
         throw new Error("End date is missing");
       }
       if (paymentMethods === "cash") {
+        const start = new Date(Number(params.start));
         const end = new Date(Number(params.end));
         const response = await axios.post(
           `http://localhost:4000/bookings/myBooking/${params.id}`,
@@ -76,45 +45,72 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
             price: totalPrice,
             message: message,
             payment: paymentMethods,
+            payment_status: "Pay by Cash",
           }
         );
         console.log(response);
+        console.log(response.data.bookingId);
         setBookingId(response.data.bookingId);
         navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
-        console.log(response.data.bookingId);
+        if (isUpdateCalendar === true) {
+          axios.post(
+            `http://localhost:4000/google/schedule_event/${params.id}`,
+            {
+              start: start,
+              end: end,
+              pets: selectedPets,
+              price: totalPrice,
+              message: message,
+              payment: paymentMethods,
+            }
+          );
+        }
       }
       if (paymentMethods === "card") {
-        // console.log(confirmStatus);
-        // if (confirmStatus) {
-        // }
-        const end = new Date(Number(params.end));
-        const response = await axios.post(
-          `http://localhost:4000/bookings/myBooking/${params.id}`,
-          {
-            start: start,
-            end: end,
-            pets: selectedPets,
-            price: totalPrice,
-            message: message,
-            payment: paymentMethods,
+        if (confirmStatus === "succeeded") {
+          const start = new Date(Number(params.start));
+          const end = new Date(Number(params.end));
+          const response = await axios.post(
+            `http://localhost:4000/bookings/myBooking/${params.id}`,
+            {
+              start: start,
+              end: end,
+              pets: selectedPets,
+              price: totalPrice,
+              message: message,
+              payment: paymentMethods,
+              payment_id: paymentId,
+              payment_status: confirmStatus,
+            }
+          );
+          console.log(response);
+          console.log(response.data.bookingId);
+          setBookingId(response.data.bookingId);
+          navigate(`/booking/result/${response.data.bookingId}/${params.id}`);
+          if (isUpdateCalendar === true) {
+            axios.post(
+              `http://localhost:4000/google/schedule_event/${params.id}`,
+              {
+                start: start,
+                end: end,
+                pets: selectedPets,
+                price: totalPrice,
+                message: message,
+                payment: paymentMethods,
+              }
+            );
           }
-        );
-        console.log(response);
-        setBookingId(response.data.bookingId);
-        console.log(response.data.bookingId);
-        setConfirmPayment(true);
-        // console.log(confirmStatus);
-        // makePayment(response.data.bookingId);
+        }
+        if (confirmStatus !== "succeeded") {
+          setShow(false);
+          alert("การชำระไม่สำเร็จ โปรดตรวจสอบอีกครั้ง");
+        }
       }
     } catch (error) {
       console.error("Error submitting booking:", error);
     }
   };
-  // useEffect(() => {
-  //   // if (confirmStatus) {
-  //   //   handleSubmit();
-  //   // }
-  // }, [confirmStatus]);
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -174,6 +170,7 @@ function ConfirmModal({ show, setShow, paymentMethods }) {
             >
               Are you sure to booking this pet sitter?
             </Typography>
+
             <div
               css={css`
                 display: flex;

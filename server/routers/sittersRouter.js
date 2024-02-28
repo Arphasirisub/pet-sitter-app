@@ -133,6 +133,7 @@ sittersRouter.get("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
   const sitterId = req.userId;
   console.log(sitterId);
@@ -141,7 +142,7 @@ sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
       .select(
-        "*,sitter_id(id,full_name,trade_name),owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(pet_name)) "
+        "*,sitter_id(id,full_name,trade_name,bank_name,bank_numbers),owners(full_name), pet_bookings:pet_booking(booking_id,pet_id(pet_name)) "
       )
       .eq("sitter_id", sitterId);
 
@@ -153,7 +154,15 @@ sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ error: sitterId });
     }
-    res.json(bookings);
+
+    // Calculate total price
+    const totalPrice = bookings.reduce(
+      (total, booking) => total + booking.price,
+      0
+    );
+
+    // Send total price in response
+    res.json({ totalPrice, bookings });
   } catch (error) {
     console.error("Error fetching data:", error.message);
     res.status(500).json({ error: "Internal Server Error" });

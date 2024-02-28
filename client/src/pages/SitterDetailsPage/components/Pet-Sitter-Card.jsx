@@ -48,141 +48,131 @@ const PetSitterCard = () => {
   return (
     <>
       <Stack>
-        {sitterData &&
-        sitterData?.rating &&
-        sitterData?.comments &&
-        sitterData?.comments.length ? (
-          <div>
-            <Card
+        <div>
+          <Card
+            sx={{
+              width: 345,
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              borderRadius: 5,
+              boxShadow: 20,
+              padding: 2,
+              marginRight: 8,
+            }}
+          >
+            <Stack
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Avatar
+                alt={sitterData.full_name}
+                src={sitterData.profile_img}
+                sx={{
+                  width: 140,
+                  height: 140,
+                }}
+              />
+            </Stack>
+
+            <CardContent
               sx={{
-                width: 345,
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                borderRadius: 5,
-                boxShadow: 20,
-                padding: 2,
-                marginRight: 8,
+                marginBottom: 5,
               }}
             >
-              <Stack
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
+              <Typography
+                className="pet-sitter-name"
+                gutterBottom
+                variant="h4"
+                component="div"
+                sx={{ fontWeight: "bold" }}
               >
-                <Avatar
-                  alt={sitterData.full_name}
-                  src={sitterData.profile_img}
-                  sx={{
-                    width: 140,
-                    height: 140,
-                  }}
-                />
-              </Stack>
-
-              <CardContent
+                {sitterData.trade_name}
+              </Typography>
+              <Stack
+                className="pet-sitter-name-and-exp"
                 sx={{
-                  marginBottom: 5,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
                 <Typography
-                  className="pet-sitter-name"
-                  gutterBottom
-                  variant="h4"
-                  component="div"
+                  className="pet-sitter-full-name"
+                  variant="h6"
                   sx={{ fontWeight: "bold" }}
+                  gutterBottom
                 >
-                  {sitterData.trade_name}
+                  {sitterData.full_name}
                 </Typography>
-                <Stack
-                  className="pet-sitter-name-and-exp"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 1,
-                  }}
-                >
-                  <Typography
-                    className="pet-sitter-full-name"
-                    variant="h6"
-                    sx={{ fontWeight: "bold" }}
-                    gutterBottom
-                  >
-                    {sitterData.full_name}
-                  </Typography>
-                  <Typography
-                    className="pet-sitter-Exp"
-                    variant="subtitle1"
-                    gutterBottom
-                    sx={{ color: "#1CCD83" }}
-                  >
-                    {sitterData.experience} Year Exp.
-                  </Typography>
-                </Stack>
-
-                <Rating
-                  name="read-only"
-                  value={averageRating}
-                  max={averageRating}
-                  precision={0.5}
-                  readOnly
+                <Typography
+                  className="pet-sitter-Exp"
+                  variant="subtitle1"
+                  gutterBottom
                   sx={{ color: "#1CCD83" }}
-                />
-
-                <Stack
-                  className="pet-sitter-location-content"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    margin: 2,
-                  }}
                 >
-                  <RoomSharpIcon
-                    className="location-icon"
-                    sx={{ color: "grey" }}
-                  />
-                  <Typography className="pet-sitter-location" color="grey">
-                    {sitterData.district}, {sitterData.province}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" spacing={1} justifyContent={"center"}>
-                  {sitterData.dog === true ? (
-                    <div className="dog" css={[petTypeIcon, dogIconStyle]}>
-                      Dog
-                    </div>
-                  ) : null}
+                  {sitterData.experience} Year Exp.
+                </Typography>
+              </Stack>
 
-                  {sitterData.cat === true ? (
-                    <div className="cat" css={[petTypeIcon, catIconStyle]}>
-                      Cat
-                    </div>
-                  ) : null}
+              <Rating
+                name="read-only"
+                value={averageRating}
+                max={averageRating}
+                precision={0.5}
+                readOnly
+                sx={{ color: "#1CCD83" }}
+              />
 
-                  {sitterData.bird === true ? (
-                    <div className="bird" css={[petTypeIcon, birdIconStyle]}>
-                      Bird
-                    </div>
-                  ) : null}
+              <Stack
+                className="pet-sitter-location-content"
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  margin: 2,
+                }}
+              >
+                <RoomSharpIcon
+                  className="location-icon"
+                  sx={{ color: "grey" }}
+                />
+                <Typography className="pet-sitter-location" color="grey">
+                  {sitterData.district}, {sitterData.province}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={1} justifyContent={"center"}>
+                {sitterData.dog === true ? (
+                  <div className="dog" css={[petTypeIcon, dogIconStyle]}>
+                    Dog
+                  </div>
+                ) : null}
 
-                  {sitterData.rabbit === true ? (
-                    <div
-                      className="rabbit"
-                      css={[petTypeIcon, rabbitIconStyle]}
-                    >
-                      Rabbit
-                    </div>
-                  ) : null}
-                </Stack>
-              </CardContent>
-              <BookNowModal />
-            </Card>
-          </div>
-        ) : (
-          <CircularProgress color="warning" />
-        )}
+                {sitterData.cat === true ? (
+                  <div className="cat" css={[petTypeIcon, catIconStyle]}>
+                    Cat
+                  </div>
+                ) : null}
+
+                {sitterData.bird === true ? (
+                  <div className="bird" css={[petTypeIcon, birdIconStyle]}>
+                    Bird
+                  </div>
+                ) : null}
+
+                {sitterData.rabbit === true ? (
+                  <div className="rabbit" css={[petTypeIcon, rabbitIconStyle]}>
+                    Rabbit
+                  </div>
+                ) : null}
+              </Stack>
+            </CardContent>
+            <BookNowModal />
+          </Card>
+        </div>
       </Stack>
     </>
   );

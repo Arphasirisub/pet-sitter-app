@@ -155,6 +155,15 @@ function SearchResult() {
               count={Math.ceil(searchResult.result.length / itemsPerPage)}
               page={currentPage}
               onChange={handleChangePage}
+              sx={{
+                "& .MuiPaginationItem-page": {
+                  color: "grey",
+                },
+                "& .MuiPaginationItem-page.Mui-selected": {
+                  color: "#ff7037",
+                  backgroundColor: "#FFF1EC",
+                },
+              }}
             />
           </Stack>
         </div>

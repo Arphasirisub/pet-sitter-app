@@ -42,13 +42,13 @@ function BookingResultPageByCard() {
     setConfirmStatus,
   } = useBookingTools();
 
-  const calculateDurationInHours = (startTime, stopTime) => {
-    const start = moment(startTime);
-    const stop = moment(stopTime);
-    const duration = moment.duration(stop.diff(start));
-    const hours = duration.asHours();
-    return hours;
-  };
+  // const calculateDurationInHours = (startTime, stopTime) => {
+  //   const start = moment(startTime);
+  //   const stop = moment(stopTime);
+  //   const duration = moment.duration(stop.diff(start));
+  //   const hours = duration.asHours();
+  //   return hours;
+  // };
 
   const handleBookingHistory = () => {
     setBookedTimeData([]);
@@ -89,13 +89,13 @@ function BookingResultPageByCard() {
   useEffect(() => {
     getBookingResult(param.bookingId);
     // console.log(confirmStatus);
-    if (bookingResult.length > 0) {
-      const startTime = bookingResult[0].booked_start;
-      const stopTime = bookingResult[0].booked_stop;
-      const duration = calculateDurationInHours(startTime, stopTime);
-      setDurationHours(duration);
-    }
-  }, [bookingResult, durationHours]);
+    // if (bookingResult.length > 0) {
+    //   const startTime = bookingResult[0].booked_start;
+    //   const stopTime = bookingResult[0].booked_stop;
+    //   const duration = calculateDurationInHours(startTime, stopTime);
+    //   setDurationHours(duration);
+    // }
+  }, []);
   return (
     <>
       <Stack
@@ -193,9 +193,12 @@ function BookingResultPageByCard() {
                     <Typography sx={bookingResultGreyText}>
                       Duration:
                     </Typography>
-                    <Typography sx={bookingResultBlackText}>
-                      {durationHours} hours
-                    </Typography>
+                    {bookingResult.length > 0 &&
+                      bookingResult.map((booking, index) => (
+                        <Typography key={index} sx={bookingResultBlackText}>
+                          {booking.duration} hours
+                        </Typography>
+                      ))}
                   </Stack>
                 </Stack>
                 <br />

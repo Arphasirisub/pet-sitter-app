@@ -64,13 +64,33 @@ function BookingToolsProvider(props) {
     }
   };
 
+  const getBookingDetailData = async (sitter_id) => {
+    try {
+      const response2 = await axios.get(
+        `http://localhost:4000/bookings/detail/${sitter_id}`,
+        {
+          params: {
+            booked_start: selectedTimeStart, // ส่งวันที่ที่เลือกไปเพื่อดึงการนัดหมายในวันนั้น
+            booked_stop: selectedTimeEnd,
+            id: bookingId,
+          },
+        }
+      );
+
+      // console.log(response2);
+      setBookedTimeData(response2.data);
+    } catch (error) {
+      console.error("Error fetching sitter details:", error);
+    }
+  };
+
   const getBookingResult = async (booking_id) => {
     try {
       const results = await axios.get(
         `http://localhost:4000/bookings/myBookingResult/${booking_id}`
       );
       setBookingResult(results.data);
-      // console.log(results);
+      // console.log(results.data);
     } catch (error) {
       console.error("Error fetching booking details:", error);
     }
@@ -103,6 +123,9 @@ function BookingToolsProvider(props) {
   const [bookingResult, setBookingResult] = useState([]);
   const [confirmPayment, setConfirmPayment] = useState(false);
   const [confirmStatus, setConfirmStatus] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState("card");
+  const [paymentId, setPaymentId] = useState("");
+  const [isUpdateCalendar, setIsUpdateCalendar] = useState(false);
 
   //handle toggle pets
   const toggleSelection = (pet) => {
@@ -154,6 +177,13 @@ function BookingToolsProvider(props) {
         setConfirmPayment,
         confirmStatus,
         setConfirmStatus,
+        getBookingDetailData,
+        paymentMethods,
+        setPaymentMethods,
+        paymentId,
+        setPaymentId,
+        isUpdateCalendar,
+        setIsUpdateCalendar,
       }}
     >
       {props.children}

@@ -31,13 +31,9 @@ function OwnerHomePage() {
   }, []);
 
   return (
-    <div
-      css={css`
-        width: 100%;
-        /* height: 3483px; */
-      `}
-    >
+    <div>
       <Navbar />
+
       <Header />
       <Content />
       <Banner />

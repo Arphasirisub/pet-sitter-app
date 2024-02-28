@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Typography } from "@mui/material";
+import { Pagination, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -14,6 +14,9 @@ import { CardActionArea } from "@mui/material";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import { LuWallet } from "react-icons/lu";
+import { CiBitcoin } from "react-icons/ci";
+import { BsCashCoin } from "react-icons/bs";
 
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
@@ -43,17 +46,15 @@ const StyledTableCell = styled(TableCell)(({ theme, status }) => ({
     textAlign: "start",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: "16px",
     color: getColorByStatus(status),
-    padding: 30,
+    padding: "20px 16px",
     textAlign: "start",
+    fontWeight: "500",
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+const StyledTableRow = styled(TableRow)(() => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -69,16 +70,32 @@ function PayoutOption() {
         `http://localhost:4000/sitters/booking/payoutOption`
       );
 
-      setPayoutData(response.data);
+      setPayoutData(response.data.bookings);
+      setTotalEarning(response.data.totalPrice);
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.bookings);
+      console.log(response.data.totalPrice);
     } catch (error) {
       console.error("Error fetching sitter details:", error);
     }
   };
+
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 8;
+  const indexOfLastRow = page * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = payoutData.slice(indexOfFirstRow, indexOfLastRow);
+
+  const lastThreeDigits = (number) => {
+    const bankNumbers = number.toString();
+    const lastThreeDigits = bankNumbers.substring(7);
+    return lastThreeDigits;
+  };
+
   useEffect(() => {
     getPayoutData();
-    const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
-    setTotalEarning(total);
-  }, [payoutData]);
+  }, []);
 
   return (
     <>
@@ -106,14 +123,17 @@ function PayoutOption() {
             }}
           >
             <Stack direction={"row"} justifyContent={"space-between"}>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                fontWeight="bold"
-                component="div"
-              >
-                Total Earning:
-              </Typography>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                <CiBitcoin size={26} />
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  Total Earning:
+                </Typography>
+              </Stack>
               <Typography
                 gutterBottom
                 variant="subtitle1"
@@ -137,14 +157,32 @@ function PayoutOption() {
               marginRight: 8,
             }}
           >
-            <Typography
-              gutterBottom
-              variant="subtitle1"
-              fontWeight="bold"
-              component="div"
-            >
-              Bank Account
-            </Typography>
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                <LuWallet />
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  Bank Account
+                </Typography>
+              </Stack>
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                fontWeight="bold"
+                component="div"
+              >
+                {payoutData?.length > 0 && (
+                  <Typography color={"#FF7037"}>
+                    {payoutData[0].sitter_id.bank_name}*
+                    {lastThreeDigits(payoutData[0].sitter_id.bank_numbers)}
+                  </Typography>
+                )}
+              </Typography>
+            </Stack>
           </CardActionArea>
         </Stack>
         <Stack className="part-3">
@@ -161,26 +199,43 @@ function PayoutOption() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {payoutData &&
-                  payoutData.map((booking, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
-                        {moment(booking.created_at).format("d MMM, YYYY")}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.owners?.full_name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.id}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {booking.price} Baht.
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                {currentRows.map((booking) => (
+                  <StyledTableRow key={booking.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {moment(booking.created_at).format("D MMM, YYYY")}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {booking.owners?.full_name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {booking.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <Typography color={"#1CCD83"}>
+                        {booking.price} THB.
+                      </Typography>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
               </TableBody>
             </Table>
           </RoundedTableContainer>
+        </Stack>
+        <Stack alignItems={"center"}>
+          <Pagination
+            count={Math.ceil(payoutData.length / rowsPerPage)}
+            page={page}
+            onChange={(event, value) => setPage(value)}
+            sx={{
+              "& .MuiPaginationItem-page": {
+                color: "grey", // เปลี่ยนสีของตัวเลข
+              },
+              "& .MuiPaginationItem-page.Mui-selected": {
+                color: "#ff7037",
+                backgroundColor: "#FFF1EC", // เปลี่ยนสีเมื่อเป็น active
+              },
+            }}
+          />
         </Stack>
       </Stack>
     </>
