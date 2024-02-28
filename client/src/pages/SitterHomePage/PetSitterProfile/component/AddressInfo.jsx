@@ -27,9 +27,9 @@ function AddressInfo() {
     setProvince,
     postCode,
     setPostCode,
+    pin,
+    setPin,
   } = useSitter();
-
-  const [pin, setPin] = useState(null);
 
   const handleMapClick = ({ lat, lng }) => {
     setPin({ lat, lng });

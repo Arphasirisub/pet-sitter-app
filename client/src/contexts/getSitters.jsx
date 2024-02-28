@@ -75,6 +75,7 @@ function SittersProvider(props) {
     bird: false,
     rabbit: false,
   });
+  const [pin, setPin] = useState(null);
 
   const getSitterData = async () => {
     try {
@@ -104,6 +105,7 @@ function SittersProvider(props) {
       setPostCode(result.data.post_code);
       setSubDistrict(result.data.sub_district);
       setAddress(result.data.address_detail);
+      setPin({ lat: result.data.latitude, lng: result.data.longitude });
     } catch (error) {
       console.log(error);
     }
@@ -190,6 +192,8 @@ function SittersProvider(props) {
         setUpdateImg,
         imgGallery,
         setImgGallery,
+        pin,
+        setPin,
       }}
     >
       {props.children}
