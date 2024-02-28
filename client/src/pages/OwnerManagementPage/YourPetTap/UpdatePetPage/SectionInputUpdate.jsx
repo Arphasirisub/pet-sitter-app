@@ -62,7 +62,7 @@ function SectionInputUpdatePage() {
     try {
       await axios.put(`http://localhost:4000/pets/${params.petId}`, {
         ...inputData,
-        picture: updateImageSrc || postById.picture,
+        picture: postById.picture,
       });
     } catch (error) {
       console.error("Error updating pet:", error.message);

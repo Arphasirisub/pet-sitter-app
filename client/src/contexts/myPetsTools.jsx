@@ -99,13 +99,12 @@ function MyPetsToolsProvider(props) {
   }, []);
 
   const [imageSrc, setImageSrc] = useState(imgimport);
-  const [updateImageSrc, setUpdateImageSrc] = useState(null);
+
   const [importImage, setImportImage] = useState();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file from the event
     const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
-    console.log(file);
     if (file && file.size > maxFileSize) {
       console.error("File size exceeds the limit (2MB)");
       return; // Exit the function if file size exceeds the limit
@@ -143,8 +142,6 @@ function MyPetsToolsProvider(props) {
         handleFileChange,
         importImage,
         setImportImage,
-        updateImageSrc,
-        setUpdateImageSrc,
       }}
     >
       {props.children}

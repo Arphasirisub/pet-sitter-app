@@ -402,6 +402,7 @@ bookingsRouter.get("/myBookingResult/:id", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // bookingsRouter.get("/sitter/:id", async (req, res) => {
 //   const bookedId = req.params.id;
 
@@ -474,6 +475,10 @@ bookingsRouter.get("/myBookingResult/:id", async (req, res) => {
 
 // bookingsRouter.get("/sitter/:id", async (req, res) => {
 //   const bookedId = req.params.id;
+=======
+bookingsRouter.get("/sitter/:id", async (req, res) => {
+  const bookedId = req.params.id;
+>>>>>>> origin/feat/proflie-page
 
 //   try {
 //     // Fetch bookings data with an additional column "pets" for the count
@@ -579,11 +584,46 @@ bookingsRouter.get("/detail/:id", async (req, res) => {
       );
       const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
 
+<<<<<<< HEAD
       // Calculate duration
       const startDateTime = new Date(booking.booked_start);
       const stopDateTime = new Date(booking.booked_stop);
       const durationInMilliseconds = stopDateTime - startDateTime;
       const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+=======
+    const formattedBirthday = new Date(booking.owners.birthday).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
+    const formattedCreatAt = new Date(booking.created_at).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
+
+    const bookingWithFormattedDate = {
+      ...booking,
+      created_at: formattedCreatAt,
+      pets: petsCount,
+      booked_date: bookedDate,
+      duration: durationInHours.toFixed(2),
+      owners: {
+        ...booking.owners,
+        birthday: formattedBirthday,
+      },
+    };
+>>>>>>> origin/feat/proflie-page
 
       return {
         ...booking,
@@ -597,5 +637,59 @@ bookingsRouter.get("/detail/:id", async (req, res) => {
   } catch (error) {
     console.error("Error fetching data:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+bookingsRouter.delete("/:id", async (req, res) => {
+  const bookingId = req.params.id;
+
+  try {
+    // Check if the booking exists
+    const { data: booking } = await supabase
+      .from("bookings")
+      .select("*")
+      .eq("id", bookingId)
+      .single();
+
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    // Delete the booking
+    const { error } = await supabase
+      .from("bookings")
+      .delete()
+      .eq("id", bookingId);
+
+    if (error) {
+      console.error("Error deleting booking:", error.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    res.status(204).end(); // No content, successful deletion
+  } catch (error) {
+    console.error("Error deleting booking:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+bookingsRouter.put("/:id", async (req, res) => {
+  const bookingId = Number(req.params.id);
+  const statusChange = req.body.status;
+
+  try {
+    const { data, error } = await supabase
+      .from("bookings")
+      .update({ status: statusChange })
+      .eq("id", bookingId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return res.status(200).json({ message: "Booking updated successfully" });
+  } catch (err) {
+    console.error("Error canceling booking:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });

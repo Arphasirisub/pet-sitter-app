@@ -95,6 +95,11 @@ function PayoutOption() {
 
   useEffect(() => {
     getPayoutData();
+<<<<<<< HEAD
+=======
+    const total = payoutData.reduce((acc, booking) => acc + booking.price, 0);
+    setTotalEarning(total);
+>>>>>>> origin/feat/proflie-page
   }, []);
 
   return (
