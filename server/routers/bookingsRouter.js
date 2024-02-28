@@ -280,39 +280,6 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
   }
 });
 
-// bookingsRouter.delete("/:id", async (req, res) => {
-//   const bookingId = Number(req.params.id);
-//   console.log(bookingId);
-//   try {
-//     // Delete related records from 'pet_booking' table
-//     const { data: petBookingData, error: petBookingError } = await supabase
-//       .from("pet_booking")
-//       .delete()
-//       .eq("booking_id", bookingId);
-
-//     if (petBookingError) {
-//       throw new Error(petBookingError.message);
-//     }
-//     // Delete booking from 'bookings' table
-//     const { data: bookingData, error: bookingError } = await supabase
-//       .from("bookings")
-//       .delete()
-//       .eq("id", bookingId);
-
-//     if (bookingError) {
-//       throw new Error(bookingError.message);
-//     }
-
-//     // Respond with success message
-//     res
-//       .status(200)
-//       .json({ message: "Booking and related records deleted successfully" });
-//   } catch (err) {
-//     console.error("Error deleting booking:", err);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
-
 bookingsRouter.put("/cancel/:id", async (req, res) => {
   const bookingId = Number(req.params.id);
   // console.log(bookingId);
@@ -402,144 +369,95 @@ bookingsRouter.get("/myBookingResult/:id", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// bookingsRouter.get("/sitter/:id", async (req, res) => {
-//   const bookedId = req.params.id;
-
-//   try {
-//     // Fetch bookings data with an additional column "pets" for the count
-//     const { data: bookings, error: bookingsError } = await supabase
-//       .from("bookings")
-//       .select(
-//         "owners(full_name,*), pet_bookings:pet_booking(booking_id,pet_id(*)),*"
-//       )
-//       .eq("id", bookedId)
-//       .single();
-
-//     if (bookingsError) {
-//       console.error("Error fetching bookings data:", bookingsError.message);
-//       return res.status(500).json({ error: "Internal Server Error" });
-//     }
-
-//     if (!bookings || bookings.length === 0) {
-//       return res.status(404).json({ error: "Booking not found" });
-//     }
-
-//     // Calculate pets count, format booked date, and calculate duration for each booking
-//     const bookingsWithFormattedDate = bookings.map((booking) => {
-//       const petsCount = booking.pet_bookings ? booking.pet_bookings.length : 0;
-
-//       // Format booked start and stop date
-//       const formattedStartDate = new Date(booking.booked_start).toLocaleString(
-//         "en-US",
-//         {
-//           month: "short",
-//           day: "numeric",
-//           hour: "numeric",
-//           minute: "numeric",
-//           hour12: true,
-//         }
-//       );
-//       const formattedStopDate = new Date(booking.booked_stop).toLocaleString(
-//         "en-US",
-//         {
-//           month: "short",
-//           day: "numeric",
-//           hour: "numeric",
-//           minute: "numeric",
-//           hour12: true,
-//         }
-//       );
-//       const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
-
-//       // Calculate duration
-//       const startDateTime = new Date(booking.booked_start);
-//       const stopDateTime = new Date(booking.booked_stop);
-//       const durationInMilliseconds = stopDateTime - startDateTime;
-//       const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
-
-//       return {
-//         ...booking,
-//         pets: petsCount,
-//         booked_date: bookedDate,
-//         duration: durationInHours, //.toFixed(2) << Limit to 2 decimal places
-//       };
-//     });
-
-//     res.json(bookingsWithFormattedDate);
-//   } catch (error) {
-//     console.error("Error fetching data:", error.message);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
-// bookingsRouter.get("/sitter/:id", async (req, res) => {
-//   const bookedId = req.params.id;
-=======
 bookingsRouter.get("/sitter/:id", async (req, res) => {
   const bookedId = req.params.id;
->>>>>>> origin/feat/proflie-page
 
-//   try {
-//     // Fetch bookings data with an additional column "pets" for the count
-//     const { data: booking, error: bookingError } = await supabase
-//       .from("bookings")
-//       .select(
-//         "owners(full_name,*), pet_bookings:pet_booking(booking_id,pet_id(*)),*"
-//       )
-//       .eq("id", bookedId)
-//       .single();
+  try {
+    // Fetch bookings data with an additional column "pets" for the count
+    const { data: booking, error: bookingError } = await supabase
+      .from("bookings")
+      .select(
+        "owners(full_name,*), pet_bookings:pet_booking(booking_id,pet_id(*)),*"
+      )
+      .eq("id", bookedId)
+      .single();
 
-//     if (bookingError) {
-//       console.error("Error fetching booking data:", bookingError.message);
-//       return res.status(500).json({ error: "Internal Server Error" });
-//     }
+    if (bookingError) {
+      console.error("Error fetching booking data:", bookingError.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
 
-//     if (!booking) {
-//       return res.status(404).json({ error: "Booking not found" });
-//     }
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
 
-//     // Calculate pets count, format booked date, and calculate duration
-//     const petsCount = booking.pet_bookings ? booking.pet_bookings.length : 0;
-//     const formattedStartDate = new Date(booking.booked_start).toLocaleString(
-//       "en-US",
-//       {
-//         month: "short",
-//         day: "numeric",
-//         hour: "numeric",
-//         minute: "numeric",
-//         hour12: true,
-//       }
-//     );
-//     const formattedStopDate = new Date(booking.booked_stop).toLocaleString(
-//       "en-US",
-//       {
-//         month: "short",
-//         day: "numeric",
-//         hour: "numeric",
-//         minute: "numeric",
-//         hour12: true,
-//       }
-//     );
-//     const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
-//     const startDateTime = new Date(booking.booked_start);
-//     const stopDateTime = new Date(booking.booked_stop);
-//     const durationInMilliseconds = stopDateTime - startDateTime;
-//     const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+    // Calculate pets count, format booked date, and calculate duration
+    const petsCount = booking.pet_bookings ? booking.pet_bookings.length : 0;
+    const formattedStartDate = new Date(booking.booked_start).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
+    const formattedStopDate = new Date(booking.booked_stop).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
+    const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
+    const startDateTime = new Date(booking.booked_start);
+    const stopDateTime = new Date(booking.booked_stop);
+    const durationInMilliseconds = stopDateTime - startDateTime;
+    const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
 
-//     const bookingWithFormattedDate = {
-//       ...booking,
-//       pets: petsCount,
-//       booked_date: bookedDate,
-//       duration: durationInHours.toFixed(2),
-//     };
+    const formattedBirthday = new Date(booking.owners.birthday).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
+    const formattedCreatAt = new Date(booking.created_at).toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }
+    );
 
-//     res.json(bookingWithFormattedDate);
-//   } catch (error) {
-//     console.error("Error fetching data:", error.message);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
+    const bookingWithFormattedDate = {
+      ...booking,
+      created_at: formattedCreatAt,
+      pets: petsCount,
+      booked_date: bookedDate,
+      duration: durationInHours.toFixed(2),
+      owners: {
+        ...booking.owners,
+        birthday: formattedBirthday,
+      },
+    };
+
+    res.json(bookingWithFormattedDate);
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 bookingsRouter.get("/detail/:id", async (req, res) => {
   const { id } = req.params;
@@ -584,46 +502,42 @@ bookingsRouter.get("/detail/:id", async (req, res) => {
       );
       const bookedDate = `${formattedStartDate} - ${formattedStopDate}`;
 
-<<<<<<< HEAD
       // Calculate duration
       const startDateTime = new Date(booking.booked_start);
       const stopDateTime = new Date(booking.booked_stop);
       const durationInMilliseconds = stopDateTime - startDateTime;
       const durationInHours = durationInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
-=======
-    const formattedBirthday = new Date(booking.owners.birthday).toLocaleString(
-      "en-US",
-      {
+      const formattedBirthday = new Date(
+        booking.owners.birthday
+      ).toLocaleString("en-US", {
         month: "short",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
         hour12: true,
-      }
-    );
-    const formattedCreatAt = new Date(booking.created_at).toLocaleString(
-      "en-US",
-      {
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      }
-    );
+      });
+      const formattedCreatAt = new Date(booking.created_at).toLocaleString(
+        "en-US",
+        {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        }
+      );
 
-    const bookingWithFormattedDate = {
-      ...booking,
-      created_at: formattedCreatAt,
-      pets: petsCount,
-      booked_date: bookedDate,
-      duration: durationInHours.toFixed(2),
-      owners: {
-        ...booking.owners,
-        birthday: formattedBirthday,
-      },
-    };
->>>>>>> origin/feat/proflie-page
+      const bookingWithFormattedDate = {
+        ...booking,
+        created_at: formattedCreatAt,
+        pets: petsCount,
+        booked_date: bookedDate,
+        duration: durationInHours.toFixed(2),
+        owners: {
+          ...booking.owners,
+          birthday: formattedBirthday,
+        },
+      };
 
       return {
         ...booking,
