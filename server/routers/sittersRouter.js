@@ -193,6 +193,7 @@ sittersRouter.put("/myProfile", protect, async (req, res) => {
       post_code,
       latitude,
       longitude,
+      is_active,
     } = req.body;
     console.log(req.body);
     const { data, error } = await supabase
@@ -218,6 +219,7 @@ sittersRouter.put("/myProfile", protect, async (req, res) => {
         post_code,
         latitude,
         longitude,
+        is_active,
       })
       .eq("id", sitterId)
       .single();

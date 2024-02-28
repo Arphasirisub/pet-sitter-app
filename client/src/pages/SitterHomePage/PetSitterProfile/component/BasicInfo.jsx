@@ -5,6 +5,7 @@ import { useSitter } from "../../../../contexts/getSitters.jsx";
 import { useEffect, useState } from "react";
 import {
   basicInfoContainer,
+  headingLayout,
   headingStyle,
   profileImg,
   imgContainer,
@@ -15,10 +16,14 @@ import {
   dropdownInput,
   introductionTextarea,
   introductionTitle,
+  Root,
+  buttonIsActiveLayout,
+  showProfileStyle,
 } from "../Style/BasicInfoStyle.jsx";
-import { useMyPetsTools } from "../../../../contexts/myPetsTools.jsx";
+import { Switch } from "@mui/base/Switch";
 
 function BasicInfo() {
+  const label = { slotProps: { input: { "aria-label": "Demo switch" } } };
   const {
     getSitterInfo,
     setGetSitterInfo,
@@ -33,11 +38,45 @@ function BasicInfo() {
     setIntroduction,
     experience,
     setExperience,
-    updateImg,
     setUpdateImg,
+    isActive,
+    setIsActive,
   } = useSitter();
   const [nameError, setNameError] = useState("");
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    getSitterData();
+  }, []);
+
+  useEffect(() => {
+    // console.log(getSitterInfo);
+    setName(getSitterInfo.full_name);
+    setEmail(getSitterInfo.email);
+    setIntroduction(getSitterInfo.introduction);
+    setPhone(getSitterInfo.phone);
+    setExperience(getSitterInfo.experience);
+    setUpdateImg(getSitterInfo.profile_img);
+    setIsActive(getSitterInfo.is_active);
+  }, [getSitterInfo]);
+
+  useEffect(() => {
+    // console.log(experience);
+  }, [experience]);
+
+  const handleIsActiveChange = (event) => {
+    const newValue = event.target.checked; // Get the new value
+    setIsActive(newValue); // Update isActive state
+
+    // Update getSitterInfo with new isActive value
+    setGetSitterInfo((prevSitterInfo) => ({
+      ...prevSitterInfo,
+      is_active: newValue,
+    }));
+  };
+
+>>>>>>> origin/feat/pet-sitter-profile-update
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setName(newName);
@@ -74,7 +113,21 @@ function BasicInfo() {
   return (
     <>
       <div css={basicInfoContainer}>
-        <p css={headingStyle}>Basic Information</p>
+        <div css={headingLayout}>
+          <p css={headingStyle}>Basic Information</p>
+          <div css={buttonIsActiveLayout}>
+            <Switch
+              slots={{
+                root: Root,
+              }}
+              {...label}
+              defaultChecked={isActive} // Make sure isActive reflects the initial state
+              onChange={handleIsActiveChange} // Use onChange instead of onClick for toggling
+            />
+            <p css={showProfileStyle}> Show Profile</p>
+          </div>
+        </div>
+
         <p>Profile Image</p>
         <div css={imgContainer}>
           <img

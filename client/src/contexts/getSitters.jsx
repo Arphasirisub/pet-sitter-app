@@ -54,6 +54,7 @@ function SittersProvider(props) {
   const [getSitterInfo, setGetSitterInfo] = useState({});
   //sitterProfile useState()
   const [imgGallery, setImgGallery] = useState([]);
+  const [isActive, setIsActive] = useState(false);
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [phone, setPhone] = useState("");
@@ -135,6 +136,7 @@ function SittersProvider(props) {
       image_gallery: imgGallery || getSitterInfo.image_gallery,
       latitude: pin.lat,
       longitude: pin.lng,
+      is_active: isActive,
     });
 
     await getSitterData();
@@ -196,6 +198,8 @@ function SittersProvider(props) {
         setImgGallery,
         pin,
         setPin,
+        isActive,
+        setIsActive,
       }}
     >
       {props.children}
