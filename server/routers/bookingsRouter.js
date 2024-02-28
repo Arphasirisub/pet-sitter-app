@@ -251,10 +251,14 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
     const endDate = new Date(end);
 
     const options = { timeZone: "Asia/Bangkok" }; // Set Thailand time zone
-    const formattedStartDate = startDate.toLocaleString("en-US", options);
-    const formattedEndDate = endDate.toLocaleString("en-US", options);
+    const displayStartDate = startDate.toLocaleString("en-US", options);
+    const displayEndDate = endDate.toLocaleString("en-US", options);
+    const formattedStartDate = startDate
+      .toISOString()
+      .replace(/-|:|\.\d+/g, "");
+    const formattedEndDate = endDate.toISOString().replace(/-|:|\.\d+/g, "");
 
-    const googleCalendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pet%20Sitting&dates=${formattedStartDate}/${formattedEndDate}&details=${message}&location=${longitude},${latitude}`;
+    const googleCalendarLink = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Pet+Sitting&dates=${formattedStartDate}/${formattedEndDate}&details=${message}&location=${latitude},${longitude}`;
 
     // Send an email invitation to the sitter
     const msg = {
@@ -264,7 +268,7 @@ bookingsRouter.post("/myBooking/:id", protect, async (req, res) => {
       html: `<p>Hello,</p><p>You have a new booking request. Please log in to your account to review and confirm.</p>
        <p><strong>Booking Details:</strong></p>
        <ul>
-           <li>Date & Time: ${start} to ${end}</li>
+           <li>Date & Time: ${displayStartDate} to ${displayEndDate}</li>
            <li>Price: ${price}</li>
            <li>Message: ${message}</li>
        </ul>
