@@ -54,6 +54,7 @@ function SittersProvider(props) {
   const [getSitterInfo, setGetSitterInfo] = useState({});
   //sitterProfile useState()
   const [imgGallery, setImgGallery] = useState([]);
+  const [isActive, setIsActive] = useState(false);
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [phone, setPhone] = useState("");
@@ -131,6 +132,7 @@ function SittersProvider(props) {
       province,
       post_code: postCode,
       image_gallery: imgGallery || getSitterInfo.image_gallery,
+      is_active: isActive,
     });
 
     await getSitterData();
@@ -190,6 +192,8 @@ function SittersProvider(props) {
         setUpdateImg,
         imgGallery,
         setImgGallery,
+        isActive,
+        setIsActive,
       }}
     >
       {props.children}
