@@ -75,7 +75,7 @@ function SittersProvider(props) {
     bird: false,
     rabbit: false,
   });
-  const [pin, setPin] = useState(null);
+  const [pin, setPin] = useState({ lat: null, lng: null });
 
   const getSitterData = async () => {
     try {
@@ -133,6 +133,8 @@ function SittersProvider(props) {
       province,
       post_code: postCode,
       image_gallery: imgGallery || getSitterInfo.image_gallery,
+      latitude: pin.lat,
+      longitude: pin.lng,
     });
 
     await getSitterData();
