@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
   overflow: "hidden",
-  width: "1120px",
+  width: "1125px",
 });
 
 const getColorByStatus = (status) => {
@@ -83,7 +83,7 @@ function CustomizedTables({
 
   return (
     <RoundedTableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Pet Owner Name</StyledTableCell>

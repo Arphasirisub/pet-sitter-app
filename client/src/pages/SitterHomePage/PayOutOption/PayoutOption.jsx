@@ -16,12 +16,11 @@ import moment from "moment";
 import axios from "axios";
 import { LuWallet } from "react-icons/lu";
 import { CiBitcoin } from "react-icons/ci";
-import { BsCashCoin } from "react-icons/bs";
 
 const RoundedTableContainer = styled(TableContainer)({
   borderRadius: "20px",
   overflow: "hidden",
-  width: "96%",
+  width: "1125px",
 });
 const getColorByStatus = (status) => {
   switch (status) {
@@ -99,145 +98,147 @@ function PayoutOption() {
 
   return (
     <>
-      <Stack padding={5} spacing={5}>
-        <Stack className="part-1">
-          <Typography variant="h5" fontWeight="bold" gutterBottom>
-            Payout Option
-          </Typography>
-        </Stack>
-        <Stack
-          className="part-2"
-          direction={"row"}
-          sx={{ justifyContent: "space-between" }}
-        >
-          <CardActionArea
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              boxShadow: 20,
-              padding: 2,
-              paddingLeft: 4,
-              paddingRight: 4,
-              marginRight: 8,
-            }}
+      <div>
+        <Stack paddingTop={"45px"} paddingLeft={"40px"} spacing={3}>
+          <Stack className="part-1">
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+              Payout Option
+            </Typography>
+          </Stack>
+          <Stack
+            className="part-2"
+            direction={"row"}
+            sx={{ width: "1120px", justifyContent: "space-between" }}
           >
-            <Stack direction={"row"} justifyContent={"space-between"}>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <CiBitcoin size={26} />
-                <Typography
-                  gutterBottom
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  component="div"
-                >
-                  Total Earning:
-                </Typography>
-              </Stack>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                fontWeight="bold"
-                component="div"
-              >
-                {totalEarning} THB.
-              </Typography>
-            </Stack>
-          </CardActionArea>
-
-          <CardActionArea
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              boxShadow: 20,
-              padding: 2,
-              paddingLeft: 4,
-              paddingRight: 4,
-              marginRight: 8,
-            }}
-          >
-            <Stack direction={"row"} justifyContent={"space-between"}>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <LuWallet />
-                <Typography
-                  gutterBottom
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  component="div"
-                >
-                  Bank Account
-                </Typography>
-              </Stack>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                fontWeight="bold"
-                component="div"
-              >
-                {payoutData?.length > 0 && (
-                  <Typography color={"#FF7037"}>
-                    {payoutData[0].sitter_id.bank_name}*
-                    {lastThreeDigits(payoutData[0].sitter_id.bank_numbers)}
+            <CardActionArea
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                boxShadow: 20,
+                width: "520px",
+                padding: 2,
+                paddingLeft: 4,
+                paddingRight: 4,
+              }}
+            >
+              <Stack direction={"row"} justifyContent={"space-between"}>
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                  <CiBitcoin size={26} />
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    component="div"
+                  >
+                    Total Earning:
                   </Typography>
-                )}
-              </Typography>
-            </Stack>
-          </CardActionArea>
-        </Stack>
-        <Stack className="part-3">
-          <RoundedTableContainer component={Paper}>
-            <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Date</StyledTableCell>
-                  <StyledTableCell align="right">From</StyledTableCell>
-                  <StyledTableCell align="right">
-                    Transaction No.
-                  </StyledTableCell>
-                  <StyledTableCell align="right">Amount</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentRows.map((booking) => (
-                  <StyledTableRow key={booking.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {moment(booking.created_at).format("D MMM, YYYY")}
-                    </StyledTableCell>
+                </Stack>
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  {totalEarning} THB.
+                </Typography>
+              </Stack>
+            </CardActionArea>
+
+            <CardActionArea
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                boxShadow: 20,
+                padding: 2,
+                paddingLeft: 4,
+                paddingRight: 4,
+                width: "520px",
+              }}
+            >
+              <Stack direction={"row"} justifyContent={"space-between"}>
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                  <LuWallet />
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    component="div"
+                  >
+                    Bank Account
+                  </Typography>
+                </Stack>
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  component="div"
+                >
+                  {payoutData?.length > 0 && (
+                    <Typography color={"#FF7037"}>
+                      {payoutData[0].sitter_id.bank_name}*
+                      {lastThreeDigits(payoutData[0].sitter_id.bank_numbers)}
+                    </Typography>
+                  )}
+                </Typography>
+              </Stack>
+            </CardActionArea>
+          </Stack>
+          <Stack className="part-3">
+            <RoundedTableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Date</StyledTableCell>
+                    <StyledTableCell align="right">From</StyledTableCell>
                     <StyledTableCell align="right">
-                      {booking.owners?.full_name}
+                      Transaction No.
                     </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {booking.id}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      <Typography color={"#1CCD83"}>
-                        {booking.price} THB.
-                      </Typography>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </RoundedTableContainer>
+                    <StyledTableCell align="right">Amount</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {currentRows.map((booking) => (
+                    <StyledTableRow key={booking.id}>
+                      <StyledTableCell component="th" scope="row">
+                        {moment(booking.created_at).format("D MMM, YYYY")}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {booking.owners?.full_name}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {booking.id}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        <Typography color={"#1CCD83"}>
+                          {booking.price} THB.
+                        </Typography>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </RoundedTableContainer>
+          </Stack>
+          <Stack alignItems={"center"} width="1120px">
+            <Pagination
+              count={Math.ceil(payoutData.length / rowsPerPage)}
+              page={page}
+              onChange={(event, value) => setPage(value)}
+              sx={{
+                "& .MuiPaginationItem-page": {
+                  color: "grey", // เปลี่ยนสีของตัวเลข
+                },
+                "& .MuiPaginationItem-page.Mui-selected": {
+                  color: "#ff7037",
+                  backgroundColor: "#FFF1EC", // เปลี่ยนสีเมื่อเป็น active
+                },
+              }}
+            />
+          </Stack>
         </Stack>
-        <Stack alignItems={"center"}>
-          <Pagination
-            count={Math.ceil(payoutData.length / rowsPerPage)}
-            page={page}
-            onChange={(event, value) => setPage(value)}
-            sx={{
-              "& .MuiPaginationItem-page": {
-                color: "grey", // เปลี่ยนสีของตัวเลข
-              },
-              "& .MuiPaginationItem-page.Mui-selected": {
-                color: "#ff7037",
-                backgroundColor: "#FFF1EC", // เปลี่ยนสีเมื่อเป็น active
-              },
-            }}
-          />
-        </Stack>
-      </Stack>
+      </div>
     </>
   );
 }

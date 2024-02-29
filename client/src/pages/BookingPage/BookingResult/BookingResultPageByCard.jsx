@@ -42,14 +42,6 @@ function BookingResultPageByCard() {
     setConfirmStatus,
   } = useBookingTools();
 
-  // const calculateDurationInHours = (startTime, stopTime) => {
-  //   const start = moment(startTime);
-  //   const stop = moment(stopTime);
-  //   const duration = moment.duration(stop.diff(start));
-  //   const hours = duration.asHours();
-  //   return hours;
-  // };
-
   const handleBookingHistory = () => {
     setBookedTimeData([]);
     setTotalPrice(0);
@@ -88,13 +80,6 @@ function BookingResultPageByCard() {
 
   useEffect(() => {
     getBookingResult(param.bookingId);
-    // console.log(confirmStatus);
-    // if (bookingResult.length > 0) {
-    //   const startTime = bookingResult[0].booked_start;
-    //   const stopTime = bookingResult[0].booked_stop;
-    //   const duration = calculateDurationInHours(startTime, stopTime);
-    //   setDurationHours(duration);
-    // }
   }, []);
   return (
     <>
