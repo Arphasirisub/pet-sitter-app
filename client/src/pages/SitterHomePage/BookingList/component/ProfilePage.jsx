@@ -137,7 +137,7 @@ function ProfilePage({ setIsProfilePage }) {
 
   const updateStatus = async (statusChange) => {
     const result = await axios.put(
-      `http://localhost:4000/bookings/${params.id}`,
+      `http://localhost:4000/bookings/${params.bookingId}`,
       { status: statusChange }
     );
     getOwnerAndPetById(params.id);
