@@ -80,39 +80,46 @@ authenticationRouter.post("/login", async (req, res) => {
 
 authenticationRouter.post("/register", async (req, res) => {
   try {
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-      {
-        email: req.body.email,
-        password: req.body.password,
-      }
-    );
+    const { email, password, name, phone, role } = req.body;
+
+    // Sign up the user
+    const { user, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
     if (signUpError) {
       console.error("Sign-up error:", signUpError.message);
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const userId = signUpData.user.id;
+    const userId = user.id;
     let tableName;
 
-    if (req.body.role === "pet_sitter") {
+    if (role === "pet_sitter") {
       tableName = "sitters";
     } else {
       tableName = "owners";
     }
 
-    const { data: insertData, error: insertError } = await supabase
+    // Construct user data object for insertion
+    const userData = {
+      id: userId,
+      full_name: name,
+      email,
+      phone,
+      role,
+    };
+
+    // If the user is a pet sitter, add image_gallery to the data
+    if (role === "pet_sitter") {
+      userData.image_gallery = [];
+    }
+
+    // Insert user data into the appropriate table
+    const { error: insertError } = await supabase
       .from(tableName)
-      .insert([
-        {
-          id: userId,
-          full_name: req.body.name,
-          email: req.body.email,
-          phone: req.body.phone,
-          role: req.body.role,
-          image_gallery: [],
-        },
-      ]);
+      .insert([userData]);
 
     if (insertError) {
       console.error(
