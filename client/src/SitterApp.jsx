@@ -13,7 +13,7 @@ function SitterApp() {
     <Routes>
       <Route path="/sitter/:id/:activeTaps/" element={<SitterHomepage />} />
       <Route
-        path="/sitter/:id/:activeTaps/:subTaps/:id"
+        path="/sitter/:id/:activeTaps/:bookingId"
         element={<SitterHomepage />}
       />
 

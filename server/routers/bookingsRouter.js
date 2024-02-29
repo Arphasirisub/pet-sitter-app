@@ -369,7 +369,7 @@ bookingsRouter.get("/myBookingResult/:id", async (req, res) => {
   }
 });
 
-bookingsRouter.get("/sitter/:id", async (req, res) => {
+bookingsRouter.get("/:id", async (req, res) => {
   const bookedId = req.params.id;
 
   try {

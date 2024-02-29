@@ -102,9 +102,7 @@ function CustomizedTables({
               onClick={() => {
                 setIsProfilePage(true);
                 setSelectedBooking(row);
-                navigate(
-                  `/sitter/${state.user.id}/booking-list/profilePage/${row.id}`
-                );
+                navigate(`/sitter/${state.user.id}/booking-list/${row.id}`);
               }}
             >
               <StyledTableCell
