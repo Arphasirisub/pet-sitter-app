@@ -40,7 +40,11 @@ function SisterHomepage() {
           position: relative;
         `}
       >
-        <Sidebar activeTaps={activeTaps} setActiveTaps={setActiveTaps} />
+        <Sidebar
+          activeTaps={activeTaps}
+          setActiveTaps={setActiveTaps}
+          setIsProfilePage={setIsProfilePage}
+        />
         <div
           css={css`
             display: flex;

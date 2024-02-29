@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const getSittersContext = createContext();
 const useSitter = () => useContext(getSittersContext);
@@ -149,6 +150,8 @@ function SittersProvider(props) {
       [fieldName]: value,
     }));
   };
+
+  //booking profile page
 
   return (
     <getSittersContext.Provider

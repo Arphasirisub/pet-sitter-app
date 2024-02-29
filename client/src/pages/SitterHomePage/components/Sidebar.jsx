@@ -19,7 +19,7 @@ import {
 } from "./SidebarStyle";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ activeTaps, setActiveTaps }) => {
+const Sidebar = ({ activeTaps, setActiveTaps, setIsProfilePage }) => {
   const { logout } = useAuth();
   const { state, checkToken } = useAuth();
   const navigate = useNavigate();
@@ -71,6 +71,7 @@ const Sidebar = ({ activeTaps, setActiveTaps }) => {
           css={getSidebarItemStyle(activeTaps === "booking-list")}
           onClick={() => {
             handleClick("booking-list");
+            setIsProfilePage(false);
           }}
         >
           <IoList fontSize="24px" />
