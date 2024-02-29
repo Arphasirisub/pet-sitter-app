@@ -44,23 +44,6 @@ function PetSitterInfo() {
     { value: "bird", label: "Bird" },
     { value: "rabbit", label: "Rabbit" },
   ];
-  useEffect(() => {
-    getSitterData();
-  }, []);
-
-  useEffect(() => {
-    setTradeName(getSitterInfo.trade_name);
-    setService(getSitterInfo.service);
-    setMyPlace(getSitterInfo.my_place);
-    setPetType({
-      ...petType,
-      dog: getSitterInfo.dog,
-      cat: getSitterInfo.cat,
-      bird: getSitterInfo.bird,
-      rabbit: getSitterInfo.rabbit,
-    });
-    setImgGallery(getSitterInfo.image_gallery);
-  }, [getSitterInfo]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]; // Get the selected file from the event

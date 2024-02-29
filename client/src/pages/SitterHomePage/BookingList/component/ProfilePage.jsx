@@ -636,7 +636,7 @@ function ProfilePage({ setIsProfilePage }) {
 
           <div className="content_additionmessage" css={contentStyle}>
             <h4 css={headTextStyle}>Additional Message</h4>
-            <p css={contentTextStyle}>I love my dogs, care</p>
+            <p css={contentTextStyle}>{bookingById.message}</p>
           </div>
         </div>
       )}

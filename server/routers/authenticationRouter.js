@@ -110,6 +110,7 @@ authenticationRouter.post("/register", async (req, res) => {
           email: req.body.email,
           phone: req.body.phone,
           role: req.body.role,
+          image_gallery: [],
         },
       ]);
 

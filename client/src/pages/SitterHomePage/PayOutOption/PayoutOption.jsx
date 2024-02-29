@@ -177,8 +177,8 @@ function PayoutOption() {
                 >
                   {payoutData?.length > 0 && (
                     <Typography color={"#FF7037"}>
-                      {payoutData[0].sitter_id.bank_name}*
-                      {lastThreeDigits(payoutData[0].sitter_id.bank_numbers)}
+                      {payoutData[0].sitter_id?.bank_name}*
+                      {lastThreeDigits(payoutData[0].sitter_id?.bank_numbers)}
                     </Typography>
                   )}
                 </Typography>
