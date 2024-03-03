@@ -19,6 +19,7 @@ import {
   Root,
   buttonIsActiveLayout,
   showProfileStyle,
+  fontStyle,
 } from "../Style/BasicInfoStyle.jsx";
 import { Switch } from "@mui/base/Switch";
 
@@ -121,7 +122,10 @@ function BasicInfo() {
               checked={isActive}
               onChange={handleIsActiveChange} // Use onChange instead of onClick for toggling
             />
-            <p css={showProfileStyle}> Show Profile</p>
+            <div>
+              <p css={showProfileStyle}> Show Profile</p>
+              <p css={fontStyle}>(on Pet Owner Searching)</p>
+            </div>
           </div>
         </div>
 

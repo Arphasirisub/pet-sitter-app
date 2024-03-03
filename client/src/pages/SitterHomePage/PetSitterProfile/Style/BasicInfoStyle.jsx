@@ -9,15 +9,19 @@ export const headingLayout = css`
   justify-content: space-between;
   width: 1000px;
 `;
+export const fontStyle = css`
+  font-size: 14px;
+  margin-top: -10px;
+`;
 
-export const buttonIsActiveLayout =css`
+export const buttonIsActiveLayout = css`
   display: flex;
   flex-direction: row;
-`
-export const showProfileStyle =css`
+`;
+export const showProfileStyle = css`
   margin-top: 10px;
   font-weight: 600;
-`
+`;
 export const headingContainer = css`
   font-weight: 700;
   font-size: 24px;

@@ -65,6 +65,7 @@ export const addImage = css`
   width: 200px;
   height: 200px;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export const selectionStyle = css`
@@ -87,6 +88,8 @@ export const imgStyle = css`
   width: 200px;
   height: 200px;
   border-radius: 10px;
+  object-fit: cover;
+  /* background-color: #dcdfed; */
 `;
 
 export const deleteButton = css`
