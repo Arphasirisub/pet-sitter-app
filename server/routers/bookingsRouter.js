@@ -426,11 +426,9 @@ bookingsRouter.get("/:id", async (req, res) => {
     const formattedBirthday = new Date(booking.owners.birthday).toLocaleString(
       "en-US",
       {
+        year: "numeric",
         month: "short",
         day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
       }
     );
     const formattedCreatAt = new Date(booking.created_at).toLocaleString(

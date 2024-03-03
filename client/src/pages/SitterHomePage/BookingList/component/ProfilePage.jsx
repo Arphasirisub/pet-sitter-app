@@ -375,72 +375,6 @@ function ProfilePage({ setIsProfilePage }) {
           </div>
         </Box>
       </Modal>
-      <Modal
-        open={openRating}
-        onClose={handleCloseRating}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            width: "800px",
-            background: "white",
-            borderRadius: "16px",
-          }}
-        >
-          <div className="header_topic" css={headGroupStyle}>
-            <h2>Rating & Review</h2>
-            <button
-              onClick={handleCloseRating}
-              css={css`
-                cursor: pointer;
-              `}
-            >
-              <IoClose css={ioCloseStyle} />
-            </button>
-          </div>
-          <div className="rating_content" css={ratingContentStyle}>
-            <p css={ratingTextStyle}>
-              <h3>What is your rate?</h3>
-              <Box
-                className="rating-star"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "4px",
-                  marginBottom: "60px",
-                  "& > legend": { mt: 2 },
-                  "& .MuiRating-iconFilled": {
-                    color: "#1ecd83",
-                    fontSize: "50px",
-                  },
-                  "& .MuiRating-iconEmpty": { fontSize: "50px" },
-                }}
-              >
-                <Rating
-                  name="simple-controlled"
-                  value={rating}
-                  onChange={(event, newValue) => {
-                    setRating(newValue);
-                  }}
-                />
-              </Box>
-            </p>
-            <div className="buttongroup" css={buttonGroupStyle}>
-              <Button css={popUpButtonCancelStyle} onClick={handleCloseReject}>
-                Cancle
-              </Button>
-              <Button css={popUpButtonSendStyle}>Send Review&Rating</Button>
-            </div>
-          </div>
-        </Box>
-      </Modal>
 
       {bookingById && (
         <div className="section_topic" css={sectionTopicProfilePageStyle}>
@@ -511,20 +445,6 @@ function ProfilePage({ setIsProfilePage }) {
                   ${bookingButtonStyle}
                 `}
                 onClick={() => updateStatus("Success")}
-              >
-                {getTextByStatus(bookingById.status)}
-              </button>
-            )}
-
-            {bookingById.status === "Success" && (
-              <button
-                css={css`
-                  width: ${getWidthByStatus(bookingById.status)};
-                  ${bookingButtonStyle}
-                `}
-                onClick={() => {
-                  setOpenRating(true);
-                }}
               >
                 {getTextByStatus(bookingById.status)}
               </button>
