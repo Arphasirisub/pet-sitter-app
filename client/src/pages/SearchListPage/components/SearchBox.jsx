@@ -182,7 +182,7 @@ function SearchBox() {
             </div>
           </div>
 
-          <p css={text}> </p>
+          <p css={text}>Experience:</p>
 
           <select
             css={inputStyles}
