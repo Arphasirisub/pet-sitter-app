@@ -58,7 +58,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData.introduction}
+                {sitterData?.introduction}
               </Typography>
             </Box>
             <Box
@@ -81,7 +81,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData.service}
+                {sitterData?.service}
               </Typography>
             </Box>
             <Box
@@ -104,7 +104,7 @@ const PetSitterDetailIntro = () => {
                 color={"#5B5D6F"}
                 gutterBottom
               >
-                {sitterData.my_place}
+                {sitterData?.my_place}
               </Typography>
             </Box>
           </Stack>
