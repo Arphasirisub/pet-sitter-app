@@ -34,6 +34,7 @@ const TopBar = () => {
     height: 40px;
     border-radius: 999px;
     cursor: pointer;
+    object-fit: cover;
   `;
 
   const nameStyle = css`

@@ -120,6 +120,7 @@ function Navbar() {
                   height: 40px;
                   cursor: pointer;
                   border-radius: 100%;
+                  object-fit: cover;
                 `}
                 onClick={handleClick}
               />
