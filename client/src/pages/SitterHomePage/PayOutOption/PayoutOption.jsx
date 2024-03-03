@@ -69,11 +69,11 @@ function PayoutOption() {
         `http://localhost:4000/sitters/booking/payoutOption`
       );
 
-      setPayoutData(response.data.bookings);
+      setPayoutData(response.data.successBookings);
       setTotalEarning(response.data.totalPrice);
       console.log(response);
       console.log(response.data);
-      console.log(response.data.bookings);
+      console.log(response.data.successBookings);
       console.log(response.data.totalPrice);
     } catch (error) {
       console.error("Error fetching sitter details:", error);

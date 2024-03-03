@@ -155,14 +155,19 @@ sittersRouter.get("/booking/payoutOption", protect, async (req, res) => {
       return res.status(404).json({ error: sitterId });
     }
 
+    // Filter bookings with status "Success"
+    const successBookings = bookings.filter(
+      (booking) => booking.status === "Success"
+    );
+
     // Calculate total price
-    const totalPrice = bookings.reduce(
+    const totalPrice = successBookings.reduce(
       (total, booking) => total + booking.price,
       0
     );
 
     // Send total price in response
-    res.json({ totalPrice, bookings });
+    res.json({ totalPrice, successBookings });
   } catch (error) {
     console.error("Error fetching data:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
