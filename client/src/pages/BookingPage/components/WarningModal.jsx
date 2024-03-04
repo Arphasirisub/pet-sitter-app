@@ -103,12 +103,14 @@ function WarningModal() {
             `}
           />
           <Button
-            onClick={handleClose}
+            onClick={() => {
+              setShowWarningModal(false);
+            }}
             css={css`
               margin-top: 10px;
             `}
           >
-            Yes
+            Close
           </Button>
         </Box>
       </Fade>
