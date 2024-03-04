@@ -279,6 +279,7 @@ export const imgProflie = css`
   height: 50px;
   margin-left: 40px;
   border-radius: 100px;
+  object-fit: cover;
 `;
 
 export const dogIconStyle = css`
@@ -314,6 +315,7 @@ export const imageGalleryStyle = css`
   width: 238px;
   height: 170px;
   border-radius: 18px;
+  object-fit:cover;
 `;
 
 export const checkboxStyles = {
