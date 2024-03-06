@@ -35,7 +35,7 @@ function SelectPaymentMethods({ setPaymentMethods, paymentMethods }) {
         }}
       >
         <BsCreditCard />
-        Creadit Card
+        Credit Card
       </Button>
       <Button
         css={css`
