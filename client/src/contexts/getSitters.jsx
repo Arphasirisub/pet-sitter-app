@@ -29,18 +29,18 @@ function SittersProvider(props) {
     try {
       // Set loading to true with a delay of 2 seconds
       setSearchResult({ ...searchResult, isLoading: true });
-      setTimeout(async () => {
-        const response = await axios.get(
-          `http://localhost:4000/sitters?full_name=${searchInput.searchInput}&experience=${searchInput.experience}&rating=${searchInput.rating}&dog=${searchInput.dog}&cat=${searchInput.cat}&bird=${searchInput.bird}&rabbit=${searchInput.rabbit}`
-        );
-        // After the delay, update the search result
-        setSearchResult({
-          ...searchResult,
-          isLoading: false,
-          isError: false,
-          result: response.data.data,
-        });
-      }, 2000); // 2000 milliseconds (2 seconds)
+
+      const response = await axios.get(
+        `http://localhost:4000/sitters?full_name=${searchInput.searchInput}&experience=${searchInput.experience}&rating=${searchInput.rating}&dog=${searchInput.dog}&cat=${searchInput.cat}&bird=${searchInput.bird}&rabbit=${searchInput.rabbit}`
+      );
+      // After the delay, update the search result
+      setSearchResult({
+        ...searchResult,
+        isLoading: false,
+        isError: false,
+        result: response.data.data,
+      });
+      // 2000 milliseconds (2 seconds)
     } catch (error) {
       console.log(error);
       // Handle errors
